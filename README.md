@@ -1,9 +1,9 @@
 1. Clone repo
-     * git clone git@github.com:wooyoungkim24/ReactSoloProject.git
+     * git clone git@github.com:wooyoungkim24/NewReactSoloProject.git
 2. Install dependencies 
      * npm install
 3. Create POSTGRESQL user with CREATEDB priveleges and a password
-     * CREATE USER auth_app WITH PASSWORD 'authpassword' CREATEDB
+     * CREATE USER new_app WITH PASSWORD 'app_password' CREATEDB
 4. Create .env file modeled off of .env.example 
 5. Enter in username and password in .env file
 6. Create a JWT_SECRET variable in .env, as well as a port number
