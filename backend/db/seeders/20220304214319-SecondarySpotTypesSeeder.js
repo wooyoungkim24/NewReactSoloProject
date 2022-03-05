@@ -10,7 +10,8 @@ module.exports = {
       */
    return queryInterface.bulkInsert('SecondarySpotTypes', [
      {spotId:7, guestHouse:true},
-     {spotId:8, guestHouse:true}
+     {spotId:8, guestHouse:true},
+     {spotId:14, guestSuite:true}
     ], {});
   },
 

@@ -13,9 +13,15 @@ const descriptionsChicago =[
   "Take it easy at this unique and tranquil getaway.",
   "Enjoy all of the fantastic food, music, and art that Wicker Park has to offer. A quick trip to downtown, and blocks away from the highway and blue line. It's equipped with easy, keyless entry and common amenities for comfort and convenience.",
   "3rd floor studio apartment in a vintage building in a quiet residential setting. Apartment is cozy, with a Queen bed, couch, private bathroom and small kitchen in a studio format. Short walk to beautiful river path, park and restaurants. Longer walk to bustling Lincoln Square with restaurants, bars, library, shops, etc.",
-
 ]
 
+const descriptionsLosAngeles = [
+  "Newly settled in Air BNB the first three months of discounted room rates. September $ 70. October $ 75. November 80. with limited supplies. Welcome to our place…….",
+  "Located in a quiet and safe neighborhood of North El Monte, very close to Arcadia. This newly remodeled and newly furnished rental unit has one spacious bedroom and one private bathroom, perfect for staying while traveling in LA. It is equipped with a working desk and chair, high speed Internet, independent A/C unit, microwave, hot water kettle, walk-in closet, and washer and dryer on site. We provide towels, bed linens, shampoo, conditioner, body soap, extra beddings and more.",
+  "Guest House in Burbank - no private patio. This private guest house is detached from the main house and has it own private/separate entrance. It accommodates up to 3 guests. One bedroom and one living room, separated from each other by walk through kitchen. Street parking only. It is located 1.5 miles from the Burbank Airport and 2.2 miles from Warner Brothers studios and Universal Studios. One queen bed, sofa, table, 4 chairs, Portable AC, TV set. By Hostel International, view all our listings.",
+  "Private Bedroom with a FULL Bed, Shared Bath! 5-7 minutes to Americana Glendale.",
+  "The apartment is in close proximity to everything including the Walt Disney Concert Hall, the Grand Central Market- the European-style food hall built-in 1917, Staples Center, LA Flower Market, the Griffith Observatory and much more. Simple and Basic studio. Very close to major metro and bus stations."
+]
 
 
 
@@ -41,6 +47,15 @@ module.exports = {
      {userId: 4,title: "Cozy 1 bedroom Condo in wonderful neighborhood", description: descriptionsChicago[2], costPerNight: 60, address: "4451 South Greenwood Ave, Chicago, Illinois", city: "Chicago"},
      {userId: 7,title: "Pierce Place Garden", description: descriptionsChicago[3], costPerNight: 81, address: "2300 West Wabansia Ave, Chicago, Illinois", city: "Chicago"},
      {userId: 8,title: "Cozy, quiet studio apartment", description: descriptionsChicago[4], costPerNight: 85, address: "2548 West Berteau Ave, Chicago, Illinois", city: "Chicago"},
+
+
+     //Los Angeles
+     {userId: 1,title: "One bed Room K02", description: descriptionsLosAngeles[0], costPerNight: 91, address: "110 Russell Ave, Monterey Park, California", city: "Los Angeles"},
+     {userId: 3,title: "New 1 Bedroom Unit w/Private Bath Private Access", description: descriptionsLosAngeles[1], costPerNight: 56, address: "11719 Cherrylee Drive, El Monte, California", city: "Los Angeles"},
+     {userId: 5,title: "1 bed Guest House", description: descriptionsLosAngeles[2], costPerNight: 100, address: "1735 North California St, Burbank, California", city: "Los Angeles"},
+     {userId: 4,title: "Private Bedroom with a FULL Bed, Shared Bath!", description: descriptionsLosAngeles[3], costPerNight: 55, address: "101 East Broadway, Glendale, California", city: "Los Angeles"},
+     {userId: 6,title: "~!Classic Studio near DTLA#16N!~ ", description: descriptionsLosAngeles[4], costPerNight: 98, address: "6533 Hayes Drive, Los Angeles, California", city: "Los Angeles"},
+
 
     ], {});
   },

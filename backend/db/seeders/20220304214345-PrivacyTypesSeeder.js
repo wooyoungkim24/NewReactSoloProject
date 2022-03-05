@@ -21,6 +21,12 @@ module.exports = {
      {spotId:9, entire:true},
      {spotId:10, entire:true},
 
+     {spotId:11, privateRoom:true},
+     {spotId:12, privateRoom:true},
+     {spotId:13, entire:true},
+     {spotId:14, privateRoom:true},
+     {spotId:15, privateRoom:true},
+
     ], {});
   },
 
