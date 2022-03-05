@@ -9,7 +9,8 @@ module.exports = {
       Example:
       */
    return queryInterface.bulkInsert('SecondarySpotTypes', [
-     {name: 'John Doe',isBetaMember: false}
+     {spotId:7, guestHouse:true},
+     {spotId:8, guestHouse:true}
     ], {});
   },
 

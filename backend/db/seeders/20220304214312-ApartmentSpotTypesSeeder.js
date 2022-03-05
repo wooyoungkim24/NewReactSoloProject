@@ -13,7 +13,10 @@ module.exports = {
      {spotId:2, loft:true},
      {spotId:3, rental:true},
      {spotId:4, rental:true},
-     {spotId:5, rental:true}
+     {spotId:5, rental:true},
+     {spotId:9, condo:true},
+     {spotId:10,rental:true}
+
     ], {});
   },
 
