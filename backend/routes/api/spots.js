@@ -1,7 +1,7 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler');
 
-const {Spot, SpotType, ApartmentSpotType, HouseSpotType, BnBSpotType, SecondarySpotType, FloorPlan, Photo, PrivacyType, Amenity}= require('../../db/models')
+const {User,Spot, SpotType, ApartmentSpotType, HouseSpotType, BnBSpotType, SecondarySpotType, FloorPlan, Photo, PrivacyType, Amenity}= require('../../db/models')
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.get(
             where:{
                 city:city
             },
-            include:[SpotType, Amenity,FloorPlan,Photo,PrivacyType]})
+            include:[SpotType, Amenity,FloorPlan,Photo,PrivacyType, User]})
         return res.json(
             spots
         )
@@ -73,7 +73,7 @@ router.get(
         let subType;
         const spotId = req.params.id;
         const spot= await Spot.findByPk(spotId,
-            {include: [SpotType, Amenity,FloorPlan,Photo,PrivacyType]}
+            {include: [SpotType, Amenity,FloorPlan,Photo,PrivacyType, User]}
             );
         let type = spot.SpotType;
         if(type.apartment){
