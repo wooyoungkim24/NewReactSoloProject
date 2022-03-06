@@ -1,0 +1,16 @@
+.individual-image-container{
+    display: flex;
+    flex-direction: row;
+}
+#individual-image-big{
+    width:580px;
+    height:480px;
+}
+#individual-image-small{
+    width: 280px;
+    height: 230px;
+}
+#individual-image-small-container > div{
+    display: flex;
+    flex-direction: row;
+}

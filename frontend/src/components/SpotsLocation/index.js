@@ -3,4 +3,134 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
+import {getSpots} from "../../store/spot"
+import "./index.css"
 
+
+function SpotsLocation() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {city} = useParams();
+    const [isLoaded, setIsLoaded] = useState(false)
+
+
+    useEffect(() => {
+        dispatch(sessionActions.restoreUser())
+        dispatch(getSpots(city)).then(() => setIsLoaded(true))
+    }, [dispatch])
+    const allSpots = useSelector(state => {
+        return state.spots.spots
+    })
+    function FilterTrue(obj){
+        let keys = Object.keys(obj);
+        let returned = keys.filter(ele => obj[ele] === true)
+        return returned;
+    }
+    function camelToWord(string){
+        let upperLetter = "";
+        for(let i = 0; i < string.length; i++){
+            let curr = string.charAt(i);
+            if(curr === curr.toUpperCase()){
+                upperLetter = curr
+            }
+        }
+        let split = string.split(/[A-Z]/)
+        let replacedLetter = upperLetter+split[1]
+        split[1] = replacedLetter
+        if(split[1] === 'undefined'){
+            split.pop();
+        }
+        let first = split[0];
+        let splitFirst = first.split("");
+        splitFirst[0] = splitFirst[0].toUpperCase();
+        let newSplitFirst = splitFirst.join("")
+        split[0] = newSplitFirst;
+        return split.join(" ")
+    }
+    function splitAtCapital(string){
+        const result = string.split(/(?=[A-Z])/);
+        if(result.length ===1){
+            return result[0]
+        }else{
+            return result.join(" ")
+        }
+    }
+
+    return (
+        <div className="spots-page">
+            <div className='navbar-spots'>
+
+            </div>
+
+            <div className='spots-list-container'>
+                {isLoaded &&
+                    <>
+                        <ol>
+                            {allSpots.map((ele) => {
+                                const spotId = ele.id
+                                const privacyType = FilterTrue(ele.PrivacyType)[0]
+
+                                let privacyText;
+                                if(privacyType === 'privateRoom'){
+                                    privacyText = "Private Room"
+                                }else if(privacyType === 'entire'){
+                                    privacyText = "Entire Unit"
+                                }else if(privacyType === 'sharedRoom'){
+                                    privacyText = "Shared Room"
+                                }
+
+                                const amenitiesKeys = Object.keys(ele.Amenity)
+                                let amenitiesKeysTrue =[]
+                                for(let i = 0; i < amenitiesKeys.length; i ++){
+                                    let curr = amenitiesKeys[i];
+
+
+                                    if(ele.Amenity[curr] === true){
+
+                                        amenitiesKeysTrue.push(curr)
+                                    }
+                                }
+                                return (
+                                    <div key = {spotId} className="spot-component-container" onClick={() => history.push(`/spot/${ele.id}`)}>
+                                        <div className='component-img'>
+                                            <img id="spot-component-image" src={ele.Photo.photoArray[0]}/>
+                                        </div>
+                                        <div className='component-details'>
+                                            <div className="component-spot-type">
+                                                <p>{privacyText} in {splitAtCapital(ele.city)} </p>
+                                            </div>
+                                            <div className='component-spot-title'>
+                                                <h2>{ele.title}</h2>
+                                            </div>
+                                            <div className='component-floor-plan'>
+                                                <p>
+                                                    {ele.FloorPlan.guests} Guest - {ele.FloorPlan.beds} Bed - {ele.FloorPlan.bedrooms} Bedroom - {ele.FloorPlan.bathrooms} Bath
+                                                </p>
+                                            </div>
+                                            <div className='component-amenities'>
+                                                {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
+
+                                            </div>
+                                            <div className='component-price'>
+                                                <span className='dollarAmount'>
+                                                    {ele.costPerNight}
+                                                </span>
+                                                <span>
+                                                    / night
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </ol>
+                    </>
+
+
+                }
+            </div>
+        </div>
+    )
+}
+
+export default SpotsLocation;

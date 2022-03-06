@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
+import SpotsLocation from "./components/SpotsLocation"
+import SpotIndividual from "./components/SpotIndividual"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -19,11 +21,17 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login">
+          <Route exact path="/login">
             <LoginFormPage />
           </Route>
-          <Route path="/signup">
+          <Route exact path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/spots/:city">
+            <SpotsLocation />
+          </Route>
+          <Route exact path = "/spot/:id">
+            <SpotIndividual />
           </Route>
         </Switch>
       )}
