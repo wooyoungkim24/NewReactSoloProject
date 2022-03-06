@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   HouseSpotType.associate = function(models) {
     // associations can be defined here
-    HouseSpotType.hasOne(models.Spot, {foreignKey:"spotId"})
+    HouseSpotType.belongsTo(models.Spot, {foreignKey:"spotId"})
   };
   return HouseSpotType;
 };

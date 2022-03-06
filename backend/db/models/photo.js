@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Photo = sequelize.define('Photo', {
-    spotid: DataTypes.INTEGER,
-    photoArray: DataTypes.ARRAY
+    spotId: DataTypes.INTEGER,
+    photoArray: DataTypes.ARRAY(DataTypes.TEXT)
   }, {});
   Photo.associate = function(models) {
     // associations can be defined here
-    Photo.hasOne(models.Spot, {foreignKey:"spotId"})
+    Photo.belongsTo(models.Spot, {foreignKey:"spotId"})
   };
   return Photo;
 };

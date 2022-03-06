@@ -9,7 +9,8 @@ module.exports = {
       Example:
       */
    return queryInterface.bulkInsert('BnBSpotTypes', [
-     {name: 'John Doe',isBetaMember: false}
+     {spotId: 18, bnb:true},
+     
     ], {});
   },
 

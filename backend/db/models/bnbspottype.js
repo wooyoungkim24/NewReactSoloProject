@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   BnBSpotType.associate = function(models) {
     // associations can be defined here
-    BnBSpotType.hasOne(models.Spot,{foreignKey:"spotId"})
+    BnBSpotType.belongsTo(models.Spot,{foreignKey:"spotId"})
   };
   return BnBSpotType;
 };

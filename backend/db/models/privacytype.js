@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   PrivacyType.associate = function(models) {
     // associations can be defined here
-    PrivacyType.hasOne(models.Spots, {foreignKey:"spotId"})
+    PrivacyType.belongsTo(models.Spot, {foreignKey:"spotId"})
   };
   return PrivacyType;
 };

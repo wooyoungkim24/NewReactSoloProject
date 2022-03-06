@@ -15,7 +15,10 @@ module.exports = {
      {spotId:4, rental:true},
      {spotId:5, rental:true},
      {spotId:9, condo:true},
-     {spotId:10,rental:true}
+     {spotId:10,rental:true},
+     {spotId:20,loft:true},
+     {spotId:24,rental:true},
+     {spotId:25,rental:true}
 
     ], {});
   },

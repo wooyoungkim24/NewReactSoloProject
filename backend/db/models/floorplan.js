@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   FloorPlan.associate = function(models) {
     // associations can be defined here
-    FloorPlan.hasOne(models.Spot, {foreignKey:"spotId"})
+    FloorPlan.belongsTo(models.Spot, {foreignKey:"spotId"})
   };
   return FloorPlan;
 };

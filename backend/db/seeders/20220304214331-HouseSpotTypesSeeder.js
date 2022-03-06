@@ -14,6 +14,10 @@ module.exports = {
      {spotId: 12,residential:true},
      {spotId: 13,residential:true},
      {spotId: 15,residential:true},
+     {spotId: 16,townhouse:true},
+     {spotId: 17,residential:true},
+     {spotId: 19,residential:true},
+
     ], {});
   },
 

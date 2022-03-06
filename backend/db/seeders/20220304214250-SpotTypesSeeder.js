@@ -27,6 +27,19 @@ module.exports = {
      {spotId:14,secondaryUnit:true},
      {spotId:15,house:true},
 
+     {spotId:16,house:true},
+     {spotId:17,house:true},
+     {spotId:18,bnb:true},
+     {spotId:19,house:true},
+     {spotId:20,apartment:true},
+
+     {spotId:21,secondaryUnit:true},
+     {spotId:22,secondaryUnit:true},
+     {spotId:23,secondaryUnit:true},
+     {spotId:24,apartment:true},
+     {spotId:25,apartment:true},
+
+
     ], {});
   },
 

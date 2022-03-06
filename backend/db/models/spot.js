@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     costPerNight: DataTypes.INTEGER,
+    bookedStart: DataTypes.DATEONLY,
+    bookedEnd:DataTypes.DATEONLY,
     address: DataTypes.STRING,
     city: DataTypes.STRING
   }, {});
@@ -20,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     Spot.hasOne(models.PrivacyType, {foreignKey:"spotId"})
     Spot.hasOne(models.Photo, {foreignKey:"spotId"})
     Spot.hasOne(models.FloorPlan, {foreignKey:"spotId"})
+    Spot.hasMany(models.Booking, {foreignKey:"spotId"})
   };
   return Spot;
 };

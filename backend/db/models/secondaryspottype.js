@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   SecondarySpotType.associate = function(models) {
     // associations can be defined here
-    SecondarySpotType.hasOne(models.Spot, {foreignKey:"spotId"})
+    SecondarySpotType.belongsTo(models.Spot, {foreignKey:"spotId"})
   };
   return SecondarySpotType;
 };
