@@ -5,12 +5,24 @@
 #individual-image-big{
     width:580px;
     height:480px;
+    object-fit: cover;
 }
 #individual-image-small{
     width: 280px;
     height: 230px;
+    object-fit: cover;
 }
 #individual-image-small-container > div{
     display: flex;
     flex-direction: row;
+}
+#spot-user-photo{
+    object-fit: cover;
+    width:60px;
+    height:60px;
+    border-radius: 30px;
+}
+div.intro-profile-photo{
+    width:60px;
+    height:60px;
 }

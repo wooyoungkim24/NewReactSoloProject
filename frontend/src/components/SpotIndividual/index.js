@@ -6,19 +6,31 @@ import Navigation from '../Navigation';
 import { getSpots, getSpot } from "../../store/spot"
 import "./index.css"
 
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
+import moment from 'moment'
+
 function SpotIndividual() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const history = useHistory();
-
+    const [dateStateStart, setDateStateStart] = useState(new Date())
+    const [dateStateEnd, setDateStateEnd] = useState(new Date())
     const [isLoaded, setIsLoaded] = useState(false);
     const [privacyText, setPrivacyText] = useState("")
     const [spotType, setSpotType] = useState("")
     const [spotTypeSub, setSpotTypeSub] = useState("")
+    const [showMore, setShowMore] = useState(false);
+
     const individualSpot = useSelector(state => {
         return state.spots.individualSpot
     })
-
+    const changeDateStart = (e) => {
+        setDateStateStart(e)
+    }
+    const changeDateEnd = (e) => {
+        setDateStateEnd(e)
+    }
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
@@ -86,8 +98,354 @@ function SpotIndividual() {
         didMountRef.current += 1;
     }, [isLoaded])
 
+    let amenitiesShow;
+    if (isLoaded) {
+        let pool = individualSpot.spot.Amenity.pool;
+        let patio = individualSpot.spot.Amenity.patio;
+        let firePit = individualSpot.spot.Amenity.firePit;
+        let firePlace = individualSpot.spot.Amenity.firePlace;
+        let exerciseEquipment = individualSpot.spot.Amenity.exerciseEquipment;
+        let wifi = individualSpot.spot.Amenity.wifi;
+        let tv = individualSpot.spot.Amenity.tv;
+        let kitchen = individualSpot.spot.Amenity.kitchen;
+        let washer = individualSpot.spot.Amenity.washer;
+        let airConditioning = individualSpot.spot.Amenity.airConditioning;
+        let smokeAlarm = individualSpot.spot.Amenity.smokeAlarm;
+        let firstAidKit = individualSpot.spot.Amenity.firstAidKit;
+        let fireExtinguisher = individualSpot.spot.Amenity.fireExtinguisher;
 
 
+        amenitiesShow = (
+            <div className="amenitiesContainer">
+                <div id="leftAmenities">
+                    {pool &&
+                        <div id="orderAmenities">
+                            <div id="amenityIconUp">
+                                <i className="fas fa-thumbs-up fa-2x"></i>
+                            </div>
+                            <div id="amenity">
+                                Has a pool
+                            </div>
+                        </div>
+                    }
+                    {!pool &&
+                        <div id="orderAmenities">
+                            <div id="amenityIconDown">
+                                <i className="fas fa-thumbs-down fa-2x"></i>
+                            </div>
+                            <div id="amenity">
+                                Does not have a pool
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div id="rightAmenities">
+                    {patio &&
+                        <div id="orderAmenities">
+                            <div id="amenityIconUp">
+                                <i className="fas fa-thumbs-up fa-2x"></i>
+                            </div>
+
+                            <div id="amenity">
+                                Has a patio
+                            </div>
+                        </div>
+                    }
+                    {!patio &&
+                        <div id="orderAmenities">
+                            <div id="amenityIconDown">
+                                <i className="fas fa-thumbs-down fa-2x"></i>
+                            </div>
+                            <div id="amenity">
+                                Does not have a patio
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        )
+
+        if (showMore) {
+            amenitiesShow = (
+                <div className="amenitiesContainer">
+                    <div id="leftAmenities">
+                        {pool &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Has a pool
+                                </div>
+                            </div>
+                        }
+                        {!pool &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a pool
+                                </div>
+                            </div>
+                        }
+                        {patio &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does have a patio
+                                </div>
+                            </div>
+                        }
+                        {!patio &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a patio
+                                </div>
+                            </div>
+                        }
+                        {firePit &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Has a fire pit
+                                </div>
+                            </div>
+                        }
+                        {!firePit &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a fire pit
+                                </div>
+                            </div>
+                        }
+                        {firePlace &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Has a fireplace
+                                </div>
+                            </div>
+                        }
+                        {!firePlace &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a fireplace
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="rightAmenities">
+                        {exerciseEquipment &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has exercise equipment
+                                </div>
+                            </div>
+                        }
+                        {!exerciseEquipment &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have exercise equipment
+                                </div>
+                            </div>
+                        }
+                        {wifi &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has wifi
+                                </div>
+                            </div>
+                        }
+                        {!wifi &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have wifi
+                                </div>
+                            </div>
+                        }
+                        {tv &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has tv
+                                </div>
+                            </div>
+                        }
+                        {!tv &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have tv
+                                </div>
+                            </div>
+                        }
+                        {kitchen &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has a kitchen
+                                </div>
+                            </div>
+                        }
+                        {!kitchen &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a kitchen
+                                </div>
+                            </div>
+                        }
+                        {washer &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has a washer
+                                </div>
+                            </div>
+                        }
+                        {!washer &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a washer
+                                </div>
+                            </div>
+                        }
+                        {airConditioning &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has air conditioning
+                                </div>
+                            </div>
+                        }
+                        {!airConditioning &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have air conditioning
+                                </div>
+                            </div>
+                        }
+                        {smokeAlarm &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has smoke alarms
+                                </div>
+                            </div>
+                        }
+                        {!smokeAlarm &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have smoke alarms
+                                </div>
+                            </div>
+                        }
+                        {firstAidKit &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has a first aid kit
+                                </div>
+                            </div>
+                        }
+                        {!firstAidKit &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a first aid kit
+                                </div>
+                            </div>
+                        }
+                        {fireExtinguisher &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconUp">
+                                    <i className="fas fa-thumbs-up fa-2x"></i>
+                                </div>
+
+                                <div id="amenity">
+                                    Has a fire extinguisher
+                                </div>
+                            </div>
+                        }
+                        {!fireExtinguisher &&
+                            <div id="orderAmenities">
+                                <div id="amenityIconDown">
+                                    <i className="fas fa-thumbs-down fa-2x"></i>
+                                </div>
+                                <div id="amenity">
+                                    Does not have a fire extinguisher
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            )
+        }
+    }
 
 
     return (
@@ -141,14 +499,22 @@ function SpotIndividual() {
                             </div>
 
                             <div className='description'>
-
+                                <p>{individualSpot.spot.description}</p>
                             </div>
 
                             <div className='amenities'>
-
+                                {amenitiesShow}
+                                {!showMore && <button id="showMoreButton" type="button" onClick={() => setShowMore(true)}>Show More</button>}
+                                {showMore && <button id="showLessButton" type="button" onClick={() => setShowMore(false)}>Show Less</button>}
                             </div>
 
                             <div className='calendar'>
+                                <div className='calendar-start'>
+                                    <Calendar value={dateStateStart} onChange={changeDateStart} />
+                                </div>
+                                <div className='calendar-end'>
+                                    <Calendar value={dateStateEnd} onChange={changeDateEnd} />
+                                </div>
 
                             </div>
                         </div>

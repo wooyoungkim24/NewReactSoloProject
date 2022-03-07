@@ -8,6 +8,7 @@ import SpotsLocation from "./components/SpotsLocation"
 import SpotIndividual from "./components/SpotIndividual"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import Home from "./components/Home"
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path = "/">
+            <Home />
+          </Route>
           <Route exact path="/login">
             <LoginFormPage />
           </Route>
