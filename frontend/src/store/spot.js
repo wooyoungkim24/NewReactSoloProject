@@ -33,6 +33,8 @@ export const getSpots = (city) => async dispatch => {
     }
 }
 
+
+
 export const getSpot = (id) => async dispatch =>{
     const res = await csrfFetch(`/api/spots/${id}`);
     if(res.ok){
@@ -44,7 +46,7 @@ export const getSpot = (id) => async dispatch =>{
 
 export const getSpotsUser = (userId) => async dispatch =>{
     const res = await csrfFetch(`/api/spots/all/user/${userId}`);
-   
+
     if(res.ok){
         const spots = await res.json();
         dispatch(load_userspots(spots))

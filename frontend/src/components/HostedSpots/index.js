@@ -10,6 +10,7 @@ import { getSpotsUser } from "../../store/spot"
 
 function HostedSpots(){
     const dispatch = useDispatch()
+    const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
     const {userId} = useParams();
     useEffect(() =>{
@@ -87,7 +88,7 @@ function HostedSpots(){
                                     }
 
                                     return (
-                                        <div key={spotId} className="spot-component-container" >
+                                        <div key={spotId} className="spot-component-container" onClick= {()=> history.push(`/profile/spot/${spotId}`)} >
                                             <div className='component-img'>
                                                 <img id="spot-component-image" src={ele.Photo.photoArray[0]} />
                                             </div>
@@ -109,7 +110,7 @@ function HostedSpots(){
                                                 </div>
                                                 <div className='component-price'>
                                                     <span className='dollarAmount'>
-                                                        {ele.costPerNight}
+                                                        ${ele.costPerNight}
                                                     </span>
                                                     <span>
                                                         / night

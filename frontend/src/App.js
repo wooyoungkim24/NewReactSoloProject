@@ -10,6 +10,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home"
 import HostedSpots from "./components/HostedSpots";
+import HostedSpotIndividual from "./components/HostedSpotIndividual";
+import EditPhotoArray from "./components/EditPhotoArray";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,13 @@ function App() {
 
           <Route exact path = "/hosted/spots/:userId">
             <HostedSpots />
+          </Route>
+
+          <Route exact path="/profile/spot/:id">
+            <HostedSpotIndividual />
+          </Route>
+          <Route exact path = "/profile/edit/photo/:type">
+            <EditPhotoArray/>
           </Route>
         </Switch>
       )}

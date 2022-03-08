@@ -1,0 +1,14 @@
+.top-profile-hosted-spot{
+    display: flex;
+    flex-direction: row;
+}
+.profile-user-photo img{
+    object-fit: cover;
+    width: 450px;
+    height:auto;
+}
+.hosted-spot-photo img{
+    object-fit: cover;
+    width: 700px;
+    height:auto;
+}
