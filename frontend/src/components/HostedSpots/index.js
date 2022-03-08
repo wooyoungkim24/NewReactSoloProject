@@ -3,57 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { getSpots } from "../../store/spot"
-import "./index.css"
-import moment from 'moment'
+import { getSpotsUser } from "../../store/spot"
 
-function SpotsLocation() {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const { searchPayload } = useParams();
 
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    const today = new Date();
-    const thisYear = today.getFullYear();
-    const thisMonth = today.getMonth();
-    const thisDate = today.getDate();
 
-    let searchSplit = searchPayload.split("_");
-    const city = searchSplit[1]
-    const guests = searchSplit[0];
 
-    const startSearch = searchSplit[2]
-    const startSearchMonth = months.indexOf(startSearch.split(" ")[0])
-    const startSearchDate = parseInt(startSearch.split(" ")[1])
-    const startSearchYear = parseInt(startSearch.split(" ")[2])
-
-    const endSearch = searchSplit[3]
-    const endSearchMonth = months.indexOf(endSearch.split(" ")[0])
-    const endSearchDate = parseInt(endSearch.split(" ")[1])
-    const endSearchYear = parseInt(endSearch.split(" ")[2])
-
-    let startSearchDateFull = new Date(startSearchYear, startSearchMonth,startSearchDate)
-    let endSearchDateFull = new Date(endSearchYear, endSearchMonth,endSearchDate)
-
+function HostedSpots(){
+    const dispatch = useDispatch()
     const [isLoaded, setIsLoaded] = useState(false)
+    const {userId} = useParams();
+    useEffect(() =>{
+        dispatch(getSpotsUser(userId)).then(() => setIsLoaded(true))
+    },[dispatch])
 
-
-
-
-
-    useEffect(() => {
-        dispatch(sessionActions.restoreUser())
-        dispatch(getSpots(city)).then(() => setIsLoaded(true))
-    }, [dispatch])
-
-
-
-
-    const allSpots = useSelector(state => {
-        return state.spots.spots
-    })
-
-    // console.log(moment(searchPayload.dateStart).format("MMMM D YYYY"))
+    const userSpots = useSelector(state =>{
+        return state.spots.userSpots
+    });
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
@@ -88,56 +53,15 @@ function SpotsLocation() {
             return result.join(" ")
         }
     }
-
-
-
     return (
-        <div className="spots-page">
-            <div className='navbar-spots'>
+        <div className="user-spots-page">
+            <div className='user-spots-list-container'>
 
-            </div>
-
-            <div className='spots-list-container'>
                 {isLoaded &&
                     <>
                         <ol>
-                            {allSpots.map((ele) => {
-                                const start = ele.bookedStart;
-                                const end = ele.bookedStart;
+                            {userSpots.map((ele) => {
 
-                                // let startYear;
-                                // let startMonth;
-                                // let startDate;
-                                // let endYear;
-                                // let endMonth;
-                                // let endDate;
-                                // if (start) {
-                                //     startYear = parseInt(start.split(" ")[2])
-                                //     startMonth = months.indexOf(start.split(" ")[0])
-                                //     startDate = parseInt(start.split(" ")[1])
-                                // }
-                                // if (end) {
-                                //     endYear = parseInt(end.split(" ")[2])
-                                //     endMonth = months.indexOf(end.split(" ")[0])
-                                //     endDate = parseInt(end.split(" ")[1])
-                                // }
-                                let beforeOk = false;
-                                let afterOk = false;
-                                if (start && end) {
-                                    if (startSearchDateFull < start && endSearchDateFull< start) {
-                                        beforeOk = true;
-                                    }
-                                    if (startSearchDateFull > end && endSearchDateFull>end) {
-                                        afterOk = true;
-                                    }
-                                }
-                                if (!start && !end) {
-                                    beforeOk = true;
-                                    afterOk = true;
-                                }
-
-
-                                if (beforeOk || afterOk) {
                                     const spotId = ele.id
                                     const privacyType = FilterTrue(ele.PrivacyType)[0]
 
@@ -161,9 +85,9 @@ function SpotsLocation() {
                                             amenitiesKeysTrue.push(curr)
                                         }
                                     }
-                                    const searchTerm = ele.id.toString() + "_" + startSearchDateFull + "_" + endSearchDateFull
+
                                     return (
-                                        <div key={spotId} className="spot-component-container" onClick={() => history.push(`/spot/${searchTerm}`)}>
+                                        <div key={spotId} className="spot-component-container" >
                                             <div className='component-img'>
                                                 <img id="spot-component-image" src={ele.Photo.photoArray[0]} />
                                             </div>
@@ -197,7 +121,7 @@ function SpotsLocation() {
                                 }
 
 
-                            })}
+                            )}
                         </ol>
                     </>
 
@@ -208,4 +132,5 @@ function SpotsLocation() {
     )
 }
 
-export default SpotsLocation;
+
+export default HostedSpots

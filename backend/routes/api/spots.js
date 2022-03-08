@@ -53,12 +53,15 @@ router.get(
 )
 //Find All by userId
 router.get(
-    "/all/:userId",
+    "/all/user/:userId",
     asyncHandler(async(req,res) => {
         const userId = req.params.userId;
         const spots = await Spot.findAll({where:{
-            userId:userId
-        }})
+            userId:userId,
+            },
+            include:[SpotType, Amenity,FloorPlan,Photo,PrivacyType, User]
+    })
+
         return res.json(
             spots
         )

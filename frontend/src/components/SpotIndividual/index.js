@@ -17,13 +17,13 @@ function SpotIndividual() {
     const id = idDates.split("_")[0]
     const start = idDates.split("_")[1];
     const end = idDates.split("_")[2];
-    let bookedStart = null;
-    let bookedEnd = null;
+    let checkedStart = null;
+    let checkedEnd = null;
     if (start) {
-        bookedStart = new Date(start)
+        checkedStart = new Date(start)
     }
     if (end) {
-        bookedEnd = new Date(end)
+        checkedEnd = new Date(end)
     }
 
 
@@ -36,7 +36,8 @@ function SpotIndividual() {
     const [spotType, setSpotType] = useState("")
     const [spotTypeSub, setSpotTypeSub] = useState("")
     const [showMore, setShowMore] = useState(false);
-
+    const [bookedStart, setBookedStart] = useState(new Date())
+    const [bookedEnd, setBookedEnd] = useState(new Date())
     const individualSpot = useSelector(state => {
         return state.spots.individualSpot
     })
@@ -125,6 +126,10 @@ function SpotIndividual() {
             else {
                 setPrivacyText(camelToWord(privacyType[0]))
             }
+
+
+            setBookedStart(individualSpot.spot.bookedStart)
+            setBookedEnd(individualSpot.spot.bookedEnd)
         }
         didMountRef.current += 1;
     }, [isLoaded])
@@ -542,6 +547,7 @@ function SpotIndividual() {
                             <div className='calendar'>
                                 <div className='calendar-start'>
                                     <Calendar
+                                        minDate={new Date()}
                                         value={dateStateStart}
                                         onChange={changeDateStart}
                                         tileDisabled={({ date, view }) =>
@@ -555,6 +561,7 @@ function SpotIndividual() {
                                 </div>
                                 <div className='calendar-end'>
                                     <Calendar
+                                        minDate={dateStateStart}
                                         value={dateStateEnd}
                                         onChange={changeDateEnd}
                                         tileDisabled={({ date, view }) =>

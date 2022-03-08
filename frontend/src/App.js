@@ -9,6 +9,7 @@ import SpotIndividual from "./components/SpotIndividual"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home"
+import HostedSpots from "./components/HostedSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ function App() {
           </Route>
           <Route exact path = "/spot/:idDates">
             <SpotIndividual />
+          </Route>
+
+          <Route exact path = "/hosted/spots/:userId">
+            <HostedSpots />
           </Route>
         </Switch>
       )}

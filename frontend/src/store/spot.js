@@ -3,12 +3,17 @@ import { csrfFetch } from './csrf';
 const LOAD_ALL = "allSpots/load"
 const LOAD_ONE = "oneSpot/load"
 const LOAD_PAYLOAD = "payload/load"
+const LOAD_USERSPOTS = "userSpots/load"
 
 const load_all = (all) => ({
     type: LOAD_ALL,
     all
 })
 
+const load_userspots = (all) => ({
+    type: LOAD_USERSPOTS,
+    all
+})
 const load_one = (one) => ({
     type: LOAD_ONE,
     one
@@ -37,6 +42,16 @@ export const getSpot = (id) => async dispatch =>{
     }
 }
 
+export const getSpotsUser = (userId) => async dispatch =>{
+    const res = await csrfFetch(`/api/spots/all/user/${userId}`);
+   
+    if(res.ok){
+        const spots = await res.json();
+        dispatch(load_userspots(spots))
+        return spots
+    }
+}
+
 export const loadSearch = (payload) => async dispatch=>{
     dispatch(load_payload(payload))
 
@@ -45,7 +60,8 @@ export const loadSearch = (payload) => async dispatch=>{
 const initialState = {
     spots: [],
     individualSpot:{},
-    searchInfo:{}
+    searchInfo:{},
+    userSpots:[]
 }
 
 const spotsReducer = (state = initialState, action) => {
@@ -63,6 +79,11 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD_PAYLOAD:
             return{
                 searchInfo:{...action.payload}
+            }
+        case LOAD_USERSPOTS:
+            return{
+                ...state,
+                userSpots:[...action.all]
             }
         default:
             return state;

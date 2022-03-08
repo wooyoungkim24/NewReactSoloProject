@@ -38,6 +38,8 @@ function ProfileButton({ user }) {
         <ul className="profile-dropdown">
           <li>{user.username}</li>
           <li>{user.email}</li>
+          <li id="trips-profile-button">Trips</li>
+          <li id='hosted-profile-button'>Hosted Spots</li>
           <li>
             <button onClick={logout}>Log Out</button>
           </li>
