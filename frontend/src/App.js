@@ -31,10 +31,10 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/spots/:city">
+          <Route exact path="/spots/:searchPayload">
             <SpotsLocation />
           </Route>
-          <Route exact path = "/spot/:id">
+          <Route exact path = "/spot/:idDates">
             <SpotIndividual />
           </Route>
         </Switch>

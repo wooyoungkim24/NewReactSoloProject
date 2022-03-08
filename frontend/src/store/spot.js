@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_ALL = "allSpots/load"
 const LOAD_ONE = "oneSpot/load"
+const LOAD_PAYLOAD = "payload/load"
 
 const load_all = (all) => ({
     type: LOAD_ALL,
@@ -11,6 +12,11 @@ const load_all = (all) => ({
 const load_one = (one) => ({
     type: LOAD_ONE,
     one
+})
+
+const load_payload = (payload)=>({
+    type: LOAD_PAYLOAD,
+    payload
 })
 
 export const getSpots = (city) => async dispatch => {
@@ -31,9 +37,15 @@ export const getSpot = (id) => async dispatch =>{
     }
 }
 
+export const loadSearch = (payload) => async dispatch=>{
+    dispatch(load_payload(payload))
+
+}
+
 const initialState = {
     spots: [],
-    individualSpot:{}
+    individualSpot:{},
+    searchInfo:{}
 }
 
 const spotsReducer = (state = initialState, action) => {
@@ -47,6 +59,10 @@ const spotsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 individualSpot: {...action.one}
+            }
+        case LOAD_PAYLOAD:
+            return{
+                searchInfo:{...action.payload}
             }
         default:
             return state;

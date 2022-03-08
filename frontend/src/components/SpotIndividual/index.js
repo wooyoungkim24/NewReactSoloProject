@@ -12,7 +12,22 @@ import moment from 'moment'
 
 function SpotIndividual() {
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const { idDates } = useParams();
+    console.log(idDates)
+    const id = idDates.split("_")[0]
+    const start = idDates.split("_")[1];
+    const end = idDates.split("_")[2];
+    let bookedStart = null;
+    let bookedEnd = null;
+    if (start) {
+        bookedStart = new Date(start)
+    }
+    if (end) {
+        bookedEnd = new Date(end)
+    }
+
+
+
     const history = useHistory();
     const [dateStateStart, setDateStateStart] = useState(new Date())
     const [dateStateEnd, setDateStateEnd] = useState(new Date())
@@ -31,6 +46,22 @@ function SpotIndividual() {
     const changeDateEnd = (e) => {
         setDateStateEnd(e)
     }
+
+    const getDisabledArray = function (start, end) {
+        let arr = [];
+        let dt = new Date(start)
+        while (dt <= end) {
+            arr.push(new Date(dt))
+            dt.setDate(dt.getDate() + 1)
+        }
+        return arr;
+    }
+
+    let disabledArray = [];
+    if (bookedStart && bookedEnd) {
+        disabledArray = getDisabledArray(bookedStart, bookedEnd)
+    }
+
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
@@ -510,12 +541,31 @@ function SpotIndividual() {
 
                             <div className='calendar'>
                                 <div className='calendar-start'>
-                                    <Calendar value={dateStateStart} onChange={changeDateStart} />
+                                    <Calendar
+                                        value={dateStateStart}
+                                        onChange={changeDateStart}
+                                        tileDisabled={({ date, view }) =>
+                                            (view === 'month') && // Block day tiles only
+                                            disabledArray.some(disabledDate =>
+                                                date.getFullYear() === disabledDate.getFullYear() &&
+                                                date.getMonth() === disabledDate.getMonth() &&
+                                                date.getDate() === disabledDate.getDate()
+                                            )}
+                                    />
                                 </div>
                                 <div className='calendar-end'>
-                                    <Calendar value={dateStateEnd} onChange={changeDateEnd} />
+                                    <Calendar
+                                        value={dateStateEnd}
+                                        onChange={changeDateEnd}
+                                        tileDisabled={({ date, view }) =>
+                                            (view === 'month') && // Block day tiles only
+                                            disabledArray.some(disabledDate =>
+                                                date.getFullYear() === disabledDate.getFullYear() &&
+                                                date.getMonth() === disabledDate.getMonth() &&
+                                                date.getDate() === disabledDate.getDate()
+                                            )}
+                                    />
                                 </div>
-
                             </div>
                         </div>
 
