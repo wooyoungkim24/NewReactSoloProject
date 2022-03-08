@@ -20,6 +20,10 @@ function HostedSpots(){
     const userSpots = useSelector(state =>{
         return state.spots.userSpots
     });
+    const photos = useSelector(state =>{
+        return state.spots.photoObjAll
+    })
+
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
@@ -54,15 +58,24 @@ function HostedSpots(){
             return result.join(" ")
         }
     }
+    // console.log(photos[13])
     return (
         <div className="user-spots-page">
             <div className='user-spots-list-container'>
 
                 {isLoaded &&
+
                     <>
                         <ol>
                             {userSpots.map((ele) => {
 
+                                    let ourPhotos = photos[ele.id]
+                                    console.log(ourPhotos)
+                                    let newOurPhotos=[];
+                                    for(let i = 0 ; i < ourPhotos.length; i++){
+                                        newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${ele.id}/`+ourPhotos[i])
+                                    }
+                                    // console.log(ele.id,newOurPhotos)
                                     const spotId = ele.id
                                     const privacyType = FilterTrue(ele.PrivacyType)[0]
 
@@ -90,7 +103,7 @@ function HostedSpots(){
                                     return (
                                         <div key={spotId} className="spot-component-container" onClick= {()=> history.push(`/profile/spot/${spotId}`)} >
                                             <div className='component-img'>
-                                                <img id="spot-component-image" src={ele.Photo.photoArray[0]} />
+                                                <img id="spot-component-image" src={newOurPhotos[4]} />
                                             </div>
                                             <div className='component-details'>
                                                 <div className="component-spot-type">

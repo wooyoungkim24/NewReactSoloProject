@@ -63,7 +63,8 @@ const initialState = {
     spots: [],
     individualSpot:{},
     searchInfo:{},
-    userSpots:[]
+    userSpots:[],
+    photoObjAll:{}
 }
 
 const spotsReducer = (state = initialState, action) => {
@@ -71,7 +72,8 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD_ALL:
             return {
                 ...state,
-                spots: [...action.all]
+                spots: [...action.all.spots],
+                photoObjAll: {...action.all.photoObj}
             }
         case LOAD_ONE:
             return {
@@ -85,7 +87,8 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD_USERSPOTS:
             return{
                 ...state,
-                userSpots:[...action.all]
+                userSpots: [...action.all.spots],
+                photoObjAll: {...action.all.photoObj}
             }
         default:
             return state;

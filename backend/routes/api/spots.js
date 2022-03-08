@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const { requireAuth } = require("../../utils/auth");
 const { User, Spot, SpotType, ApartmentSpotType, HouseSpotType, BnBSpotType, SecondarySpotType, FloorPlan, Photo, PrivacyType, Amenity } = require('../../db/models')
 const { ListBucketsCommand } = require("@aws-sdk/client-s3")
-const {ListObjectsCommand} = require("@aws-sdk/client-s3")
+const { ListObjectsCommand } = require("@aws-sdk/client-s3")
 const { s3Client } = require("../../utils/lib")
 const bucketParams = { Bucket: "citybrbphotos" };
 const router = express.Router();
@@ -15,6 +15,29 @@ router.get(
     asyncHandler(async (req, res) => {
 
         const city = req.params.city;
+        let photoObj = {};
+
+        try {
+            const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+            //   console.log("Success", Object.keys(data));
+            //   console.log("Success", data.Contents[0], data.Contents[1]);
+            for (let i = 0; i < data.Contents.length; i++) {
+                let currFile = data.Contents[i]
+                let fileKey = currFile.Key;
+                let fileKeyNumberPrep = fileKey.split("/")[0]
+                let num = parseInt(fileKeyNumberPrep.match(/\d+/g)[0]);
+
+                if (!photoObj[num]) {
+                    photoObj[num] = [fileKey.split("/")[1]]
+                } else {
+                    photoObj[num].push(fileKey.split("/")[1])
+                }
+            }
+            //   console.log(photoObj)
+            // return data; // For unit tests.
+        } catch (err) {
+            console.log("Error", err);
+        }
 
         const spots = await Spot.findAll({
             where: {
@@ -22,9 +45,11 @@ router.get(
             },
             include: [SpotType, Amenity, FloorPlan, Photo, PrivacyType, User]
         })
-        return res.json(
-            spots
-        )
+        console.log(spots)
+        return res.json({
+            spots,
+            photoObj
+        })
     }))
 //get subspottype for individual
 router.get(
@@ -69,6 +94,31 @@ router.get(
     requireAuth,
     asyncHandler(async (req, res) => {
         const userId = req.params.userId;
+        let photoObj = {};
+
+        try {
+            const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+            //   console.log("Success", Object.keys(data));
+            //   console.log("Success", data.Contents[0], data.Contents[1]);
+            for (let i = 0; i < data.Contents.length; i++) {
+                let currFile = data.Contents[i]
+                let fileKey = currFile.Key;
+                let fileKeyNumberPrep = fileKey.split("/")[0]
+                let num = parseInt(fileKeyNumberPrep.match(/\d+/g)[0]);
+
+                if (!photoObj[num]) {
+                    photoObj[num] = [fileKey.split("/")[1]]
+                } else {
+                    photoObj[num].push(fileKey.split("/")[1])
+                }
+            }
+            //   console.log(photoObj)
+            // return data; // For unit tests.
+        } catch (err) {
+            console.log("Error", err);
+        }
+
+
         const spots = await Spot.findAll({
             where: {
                 userId: userId,
@@ -76,9 +126,10 @@ router.get(
             include: [SpotType, Amenity, FloorPlan, Photo, PrivacyType, User]
         })
 
-        return res.json(
-            spots
-        )
+        return res.json({
+            spots,
+            photoObj
+        })
     }))
 
 
@@ -92,16 +143,30 @@ router.get(
         const spot = await Spot.findByPk(spotId,
             { include: [SpotType, Amenity, FloorPlan, Photo, PrivacyType, User] }
         );
-        const run = async () => {
-            try {
-              const data = await s3Client.send(new ListObjectsCommand(bucketParams));
-              console.log("Success", data);
-              return data; // For unit tests.
-            } catch (err) {
-              console.log("Error", err);
+        let photoObj = {};
+
+        try {
+            const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+            //   console.log("Success", Object.keys(data));
+            //   console.log("Success", data.Contents[0], data.Contents[1]);
+            for (let i = 0; i < data.Contents.length; i++) {
+                let currFile = data.Contents[i]
+                let fileKey = currFile.Key;
+                let fileKeyNumberPrep = fileKey.split("/")[0]
+                let num = parseInt(fileKeyNumberPrep.match(/\d+/g)[0]);
+
+                if (!photoObj[num]) {
+                    photoObj[num] = [fileKey.split("/")[1]]
+                } else {
+                    photoObj[num].push(fileKey.split("/")[1])
+                }
             }
-          };
-          run();
+            //   console.log(photoObj)
+            // return data; // For unit tests.
+        } catch (err) {
+            console.log("Error", err);
+        }
+
         let type = spot.SpotType;
         if (type.apartment) {
             subType = await ApartmentSpotType.findOne({
@@ -131,6 +196,7 @@ router.get(
         return res.json({
             spot: spot,
             subType: subType,
+            photoObj:photoObj
         })
     })
 )

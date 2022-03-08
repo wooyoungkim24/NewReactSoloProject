@@ -48,7 +48,9 @@ function SpotsLocation() {
 
 
 
-
+    const photos = useSelector(state =>{
+        return state.spots.photoObjAll
+    })
     const allSpots = useSelector(state => {
         return state.spots.spots
     })
@@ -104,6 +106,12 @@ function SpotsLocation() {
                             {allSpots.map((ele) => {
                                 const start = ele.bookedStart;
                                 const end = ele.bookedStart;
+                                let ourPhotos = photos[ele.id]
+
+                                let newOurPhotos = [];
+                                for(let i = 0 ; i < ourPhotos.length; i++){
+                                    newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${ele.id}/`+ourPhotos[i])
+                                }
 
                                 // let startYear;
                                 // let startMonth;
@@ -165,7 +173,7 @@ function SpotsLocation() {
                                     return (
                                         <div key={spotId} className="spot-component-container" onClick={() => history.push(`/spot/${searchTerm}`)}>
                                             <div className='component-img'>
-                                                <img id="spot-component-image" src={ele.Photo.photoArray[0]} />
+                                                <img id="spot-component-image" src={newOurPhotos[4]} />
                                             </div>
                                             <div className='component-details'>
                                                 <div className="component-spot-type">

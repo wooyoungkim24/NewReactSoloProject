@@ -41,6 +41,9 @@ function SpotIndividual() {
     const individualSpot = useSelector(state => {
         return state.spots.individualSpot
     })
+    const photos = useSelector(state =>{
+        return state.spots.individualSpot.photoObj
+    })
     const changeDateStart = (e) => {
         setDateStateStart(e)
     }
@@ -135,7 +138,24 @@ function SpotIndividual() {
     }, [isLoaded])
 
     let amenitiesShow;
+    let ourPhotos;
+    let newOurPhotos =[];
     if (isLoaded) {
+        ourPhotos = photos[id]
+
+        ourPhotos.map(ele =>{
+            let newString = `https://citybrbphotos.s3.amazonaws.com/`+`Spot${id}/`+ele;
+            // console.log(newString)
+            return newString
+        })
+        for(let i = 0 ; i < ourPhotos.length; i++){
+            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${id}/`+ourPhotos[i])
+        }
+        console.log('new',newOurPhotos)
+
+
+
+
         let pool = individualSpot.spot.Amenity.pool;
         let patio = individualSpot.spot.Amenity.patio;
         let firePit = individualSpot.spot.Amenity.firePit;
@@ -501,17 +521,17 @@ function SpotIndividual() {
 
                     <div className='individual-image-container'>
                         <div id='individual-image-big-container'>
-                            <img id="individual-image-big" src={individualSpot.spot.Photo.photoArray[0]} />
+                            <img id="individual-image-big" src={newOurPhotos[4]} />
                         </div>
 
                         <div id='individual-image-small-container'>
                             <div id='individual-image-small-top'>
-                                <img id="individual-image-small" src={individualSpot.spot.Photo.photoArray[1]} />
-                                <img id="individual-image-small" src={individualSpot.spot.Photo.photoArray[2]} />
+                                <img id="individual-image-small" src={newOurPhotos[1]} />
+                                <img id="individual-image-small" src={newOurPhotos[2]} />
                             </div>
                             <div id='individual-image-small-bottom'>
-                                <img id="individual-image-small" src={individualSpot.spot.Photo.photoArray[3]} />
-                                <img id="individual-image-small" src={individualSpot.spot.Photo.photoArray[4]} />
+                                <img id="individual-image-small" src={newOurPhotos[3]} />
+                                <img id="individual-image-small" src={newOurPhotos[4]} />
                             </div>
                         </div>
                     </div>

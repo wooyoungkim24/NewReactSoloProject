@@ -19,13 +19,26 @@ function HostedSpotIndividual() {
     const spotInfo = useSelector(state => {
         return state.spots.individualSpot.spot
     })
+    const photos = useSelector(state =>{
+        return state.spots.individualSpot.photoObj
+    })
     let spotId;
     let pushTermDelete;
     let pushTermAdd;
+    let ourPhotos;
+    let newOurPhotos =[];
     if(isLoaded){
         spotId = spotInfo.id
         pushTermAdd = "add" + "_" + spotId.toString();
         pushTermDelete = "delete" + "_" + spotId.toString();
+
+        ourPhotos = photos[id]
+
+
+        for(let i = 0 ; i < ourPhotos.length; i++){
+            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${id}/`+ourPhotos[i])
+        }
+        console.log('new',newOurPhotos)
 
     }
 
@@ -40,7 +53,8 @@ function HostedSpotIndividual() {
                         </div>
                         <div className='hosted-spot-photo-container'>
                             <div className='hosted-spot-photo'>
-                                <img src={spotInfo.Photo.photoArray[0]}></img>
+
+                                <img src={newOurPhotos[4]}></img>
 
                             </div>
                             <div className='hosted-spot-photo-nav'>

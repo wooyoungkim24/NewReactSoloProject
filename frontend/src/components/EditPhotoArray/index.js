@@ -5,19 +5,20 @@ import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
 import { getSpot } from "../../store/spot"
 
-import { ListObjectsCommand } from "@aws-sdk/client-s3";
-import { s3Client } from "../../libs/index"
-const bucketParams = { Bucket: "citybrbphotos" };
-const run = async () => {
-    try {
-      const data = await s3Client.send(new ListObjectsCommand(bucketParams));
-      console.log("Success", data);
-      return data; // For unit tests.
-    } catch (err) {
-      console.log("Error", err);
-    }
-  };
-  run();
+// import { ListObjectsCommand } from "@aws-sdk/client-s3";
+// import { s3Client } from "../../libs/index"
+// const bucketParams = { Bucket: "citybrbphotos" };
+// const run = async () => {
+//     try {
+//       const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+//       console.log("Success", data);
+//       return data; // For unit tests.
+//     } catch (err) {
+//       console.log("Error", err);
+//     }
+//   };
+//   run();
+
 function EditPhotoArray() {
     const dispatch = useDispatch();
     const { type } = useParams();
