@@ -265,28 +265,31 @@ router.post(
 router.put(
     "/spotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const spotTypeUpdate = SpotType.findOne({
+        const { id} = req.body
+        console.log(req.body)
+        const spotTypeUpdate = await SpotType.findOne({
             where: {
-                spotId: spotId
+                id
             }
         })
+
         const spotTypeUpdated = await spotTypeUpdate.update(req.body)
         return res.json(spotTypeUpdated)
+
     })
 )
 router.delete(
     "/spotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const spotTypeDelete = SpotType.findOne({
+        const { id } = req.body
+        const spotTypeDelete = await SpotType.findOne({
             where: {
-                spotId: spotId
+                id
             }
         })
         await SpotType.destroy({
             where: {
-                spotId: spotId
+                id
             }
         })
         return res.json(spotTypeDelete)
@@ -320,14 +323,14 @@ router.delete(
     "/apartmentSpotType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        const apartmentSpotTypeDelete = ApartmentSpotType.findOne({
+        const apartmentSpotTypeDelete = await ApartmentSpotType.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         await ApartmentSpotType.destroy({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         return res.json(apartmentSpotTypeDelete)
@@ -362,14 +365,15 @@ router.delete(
     "/houseSpotType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        const houseSpotTypeDelete = HouseSpotType.findOne({
+        console.log('thjis is the payload',req.body)
+        const houseSpotTypeDelete = await HouseSpotType.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         await HouseSpotType.destroy({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         return res.json(houseSpotTypeDelete)
@@ -380,14 +384,14 @@ router.delete(
 
 //SecondarySpotType stuff
 router.post(
-    "/secondarySpotType",
+    "/secondaryUnitSpotType",
     asyncHandler(async (req, res) => {
         const newSecondarySpotType = await SecondarySpotType.create(req.body);
         return res.json(newSecondarySpotType)
     })
 )
 router.put(
-    "/secondarySpotType",
+    "/secondaryUnitSpotType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
         const secondarySpotTypeUpdate = SecondarySpotType.findOne({
@@ -400,17 +404,17 @@ router.put(
     })
 )
 router.delete(
-    "/secondarySpotType",
+    "/secondaryUnitSpotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const secondarySpotTypeDelete = SecondarySpotType.findOne({
+        const {spotId} = req.body
+        const secondarySpotTypeDelete = await SecondarySpotType.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         await SecondarySpotType.destroy({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         return res.json(secondarySpotTypeDelete)
@@ -444,14 +448,14 @@ router.delete(
     "/bnbSpotType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        const bnbSpotTypeDelete = BnBSpotType.findOne({
+        const bnbSpotTypeDelete = await BnBSpotType.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         await BnBSpotType.destroy({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         return res.json(bnbSpotTypeDelete)
@@ -600,12 +604,15 @@ router.post(
 router.put(
     "/amenity",
     asyncHandler(async (req, res) => {
+
         const { spotId } = req.body
-        const amenityUpdate = Amenity.findOne({
+        const amenityUpdate = await Amenity.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
+        delete req.body.spotId
+        console.log(req.body)
         const amenityUpdated = await amenityUpdate.update(req.body)
         return res.json(amenityUpdated)
     })

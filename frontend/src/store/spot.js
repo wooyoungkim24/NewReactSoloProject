@@ -19,7 +19,7 @@ const load_one = (one) => ({
     one
 })
 
-const load_payload = (payload)=>({
+const load_payload = (payload) => ({
     type: LOAD_PAYLOAD,
     payload
 })
@@ -32,91 +32,121 @@ export const getSpots = (city) => async dispatch => {
         return spots;
     }
 }
-export const putPhoto = (payload) => async dispatch =>{
+export const putPhoto = (payload) => async dispatch => {
 
     console.log("this is the test", payload.getAll("File"))
     await csrfFetch(`/api/spots/photo`, {
         method: "POST",
-        headers: {"Content-Type": "multipart/form-data"},
+        headers: { "Content-Type": "multipart/form-data" },
         body: payload
     })
 
 }
 
-export const getSpot = (id) => async dispatch =>{
+export const getSpot = (id) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${id}`);
-    if(res.ok){
+    if (res.ok) {
         const spot = await res.json();
         dispatch(load_one(spot));
         return spot
     }
 }
 
-export const getSpotsUser = (userId) => async dispatch =>{
+export const getSpotsUser = (userId) => async dispatch => {
     const res = await csrfFetch(`/api/spots/all/user/${userId}`);
 
-    if(res.ok){
+    if (res.ok) {
         const spots = await res.json();
         dispatch(load_userspots(spots))
         return spots
     }
 }
 
-export const editSpotStuff = (payload) => async dispatch =>{
-    const {type} = payload;
-    if(type === 'title'){
-        const {title, spotId} = payload
+export const editAmenity = (payload)=>async dispatch =>{
+    console.log(payload)
+    const res1 = await csrfFetch(`/api/spots/amenity`, {
+        method: "PUT",
+        body: JSON.stringify(payload)
+    })
+}
+
+export const editSpotType = (payload) => async dispatch => {
+
+    const res1 = await csrfFetch(`/api/spots/spotType`, {
+        method: "PUT",
+        body: JSON.stringify(payload)
+    })
+}
+export const editSpotSub = (payload) => async dispatch => {
+    const{oldSpotType, newSpotType} = payload
+
+    delete payload.oldSpotType
+    delete payload.newSpotType
+    console.log("frotn end test", payload)
+    const res1 = await csrfFetch(`/api/spots/${oldSpotType}SpotType`, {
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    const res2 = await csrfFetch(`/api/spots/${newSpotType}SpotType`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+}
+export const editSpotStuff = (payload) => async dispatch => {
+    const { type } = payload;
+    if (type === 'title') {
+        const { title, spotId } = payload
         const res = await csrfFetch(`/api/spots/`, {
             method: "PUT",
             body: JSON.stringify({
                 title,
-                id:spotId
+                id: spotId
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const titleChanged = await res.json();
             return titleChanged;
         }
     }
-    if(type === 'description'){
-        const {description, spotId} = payload
+    if (type === 'description') {
+        const { description, spotId } = payload
         const res = await csrfFetch(`/api/spots/`, {
             method: "PUT",
             body: JSON.stringify({
                 description,
-                id:spotId
+                // id: spotId
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const descriptionChanged = await res.json();
             return descriptionChanged;
         }
     }
-    if(type === 'cost'){
-        const {costPerNight, spotId} = payload
+    if (type === 'cost') {
+        const { costPerNight, spotId } = payload
         const res = await csrfFetch(`/api/spots/`, {
             method: "PUT",
             body: JSON.stringify({
                 costPerNight,
-                id:spotId
+                id: spotId
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const costChanged = await res.json();
             return costChanged;
         }
     }
-    if(type === 'address'){
-        const {address,city, spotId} = payload
+    if (type === 'address') {
+        const { address, city, spotId } = payload
         const res = await csrfFetch(`/api/spots/`, {
             method: "PUT",
             body: JSON.stringify({
                 address,
                 city,
-                id:spotId
+                id: spotId
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const costChanged = await res.json();
             return costChanged;
         }
@@ -125,16 +155,16 @@ export const editSpotStuff = (payload) => async dispatch =>{
 
 }
 
-export const loadSearch = (payload) => async dispatch=>{
+export const loadSearch = (payload) => async dispatch => {
     dispatch(load_payload(payload))
 }
 
 const initialState = {
     spots: [],
-    individualSpot:{},
-    searchInfo:{},
-    userSpots:[],
-    photoObjAll:{}
+    individualSpot: {},
+    searchInfo: {},
+    userSpots: [],
+    photoObjAll: {}
 }
 
 const spotsReducer = (state = initialState, action) => {
@@ -143,22 +173,22 @@ const spotsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 spots: [...action.all.spots],
-                photoObjAll: {...action.all.photoObj}
+                photoObjAll: { ...action.all.photoObj }
             }
         case LOAD_ONE:
             return {
                 ...state,
-                individualSpot: {...action.one}
+                individualSpot: { ...action.one }
             }
         case LOAD_PAYLOAD:
-            return{
-                searchInfo:{...action.payload}
+            return {
+                searchInfo: { ...action.payload }
             }
         case LOAD_USERSPOTS:
-            return{
+            return {
                 ...state,
                 userSpots: [...action.all.spots],
-                photoObjAll: {...action.all.photoObj}
+                photoObjAll: { ...action.all.photoObj }
             }
         default:
             return state;

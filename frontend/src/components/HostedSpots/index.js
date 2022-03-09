@@ -31,18 +31,29 @@ function HostedSpots(){
     }
     function camelToWord(string) {
         let upperLetter = "";
+        let upperLetter2 = "";
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                upperLetter = curr
+                if(upperLetter === ""){
+                    upperLetter = curr
+                }else{
+                    upperLetter2 = curr
+                }
             }
         }
         let split = string.split(/[A-Z]/)
-        let replacedLetter = upperLetter + split[1]
-        split[1] = replacedLetter
+        let replacedLetter1 = upperLetter + split[1]
+        split[1] = replacedLetter1
+        let replacedLetter2 = upperLetter2 + split[2]
+        split[2] = replacedLetter2
+        if (split[2] === 'undefined') {
+            split.pop();
+        }
         if (split[1] === 'undefined') {
             split.pop();
         }
+
         let first = split[0];
         let splitFirst = first.split("");
         splitFirst[0] = splitFirst[0].toUpperCase();

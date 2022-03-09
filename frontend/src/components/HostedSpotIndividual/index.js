@@ -19,7 +19,7 @@ function HostedSpotIndividual() {
     const spotInfo = useSelector(state => {
         return state.spots.individualSpot.spot
     })
-    const spotInfoSub = useSelector(state =>{
+    const spotInfoSub = useSelector(state => {
         return state.spots.individualSpot.subType
     })
     const photos = useSelector(state => {
@@ -33,18 +33,29 @@ function HostedSpotIndividual() {
     }
     function camelToWord(string) {
         let upperLetter = "";
+        let upperLetter2 = "";
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                upperLetter = curr
+                if(upperLetter === ""){
+                    upperLetter = curr
+                }else{
+                    upperLetter2 = curr
+                }
             }
         }
         let split = string.split(/[A-Z]/)
-        let replacedLetter = upperLetter + split[1]
-        split[1] = replacedLetter
+        let replacedLetter1 = upperLetter + split[1]
+        split[1] = replacedLetter1
+        let replacedLetter2 = upperLetter2 + split[2]
+        split[2] = replacedLetter2
+        if (split[2] === 'undefined') {
+            split.pop();
+        }
         if (split[1] === 'undefined') {
             split.pop();
         }
+
         let first = split[0];
         let splitFirst = first.split("");
         splitFirst[0] = splitFirst[0].toUpperCase();
@@ -52,16 +63,20 @@ function HostedSpotIndividual() {
         split[0] = newSplitFirst;
         return split.join(" ")
     }
-    let spotId;
 
+
+
+    let spotId;
     let pushTermPhoto;
     let pushTermTitle;
     let pushTermDesc;
     let pushTermCost;
-    let pushTermSpotType
+    let pushTermSpotType;
+    let pushTermAmenities;
     let ourPhotos;
     let pushTermWhere;
     let newOurPhotos = [];
+    let amenityKey;
     if (isLoaded) {
         spotId = spotInfo.id
         pushTermPhoto = "photo" + "_" + spotId.toString();
@@ -70,13 +85,22 @@ function HostedSpotIndividual() {
         pushTermCost = "cost" + "_" + spotId.toString();
         pushTermWhere = "where" + "_" + spotId.toString();
         pushTermSpotType = "spotType" + "_" + spotId.toString();
+        pushTermAmenities = "amenity" + "_" + spotId.toString();
         ourPhotos = photos[id]
 
         for (let i = 0; i < ourPhotos.length; i++) {
             newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
-        console.log('new', newOurPhotos)
-
+        amenityKey = Object.keys(spotInfo.Amenity)
+        const idIndex = amenityKey.indexOf("id")
+        amenityKey.splice(idIndex, 1)
+        const spotIdIndex = amenityKey.indexOf("spotId")
+        amenityKey.splice(spotIdIndex, 1)
+        const createdIndex = amenityKey.indexOf("createdAt")
+        amenityKey.splice(createdIndex, 1)
+        const updatedIndex = amenityKey.indexOf("updatedAt")
+        amenityKey.splice(updatedIndex, 1)
+        console.log(amenityKey)
     }
 
     return (
@@ -113,8 +137,8 @@ function HostedSpotIndividual() {
                                 </span>
                                 <span>
                                     <button
-                                    type='button'
-                                    onClick={() => history.push(`/profile/edit/${pushTermTitle}`)}
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermTitle}`)}
                                     >Edit</button>
                                 </span>
                             </div>
@@ -131,8 +155,8 @@ function HostedSpotIndividual() {
                                 </span>
                                 <span>
                                     <button
-                                    type='button'
-                                    onClick={() => history.push(`/profile/edit/${pushTermDesc}`)}
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermDesc}`)}
                                     >Edit</button>
                                 </span>
                             </div>
@@ -149,8 +173,8 @@ function HostedSpotIndividual() {
                                 </span>
                                 <span>
                                     <button
-                                    type='button'
-                                    onClick={() => history.push(`/profile/edit/${pushTermCost}`)}
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermCost}`)}
                                     >Edit</button>
                                 </span>
                             </div>
@@ -167,8 +191,8 @@ function HostedSpotIndividual() {
                                 </span>
                                 <span>
                                     <button
-                                    type='button'
-                                    onClick={() => history.push(`/profile/edit/${pushTermWhere}`)}
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermWhere}`)}
                                     >Edit</button>
                                 </span>
                             </div>
@@ -186,14 +210,50 @@ function HostedSpotIndividual() {
                                 </span>
                                 <span>
                                     <button
-                                    type='button'
-                                    onClick={() => history.push(`/profile/edit/${pushTermSpotType}`)}
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermSpotType}`)}
                                     >Edit</button>
                                 </span>
                             </div>
                             <div className='edit-spotType-bottom'>
-                                {console.log(spotInfo.spotType)}
-                                {/* <p>{camelToWord(FilterTrue(spotInfo.spotType))}/ {camelToWord(FilterTrue(spotInfoSub))}</p> */}
+                                {/* <p>
+                                {camelToWord(FilterTrue(spotInfo.SpotType)[0])}
+                                </p> */}
+                                {console.log(spotInfoSub)}
+                                <p>{camelToWord(FilterTrue(spotInfo.SpotType)[0])}/ {camelToWord(FilterTrue(spotInfoSub)[0])}</p>
+                            </div>
+
+                        </div>
+                        <div className='edit-amenities-div'>
+                            <div className='edit-amenities-top'>
+                                <span>
+                                    <h2>Amenities: </h2>
+                                </span>
+                                <span>
+                                    <button
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermAmenities}`)}
+                                    >Edit</button>
+                                </span>
+                            </div>
+                            <div className='edit-amenities-bottom'>
+                                {amenityKey.map(ele => {
+
+                                    return (
+                                        <div key={ele}>
+                                            {spotInfo.Amenity[ele] &&
+                                                <>
+                                                    {camelToWord(ele)} <i className="fas fa-thumbs-up fa-2x"></i>
+                                                </>
+                                            }
+                                            {spotInfo.Amenity[ele] ===false &&
+                                                <>
+                                                    {camelToWord(ele)} <i className="fas fa-thumbs-down fa-2x"></i>
+                                                </>
+                                            }
+                                        </div>
+                                    )
+                                })}
                             </div>
 
                         </div>
