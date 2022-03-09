@@ -29,8 +29,7 @@ function HostedSpotIndividual() {
     let newOurPhotos =[];
     if(isLoaded){
         spotId = spotInfo.id
-        pushTermAdd = "add" + "_" + spotId.toString();
-        pushTermDelete = "delete" + "_" + spotId.toString();
+        pushTermAdd = "photo" + "_" + spotId.toString();
 
         ourPhotos = photos[id]
 
@@ -60,13 +59,8 @@ function HostedSpotIndividual() {
                             <div className='hosted-spot-photo-nav'>
                                 <button
                                     type="button"
-                                    onClick={() =>history.push(`/profile/edit/photo/${pushTermAdd}`)}
-                                    >Add
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() =>history.push(`/profile/edit/photo/${pushTermDelete}`)}
-                                    >Delete
+                                    onClick={() =>history.push(`/profile/edit/${pushTermAdd}`)}
+                                    >Edit
                                 </button>
 
                             </div>

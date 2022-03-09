@@ -48,7 +48,7 @@ function App() {
           <Route exact path="/profile/spot/:id">
             <HostedSpotIndividual />
           </Route>
-          <Route exact path = "/profile/edit/photo/:type">
+          <Route exact path = "/profile/edit/:type">
             <EditPhotoArray/>
           </Route>
         </Switch>
