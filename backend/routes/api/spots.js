@@ -1,5 +1,6 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler');
+const multer  = require('multer')
 const { requireAuth } = require("../../utils/auth");
 const { User, Spot, SpotType, ApartmentSpotType, HouseSpotType, BnBSpotType, SecondarySpotType, FloorPlan, Photo, PrivacyType, Amenity } = require('../../db/models')
 const { ListBucketsCommand } = require("@aws-sdk/client-s3")
@@ -8,6 +9,13 @@ const { PutObjectCommand } =require( "@aws-sdk/client-s3")
 const { s3Client } = require("../../utils/lib")
 const bucketParams = { Bucket: "citybrbphotos" };
 const router = express.Router();
+const formidable = require('express-formidable');
+const fs = require( "fs");
+const path = require('path')
+
+
+const upload = multer();
+// router.use(formidable())
 
 //Read Spots - General
 //Find All by city
@@ -499,30 +507,33 @@ router.put(
     })
 )
 router.post(
-    "/photo",
+    "/photoPost/:key",
+    upload.single("File"),
     asyncHandler(async (req, res) => {
         // const {key, formData} = req.body
-        console.log('this is the body',req.headers)
-        // const bucketParams = {
-        //     Bucket: "citybrbphotos",
-        //     // Specify the name of the new object. For example, 'index.html'.
-        //     // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
-        //     Key: key,
-        //     // Content of the new object.
-        //     Body: selectedFile,
-        //   };
-        // try {
-        //     const data = await s3Client.send(new PutObjectCommand(bucketParams));
-        //     // return data; // For unit tests.
-        //     console.log(
-        //       "Successfully uploaded object: " +
-        //         bucketParams.Bucket +
-        //         "/" +
-        //         bucketParams.Key
-        //     );
-        //   } catch (err) {
-        //     console.log("Error", err);
-        //   }
+        // console.log(req.params)
+        const key = req.params.key
+        const newKey = key.split("_").join("/")
+        const bucketParams = {
+            Bucket: "citybrbphotos",
+            // Specify the name of the new object. For example, 'index.html'.
+            // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
+            Key: newKey,
+            // Content of the new object.
+            Body: req.files.File.data
+          };
+        try {
+            const data = await s3Client.send(new PutObjectCommand(bucketParams));
+            // return data; // For unit tests.
+            console.log(
+              "Successfully uploaded object: " +
+                bucketParams.Bucket +
+                "/" +
+                bucketParams.Key
+            );
+          } catch (err) {
+            console.log("Error", err);
+          }
         return {};
     })
 )

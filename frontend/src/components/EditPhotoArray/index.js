@@ -4,8 +4,8 @@ import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
 import { getSpot, putPhoto } from "../../store/spot"
-
-import fs from 'fs';
+import { csrfFetch } from '../../store/csrf'
+import Cookies from 'js-cookie';
 
 
 function EditPhotoArray() {
@@ -38,7 +38,7 @@ function EditPhotoArray() {
         //     console.log(reader.result);
         // }
         const selectedFile = document.getElementById('edit-photo-input').files[0];
-        formData.append('File', selectedFile);
+        // formData.append('File', selectedFile);
 
         // fs.readFile(selectedFile, (err, data) => {
         //     if (err) throw err;
@@ -46,13 +46,19 @@ function EditPhotoArray() {
         // reader.readAsBinaryString(selectedFile)
 
         console.log(selectedFile)
-        const key = `Spot${id}/${selectedFile.name}`
-        formData.append('Key', key);
-        // console.log('test',formData.getAll("Key"))
-        const payload = formData
+        const key = `Spot${id}_${selectedFile.name}`
 
+        // console.log('test',formData.getAll("Key"))
+        // let formArray = [key, selectedFile]
+        formData.append('File', selectedFile);
+        // formData.append('Files', formArray);
         console.log('form',formData)
-        dispatch(putPhoto(payload))
+        // dispatch(putPhoto(payload))
+        await fetch(`/api/spots/photoPost/${key}`, {
+            method: "POST",
+            headers: {"XSRF-TOKEN": Cookies.get('XSRF-TOKEN')},
+            body: formData
+    })
         // console.log(selectedFile, binaryStream)
     }
 
