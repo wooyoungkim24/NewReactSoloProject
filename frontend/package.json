@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "fs": "^0.0.1-security",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -18,6 +19,15 @@
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1"
   },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false,
+    "net": false,
+    "stream": false,
+    "tls": false
+    },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

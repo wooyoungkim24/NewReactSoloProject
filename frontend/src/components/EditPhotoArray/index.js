@@ -5,6 +5,8 @@ import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
 import { getSpot, putPhoto } from "../../store/spot"
 
+import fs from 'fs';
+
 
 function EditPhotoArray() {
     const dispatch = useDispatch();
@@ -28,20 +30,28 @@ function EditPhotoArray() {
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        const formData = new FormData();
+
+
         // let reader = new FileReader()
         // reader.onload = function () {
         //     console.log(reader.result);
         // }
         const selectedFile = document.getElementById('edit-photo-input').files[0];
+        formData.append('File', selectedFile);
+
+        // fs.readFile(selectedFile, (err, data) => {
+        //     if (err) throw err;
+        // });
         // reader.readAsBinaryString(selectedFile)
 
         console.log(selectedFile)
         const key = `Spot${id}/${selectedFile.name}`
-        const payload = {
-            key,
-            selectedFile
-        }
-        console.log(key)
+        formData.append('Key', key);
+        // console.log('test',formData.getAll("Key"))
+        const payload = formData
+
+        console.log('form',formData)
         dispatch(putPhoto(payload))
         // console.log(selectedFile, binaryStream)
     }

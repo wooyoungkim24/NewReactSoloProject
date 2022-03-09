@@ -33,14 +33,12 @@ export const getSpots = (city) => async dispatch => {
     }
 }
 export const putPhoto = (payload) => async dispatch =>{
-    const {key, selectedFile} = payload
-    console.log("this is the test",selectedFile)
+
+    console.log("this is the test", payload.getAll("File"))
     await csrfFetch(`/api/spots/photo`, {
-        method: "PUT",
-        body: JSON.stringify({
-            key,
-            selectedFile:selectedFile
-        })
+        method: "POST",
+        headers: {"Content-Type": "multipart/form-data"},
+        body: payload
     })
 
 }

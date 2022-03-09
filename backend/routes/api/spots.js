@@ -491,39 +491,39 @@ router.delete(
 
 
 //Photos stuff
-router.post(
+router.put(
     "/photo",
     asyncHandler(async (req, res) => {
         const newPhotos = await Photo.create(req.body);
         return res.json(newPhotos)
     })
 )
-router.put(
+router.post(
     "/photo",
     asyncHandler(async (req, res) => {
-        const {key, selectedFile} = req.body
-        console.log(req.body)
-        const bucketParams = {
-            Bucket: "citybrbphotos",
-            // Specify the name of the new object. For example, 'index.html'.
-            // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
-            Key: key,
-            // Content of the new object.
-            Body: selectedFile,
-          };
-        try {
-            const data = await s3Client.send(new PutObjectCommand(bucketParams));
-            // return data; // For unit tests.
-            console.log(
-              "Successfully uploaded object: " +
-                bucketParams.Bucket +
-                "/" +
-                bucketParams.Key
-            );
-          } catch (err) {
-            console.log("Error", err);
-          }
-        return res.json(key)
+        // const {key, formData} = req.body
+        console.log('this is the body',req.headers)
+        // const bucketParams = {
+        //     Bucket: "citybrbphotos",
+        //     // Specify the name of the new object. For example, 'index.html'.
+        //     // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
+        //     Key: key,
+        //     // Content of the new object.
+        //     Body: selectedFile,
+        //   };
+        // try {
+        //     const data = await s3Client.send(new PutObjectCommand(bucketParams));
+        //     // return data; // For unit tests.
+        //     console.log(
+        //       "Successfully uploaded object: " +
+        //         bucketParams.Bucket +
+        //         "/" +
+        //         bucketParams.Key
+        //     );
+        //   } catch (err) {
+        //     console.log("Error", err);
+        //   }
+        return {};
     })
 )
 router.delete(
