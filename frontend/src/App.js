@@ -11,7 +11,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home"
 import HostedSpots from "./components/HostedSpots";
 import HostedSpotIndividual from "./components/HostedSpotIndividual";
-import EditPhotoArray from "./components/EditPhotoArray";
+import EditFormPage from "./components/EditFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ function App() {
             <HostedSpotIndividual />
           </Route>
           <Route exact path = "/profile/edit/:type">
-            <EditPhotoArray/>
+            <EditFormPage/>
           </Route>
         </Switch>
       )}

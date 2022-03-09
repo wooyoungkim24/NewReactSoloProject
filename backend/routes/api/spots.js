@@ -1,16 +1,17 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler');
-const multer  = require('multer')
+const multer = require('multer')
 const { requireAuth } = require("../../utils/auth");
 const { User, Spot, SpotType, ApartmentSpotType, HouseSpotType, BnBSpotType, SecondarySpotType, FloorPlan, Photo, PrivacyType, Amenity } = require('../../db/models')
 const { ListBucketsCommand } = require("@aws-sdk/client-s3")
 const { ListObjectsCommand } = require("@aws-sdk/client-s3")
-const { PutObjectCommand } =require( "@aws-sdk/client-s3")
+const { PutObjectCommand } = require("@aws-sdk/client-s3")
+const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { s3Client } = require("../../utils/lib")
 const bucketParams = { Bucket: "citybrbphotos" };
 const router = express.Router();
 const formidable = require('express-formidable');
-const fs = require( "fs");
+const fs = require("fs");
 const path = require('path')
 
 
@@ -205,7 +206,7 @@ router.get(
         return res.json({
             spot: spot,
             subType: subType,
-            photoObj:photoObj
+            photoObj: photoObj
         })
     })
 )
@@ -223,10 +224,10 @@ router.post(
 router.put(
     "/",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const spotUpdate = Spot.findOne({
+        const { id } = req.body
+        const spotUpdate = await Spot.findOne({
             where: {
-                id: spotId
+                id
             }
         })
         const spotUpdated = await spotUpdate.update(req.body)
@@ -499,13 +500,7 @@ router.delete(
 
 
 //Photos stuff
-router.put(
-    "/photo",
-    asyncHandler(async (req, res) => {
-        const newPhotos = await Photo.create(req.body);
-        return res.json(newPhotos)
-    })
-)
+
 router.post(
     "/photoPost/:key",
     upload.single("File"),
@@ -513,47 +508,44 @@ router.post(
         // const {key, formData} = req.body
         // console.log(req.params)
         const key = req.params.key
-        const newKey = key.split("_").join("/")
-        const bucketParams = {
+        const keyPrep = key.split("_")
+        let spotId = keyPrep[0]
+        const oldKeyPrep = keyPrep.pop();
+        const oldKey = `${spotId}/${oldKeyPrep}`
+        const newKey = keyPrep.join("/")
+
+        const bucketParamsAdd = {
             Bucket: "citybrbphotos",
             // Specify the name of the new object. For example, 'index.html'.
             // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
             Key: newKey,
             // Content of the new object.
             Body: req.files.File.data
-          };
+        };
         try {
-            const data = await s3Client.send(new PutObjectCommand(bucketParams));
+            const data = await s3Client.send(new PutObjectCommand(bucketParamsAdd));
             // return data; // For unit tests.
             console.log(
-              "Successfully uploaded object: " +
-                bucketParams.Bucket +
+                "Successfully uploaded object: " +
+                bucketParamsAdd.Bucket +
                 "/" +
-                bucketParams.Key
+                bucketParamsAdd.Key
             );
-          } catch (err) {
+        } catch (err) {
             console.log("Error", err);
-          }
+        }
+
+        const bucketParamsDelete = { Bucket: "citybrbphotos", Key: oldKey };
+        try {
+            const data = await s3Client.send(new DeleteObjectCommand(bucketParamsDelete));
+            console.log("Success. Object deleted.", data);
+        } catch (err) {
+            console.log("Error", err);
+        }
         return {};
     })
 )
-router.delete(
-    "/photo",
-    asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const photoDelete = Photo.findOne({
-            where: {
-                spotId: spotId
-            }
-        })
-        await Photo.destroy({
-            where: {
-                spotId: spotId
-            }
-        })
-        return res.json(photoDelete)
-    })
-)
+
 
 
 //FloorPlan stuff

@@ -62,9 +62,71 @@ export const getSpotsUser = (userId) => async dispatch =>{
     }
 }
 
+export const editSpotStuff = (payload) => async dispatch =>{
+    const {type} = payload;
+    if(type === 'title'){
+        const {title, spotId} = payload
+        const res = await csrfFetch(`/api/spots/`, {
+            method: "PUT",
+            body: JSON.stringify({
+                title,
+                id:spotId
+            })
+        })
+        if(res.ok){
+            const titleChanged = await res.json();
+            return titleChanged;
+        }
+    }
+    if(type === 'description'){
+        const {description, spotId} = payload
+        const res = await csrfFetch(`/api/spots/`, {
+            method: "PUT",
+            body: JSON.stringify({
+                description,
+                id:spotId
+            })
+        })
+        if(res.ok){
+            const descriptionChanged = await res.json();
+            return descriptionChanged;
+        }
+    }
+    if(type === 'cost'){
+        const {costPerNight, spotId} = payload
+        const res = await csrfFetch(`/api/spots/`, {
+            method: "PUT",
+            body: JSON.stringify({
+                costPerNight,
+                id:spotId
+            })
+        })
+        if(res.ok){
+            const costChanged = await res.json();
+            return costChanged;
+        }
+    }
+    if(type === 'address'){
+        const {address,city, spotId} = payload
+        const res = await csrfFetch(`/api/spots/`, {
+            method: "PUT",
+            body: JSON.stringify({
+                address,
+                city,
+                id:spotId
+            })
+        })
+        if(res.ok){
+            const costChanged = await res.json();
+            return costChanged;
+        }
+    }
+
+
+}
+
 export const loadSearch = (payload) => async dispatch=>{
     dispatch(load_payload(payload))
-
 }
 
 const initialState = {
