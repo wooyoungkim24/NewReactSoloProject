@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import Search from "../Search"
+import "./index.css"
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -24,18 +25,20 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='navbar'>
-      <div className='navbar-top'>
-        <ul>
-          <li>
-            <NavLink exact to="/">Home</NavLink>
-            {isLoaded && sessionLinks}
-          </li>
-        </ul>
-      </div>
 
-      <div className='navbar-bottom'>
+      <div className='navbar-home'>
+        <NavLink exact to="/"><i className="fab fa-airbnb fa-4x"></i></NavLink>
+      </div>
+      <div className='navbar-search'>
         <Search />
       </div>
+      <div className='navbar-links'>
+        {isLoaded && sessionLinks}
+      </div>
+
+      {/* <div className='navbar-bottom'>
+
+      </div> */}
     </div>
 
 

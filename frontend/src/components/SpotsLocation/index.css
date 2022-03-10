@@ -1,6 +1,7 @@
 #spot-component-image{
     width:300px;
     height:200px;
+    border-radius: 20px;
 }
 
 .component-img{
@@ -8,7 +9,56 @@
 }
 
 .spot-component-container{
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+    border: black 1px solid;
+    border-radius: 20px;
+    width: 800px;
+    height: 200px;
+    color: rgb(113,113,113);
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+}
+.component-spot-type{
+    font-size: 15px;
+}
+
+.component-spot-title p{
+    font-size: 20px;
+    margin:0px;
+    font-weight: 550;
+    width: 450px;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.divider{
+    margin-top:10px;
+    height:0px;
+    width: 30px;
+    border: rgb(113,113,113, .4) .2px solid;
+}
+.component-floor-plan p{
+    font-size: 15px;
+    margin:0px;
+    margin-top:10px;
+}
+.component-amenities p{
+    margin-top:10px;
+    font-size: 15px;
+}
+.component-price{
+    display: flex;
+    justify-content: end;
+    color:black;
+    font-size: 20px;
+    font-weight: 400;
+}
+.dollarAmount{
+    font-weight:400;
+    color:black;
+    font-size: 20px;
+    font-weight: 600;
 }

@@ -1,14 +1,76 @@
-.search-bar-start{
-    width: 200px;
-    height: 100px;
-    border: 1px solid black;
-}
-.search-bar-end{
-    width: 200px;
-    height: 100px;
-    border: 1px solid black;
-}
+
 .home-search-bar > form{
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
+.home-search-bar{
+    display: flex;
+    align-items: center;
+    border: rgb(221,221,221) 2px solid;
+    border-radius: 50px;
+    height: 70px;
+    width: 825px;
+
+}
+#cityname-search{
+    border: 0;
+    border-right:rgb(221,221,221) 2px solid;
+    outline:none;
+    height: 40px;
+    margin-left: 20px;
+}
+.search-bar-start, .search-bar-end{
+    display:flex;
+    cursor: pointer;
+    align-items: center;
+    height: 40px;
+    width: 150px;
+    border: 0;
+    border-right:rgb(221,221,221) 2px solid;
+}
+#start-text, #end-text{
+    margin-left: 10px;
+}
+.dropdown-start{
+    position: absolute;
+    top:70px;
+}
+.dropdown-end{
+    position: absolute;
+    top:70px;
+}
+.search-bar-guests{
+    display: flex;
+    justify-content: center;
+
+}
+#search-bar-guests-input{
+    border: 0;
+    border-right:rgb(221,221,221) 2px solid;
+    outline:none;
+    height: 40px;
+    margin-left: 20px;
+}
+.button-search-submit{
+    cursor: pointer;
+    margin-left:10px;
+    width: 100px;
+    height: 50px;
+    border:0;
+    border-radius: 30px;
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-weight:800;
+    color:white;
+    background-image: radial-gradient(circle at center center, rgb(255, 56, 92) 0%, rgb(230, 30, 77) 27.5%, rgb(227, 28, 95) 40%, rgb(215, 4, 102) 57.5%, rgb(189, 30, 89) 75%, rgb(189, 30, 89) 100%);
+}
+/*
+.home-search-bar{
+
+}
+.search-bar *{
+    border:0;
+}
+#cityname-search:hover{
+    background-color: rgb(164,164,164,.2);
+} */

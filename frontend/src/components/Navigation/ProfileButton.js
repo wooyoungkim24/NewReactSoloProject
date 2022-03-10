@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import {useHistory} from 'react-router-dom'
+import "./index.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ function ProfileButton({ user }) {
     if (showMenu) return;
     setShowMenu(true);
   };
+
 
   useEffect(() => {
     if (!showMenu) return;
@@ -32,8 +34,8 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button onClick={openMenu} className="profile-button">
+        <i className="fas fa-user-circle fa-3x" />
       </button>
       {showMenu && (
         <ul className="profile-dropdown">

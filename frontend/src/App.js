@@ -1,7 +1,7 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import SpotsLocation from "./components/SpotsLocation"
@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
+
         <Switch>
           <Route exact path = "/">
             <Home />
@@ -36,7 +36,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route exact path="/spots/:searchPayload">
-            <SpotsLocation />
+            <SpotsLocation key={useLocation().pathname.split("/")[2]}/>
           </Route>
           <Route exact path = "/spot/:idDates">
             <SpotIndividual />
@@ -57,7 +57,7 @@ function App() {
             <NewSpotForm />
           </Route>
         </Switch>
-      )}
+      )
     </>
   );
 }

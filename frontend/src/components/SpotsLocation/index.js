@@ -187,12 +187,16 @@ function SpotsLocation() {
                                             <div className='component-img'>
                                                 <img id="spot-component-image" src={newOurPhotos[4]} />
                                             </div>
+
                                             <div className='component-details'>
                                                 <div className="component-spot-type">
                                                     <p>{privacyText} in {splitAtCapital(ele.city)} </p>
                                                 </div>
                                                 <div className='component-spot-title'>
-                                                    <h2>{ele.title}</h2>
+                                                    <p>{ele.title}</p>
+                                                </div>
+                                                <div className='divider'>
+
                                                 </div>
                                                 <div className='component-floor-plan'>
                                                     <p>
@@ -200,12 +204,12 @@ function SpotsLocation() {
                                                     </p>
                                                 </div>
                                                 <div className='component-amenities'>
-                                                    {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
+                                                    <p>{camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}</p>
 
                                                 </div>
                                                 <div className='component-price'>
                                                     <span className='dollarAmount'>
-                                                        {ele.costPerNight}
+                                                        ${ele.costPerNight}
                                                     </span>
                                                     <span>
                                                         / night

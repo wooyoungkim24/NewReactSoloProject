@@ -1,0 +1,56 @@
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 1600px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: solid rgb(235,235,235);
+    background-color: white;
+    height: 90px;
+
+}
+
+.profile-dropdown{
+    position: absolute;
+    list-style-type: none;
+    right: 120px;
+    top: 55px;
+    border: rgb(221,221,221) 2px solid;
+    padding-left:5px;
+    padding-right:15px;
+    border-radius: 10px;
+    background-color: white;
+
+}
+.profile-dropdown li{
+
+    padding-bottom:5px;
+    padding-top:5px;
+    padding-left:3px;
+}
+.profile-dropdown li#trips-profile-button, .profile-dropdown li#hosted-profile-button{
+    cursor: pointer;
+}
+.profile-dropdown li#trips-profile-button:hover{
+    background-color: rgb(164,164,164,.2);
+}
+.profile-dropdown li#hosted-profile-button:hover{
+    background-color: rgb(164,164,164,.2);
+}
+.profile-button{
+    border:0;
+    background-color: white;
+    cursor: pointer;
+}
+
+.navbar i{
+    color: rgb(255,56,92)
+}
+
+body{
+    margin: 0;
+    padding:0;
+}

@@ -93,14 +93,17 @@ function Search() {
         <div className="home-search-bar">
             <form className="search-bar" onSubmit={handleSearchSubmit}>
                 <input
+                    id = 'cityname-search'
                     type='search'
-                    placeholder='1'
+                    placeholder='City Name'
                     required
                     value={location}
                     onChange={updateLocation}
                 />
                 <div className="search-bar-start" onClick={handleStartClick}>
-                    Start
+                    <div id="start-text">
+                        Start
+                    </div>
                     <div
                         tabIndex="0"
                         className="dropdown-start"
@@ -108,15 +111,17 @@ function Search() {
                         onFocus={() => setSeeStart(true)}
                     >
                         {seeStart &&
-                            <Calendar value={startDate} onChange={changeDateStart} minDate={new Date()} />
+                            <Calendar id="calendar-search-start" value={startDate} onChange={changeDateStart} minDate={new Date()} />
                         }
                     </div>
 
 
                 </div>
                 <div className="search-bar-end" onClick={handleEndClick}>
-                    End
-                    
+                    <div id="end-text">
+                        End
+                    </div>
+
                     <div
                         tabIndex="0"
                         className="dropdown-end"
@@ -126,7 +131,7 @@ function Search() {
                         {seeEnd &&
 
 
-                            <Calendar value={endDate} onChange={changeDateEnd} minDate={startDate} />
+                            <Calendar  id="calendar-search-end" value={endDate} onChange={changeDateEnd} minDate={startDate} />
                         }
                     </div>
 
@@ -139,12 +144,12 @@ function Search() {
                         required
                         value={guests}
                         onChange={updateGuests}
-
+                        id= "search-bar-guests-input"
                         min={0}
                     />
                 </div>
-                <button type="submit">
-                    Go
+                <button type="submit" className="button-search-submit">
+                    Search
                 </button>
             </form>
         </div>

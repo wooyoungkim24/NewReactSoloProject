@@ -517,17 +517,14 @@ function SpotIndividual() {
 
     return (
         <div className='individual-spot-page'>
-            <div className='navbar-individual-spot'>
-
-            </div>
             {isLoaded &&
                 <div className='individual-spot-container'>
                     <div className='individual-title'>
-                        <h1>{individualSpot.spot.title}</h1>
+                        <p>{individualSpot.spot.title}</p>
                     </div>
 
                     <div className='individual-location'>
-                        <h4>{splitAtCapital(individualSpot.spot.city)}</h4>
+                        <p>Location: {splitAtCapital(individualSpot.spot.city)}</p>
                     </div>
 
                     <div className='individual-image-container'>
