@@ -12,6 +12,7 @@ import Home from "./components/Home"
 import HostedSpots from "./components/HostedSpots";
 import HostedSpotIndividual from "./components/HostedSpotIndividual";
 import EditFormPage from "./components/EditFormPage";
+import NewSpotForm from "./components/NewSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,10 @@ function App() {
           </Route>
           <Route exact path = "/profile/edit/:type">
             <EditFormPage/>
+          </Route>
+
+          <Route exact path ="/profile/new/spot">
+            <NewSpotForm />
           </Route>
         </Switch>
       )}

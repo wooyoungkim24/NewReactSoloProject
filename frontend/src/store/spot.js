@@ -24,6 +24,20 @@ const load_payload = (payload) => ({
     payload
 })
 
+
+export const createSpot = (payload) => async dispatch =>{
+    const res = await csrfFetch("/api/spots", {
+        method: "POST",
+        body: JSON.stringify(payload)
+    });
+    if(res.ok){
+        const newSpot = await res.json();
+        console.log("this is my spot", newSpot)
+        return newSpot;
+    }
+
+}
+
 export const getSpots = (city) => async dispatch => {
     const res = await csrfFetch(`/api/spots/all/${city}`);
     if (res.ok) {
@@ -69,6 +83,37 @@ export const editAmenity = (payload)=>async dispatch =>{
         body: JSON.stringify(payload)
     })
 }
+
+export const editFloorPlan = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/floorPlan`, {
+        method: "PUT",
+        body: JSON.stringify(payload)
+    })
+}
+
+export const editPrivacy = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/privacyType`, {
+        method: "PUT",
+        body: JSON.stringify(payload)
+    })
+}
+
+export const addSpotType = (payload) => async dispatch => {
+
+    const res1 = await csrfFetch(`/api/spots/spotType`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+}
+export const addSpotSub = (payload) => async dispatch => {
+    const{newSpotType} = payload
+    delete payload.newSpotType
+    const res2 = await csrfFetch(`/api/spots/${newSpotType}SpotType`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+}
+
 
 export const editSpotType = (payload) => async dispatch => {
 
@@ -151,8 +196,6 @@ export const editSpotStuff = (payload) => async dispatch => {
             return costChanged;
         }
     }
-
-
 }
 
 export const loadSearch = (payload) => async dispatch => {

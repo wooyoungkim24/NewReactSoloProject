@@ -72,6 +72,9 @@ function HostedSpots(){
     // console.log(photos[13])
     return (
         <div className="user-spots-page">
+            <div>
+                <button onClick={() => history.push("/profile/new/spot")}>Host a New Spot</button>
+            </div>
             <div className='user-spots-list-container'>
 
                 {isLoaded &&

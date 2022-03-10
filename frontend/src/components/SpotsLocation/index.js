@@ -19,7 +19,8 @@ function SpotsLocation() {
     const thisDate = today.getDate();
 
     let searchSplit = searchPayload.split("_");
-    const city = searchSplit[1]
+    const cityParam = searchSplit[1]
+    const city = cityParam.replace(/\s+/g, '')
     const guests = searchSplit[0];
 
     const startSearch = searchSplit[2]

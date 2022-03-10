@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { editSpotStuff, getSpot, putPhoto, editSpotType, editSpotSub, editAmenity } from "../../store/spot"
+import { editPrivacy,editFloorPlan,editSpotStuff, getSpot, putPhoto, editSpotType, editSpotSub, editAmenity } from "../../store/spot"
 import { csrfFetch } from '../../store/csrf'
 import Cookies from 'js-cookie';
 
@@ -42,7 +42,41 @@ function EditFormPage() {
     const [newKitchen, setNewKitchen] = useState(false)
     const [newWasher, setNewWasher] = useState(false)
 
-    console.log('what is the value',newPool)
+    const [newGuests, setNewGuests] = useState();
+    const [newBeds, setNewBeds] = useState();
+    const [newBedrooms, setNewBedrooms] = useState();
+    const [newBathrooms, setNewBathrooms] = useState();
+
+    const [oldPrivacyState, setOldPrivacyState] = useState("")
+    const [privacyState, setPrivacyState]= useState("");
+    // const [entire, setEntire] = useState(false)
+    // const [privateR, setPrivateR] = useState(false)
+    // const [shared, setShared]= useState(false)
+
+
+    console.log(privacyState)
+    const updatePrivacy = (e) =>{
+        setPrivacyState(e.target.value)
+    }
+
+
+
+    const updateGuests = (e) =>{
+        setNewGuests(e.target.value)
+    }
+
+    const updateBeds = (e) =>{
+        setNewBeds(e.target.value)
+    }
+    const updateBedrooms = (e) =>{
+        setNewBedrooms(e.target.value)
+    }
+    const updateBathrooms = (e) =>{
+        setNewBathrooms(e.target.value)
+    }
+
+
+
     const updatePool = (e) => {
         // console.log('this is the type before',newPool)
         // console.log('testing',typeof e.target.value)
@@ -135,6 +169,19 @@ function EditFormPage() {
             setNewFireExtinguisher(spotInfo.Amenity.fireExtinguisher)
             setNewPatio(spotInfo.Amenity.patio)
 
+
+            setNewGuests(spotInfo.FloorPlan.guests)
+            setNewBeds(spotInfo.FloorPlan.beds)
+            setNewBedrooms(spotInfo.FloorPlan.bedrooms)
+            setNewBathrooms(spotInfo.FloorPlan.bathrooms)
+
+
+            // setEntire(spotInfo.PrivacyType.entire)
+            // setPrivateR(spotInfo.PrivacyType.privateRoom)
+            // setShared(spotInfo.PrivacyType.sharedRoom)
+
+            setPrivacyState(FilterTrue(spotInfo.PrivacyType)[0])
+            setOldPrivacyState(FilterTrue(spotInfo.PrivacyType)[0])
             // console.log(review)
         }
         didMountRef.current = true;
@@ -273,6 +320,30 @@ function EditFormPage() {
         payload2[newSpotSub] =true;
         let editedSpotType = await dispatch(editSpotType(payload1))
         let editedSpotSub = await dispatch(editSpotSub(payload2))
+        history.goBack();
+    }
+
+
+    const handleFloorPlanSubmit = async (e) =>{
+        e.preventDefault();
+        const payload = {
+            spotId:id,
+            guests: newGuests,
+            beds: newBeds,
+            bedrooms: newBedrooms,
+            bathrooms: newBathrooms
+        }
+        let editedFloorPlan = await dispatch(editFloorPlan(payload))
+        history.goBack();
+    }
+    const handlePrivacySubmit = async (e) =>{
+        e.preventDefault();
+        const payload = {
+            spotId:id
+        }
+        payload[oldPrivacyState] = false;
+        payload[privacyState] = true
+        let editedPrivacy = await dispatch(editPrivacy(payload))
         history.goBack();
     }
 
@@ -558,6 +629,78 @@ function EditFormPage() {
                                     checked = {newFireExtinguisher}
 
                                     onChange={updateFireExtinguisher}>
+                                </input>
+                                <button type='submit'>Change</button>
+
+                            </form>
+                        </div>
+                    }
+                    {formType === "floorPlan" &&
+                        <div>
+                            <form onSubmit={handleFloorPlanSubmit}>
+                                <label htmlFor="edit-floorplan-input">Change Guests</label>
+                                <input
+                                    id="edit-floorplan-input"
+                                    type="number"
+                                    min = "0"
+                                    value={newGuests}
+                                    onChange={updateGuests}>
+                                </input>
+                                <label htmlFor="edit-floorplan-input">Change Beds</label>
+                                <input
+                                    id="edit-floorplan-input"
+                                    type="number"
+                                    min = "0"
+                                    value={newBeds}
+                                    onChange={updateBeds}>
+                                </input>
+                                <label htmlFor="edit-floorplan-input">Change Bedrooms</label>
+                                <input
+                                    id="edit-floorplan-input"
+                                    type="number"
+                                    min = "0"
+                                    value={newBedrooms}
+                                    onChange={updateBedrooms}>
+                                </input>
+                                <label htmlFor="edit-floorplan-input">Change Bathrooms</label>
+                                <input
+                                    id="edit-floorplan-input"
+                                    type="number"
+                                    min = "0"
+                                    value={newBathrooms}
+                                    onChange={updateBathrooms}>
+                                </input>
+                                <button type='submit'>Change</button>
+
+                            </form>
+                        </div>
+                    }
+                    {formType === "privacy" &&
+                        <div>
+                            <form onSubmit={handlePrivacySubmit}>
+                                <label htmlFor="edit-privacy-input">Entire: </label>
+                                <input
+                                    id="edit-privacy-input"
+                                    type="radio"
+                                    value = "entire"
+                                    checked = {privacyState === "entire"}
+                                    onChange={updatePrivacy}>
+                                </input>
+                                <label htmlFor="edit-privacy-input">Private Room: </label>
+                                <input
+                                    id="edit-privacy-input"
+                                    type="radio"
+                                    checked = {privacyState === "privateRoom"}
+                                    value="privateRoom"
+                                    onChange={updatePrivacy}>
+                                </input>
+                                <label htmlFor="edit-privacy-input">Shared Room: </label>
+                                <input
+                                    id="edit-privacy-input"
+                                    type="radio"
+                                    checked = {privacyState === "sharedRoom"}
+                                    value="sharedRoom"
+                                    onChange={updatePrivacy}>
                                 </input>
                                 <button type='submit'>Change</button>
 

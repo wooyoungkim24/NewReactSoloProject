@@ -37,9 +37,9 @@ function HostedSpotIndividual() {
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                if(upperLetter === ""){
+                if (upperLetter === "") {
                     upperLetter = curr
-                }else{
+                } else {
                     upperLetter2 = curr
                 }
             }
@@ -73,6 +73,8 @@ function HostedSpotIndividual() {
     let pushTermCost;
     let pushTermSpotType;
     let pushTermAmenities;
+    let pushTermFloorPlan
+    let pushTermPrivacy;
     let ourPhotos;
     let pushTermWhere;
     let newOurPhotos = [];
@@ -86,6 +88,8 @@ function HostedSpotIndividual() {
         pushTermWhere = "where" + "_" + spotId.toString();
         pushTermSpotType = "spotType" + "_" + spotId.toString();
         pushTermAmenities = "amenity" + "_" + spotId.toString();
+        pushTermFloorPlan = "floorPlan" + "_" + spotId.toString();
+        pushTermPrivacy = "privacy" + "_" + spotId.toString();
         ourPhotos = photos[id]
 
         for (let i = 0; i < ourPhotos.length; i++) {
@@ -237,6 +241,7 @@ function HostedSpotIndividual() {
                                 </span>
                             </div>
                             <div className='edit-amenities-bottom'>
+
                                 {amenityKey.map(ele => {
 
                                     return (
@@ -246,7 +251,7 @@ function HostedSpotIndividual() {
                                                     {camelToWord(ele)} <i className="fas fa-thumbs-up fa-2x"></i>
                                                 </>
                                             }
-                                            {spotInfo.Amenity[ele] ===false &&
+                                            {spotInfo.Amenity[ele] === false &&
                                                 <>
                                                     {camelToWord(ele)} <i className="fas fa-thumbs-down fa-2x"></i>
                                                 </>
@@ -254,6 +259,53 @@ function HostedSpotIndividual() {
                                         </div>
                                     )
                                 })}
+                            </div>
+
+                        </div>
+                        <div className='edit-floorPlan-div'>
+                            <div className='edit-floorPlan-top'>
+                                <span>
+                                    <h2>Floor Plan: </h2>
+                                </span>
+                                <span>
+                                    <button
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermFloorPlan}`)}
+                                    >Edit</button>
+                                </span>
+                            </div>
+                            <div className='edit-floorPlan-bottom'>
+                                {Object.keys(spotInfo.FloorPlan).map(ele => {
+                                    const not = ["id", "spotId", "createdAt", "updatedAt"]
+
+                                    if (!(not.includes(ele))) {
+                                        return (
+                                            <div key ={ele} className="profile-floorPlan-info">
+                                                {camelToWord(ele)}: {spotInfo.FloorPlan[ele]}
+                                            </div>
+                                        )
+                                    }
+
+                                })}
+
+                            </div>
+
+                        </div>
+                        <div className='edit-privacyType-div'>
+                            <div className='edit-privacyType-top'>
+                                <span>
+                                    <h2>Privacy Type: </h2>
+                                </span>
+                                <span>
+                                    <button
+                                        type='button'
+                                        onClick={() => history.push(`/profile/edit/${pushTermPrivacy}`)}
+                                    >Edit</button>
+                                </span>
+                            </div>
+                            <div className='edit-privacyType-bottom'>
+                                <h3>{camelToWord(FilterTrue(spotInfo.PrivacyType)[0])}</h3>
+
                             </div>
 
                         </div>

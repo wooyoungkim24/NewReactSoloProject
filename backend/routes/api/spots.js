@@ -475,9 +475,9 @@ router.put(
     "/privacyType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        const privacyTypeUpdate = PrivacyType.findOne({
+        const privacyTypeUpdate = await PrivacyType.findOne({
             where: {
-                spotId: spotId
+                spotId
             }
         })
         const privacyTypeUpdated = await privacyTypeUpdate.update(req.body)
@@ -504,6 +504,40 @@ router.delete(
 
 
 //Photos stuff
+
+
+
+router.post(
+    "/photoAdd/:key",
+    upload.single("File"),
+    asyncHandler(async(req,res) =>{
+        const key = req.params.key
+        const keyPrep = key.split("_")
+        const newKey = keyPrep.join("/")
+
+        const bucketParamsAdd = {
+            Bucket: "citybrbphotos",
+            // Specify the name of the new object. For example, 'index.html'.
+            // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
+            Key: newKey,
+            // Content of the new object.
+            Body: req.files.File.data
+        };
+        try {
+            await s3Client.send(new PutObjectCommand(bucketParamsAdd));
+            // return data; // For unit tests.
+            console.log(
+                "Successfully uploaded object: " +
+                bucketParamsAdd.Bucket +
+                "/" +
+                bucketParamsAdd.Key
+            );
+        } catch (err) {
+            console.log("Error", err);
+        }
+        return {};
+}))
+
 
 router.post(
     "/photoPost/:key",
@@ -564,7 +598,7 @@ router.put(
     "/floorPlan",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        const floorPlanUpdate = FloorPlan.findOne({
+        const floorPlanUpdate = await FloorPlan.findOne({
             where: {
                 spotId: spotId
             }

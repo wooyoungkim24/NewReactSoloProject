@@ -1,12 +1,13 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import {useHistory} from 'react-router-dom'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-
+  const history = useHistory();
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -39,7 +40,7 @@ function ProfileButton({ user }) {
           <li>{user.username}</li>
           <li>{user.email}</li>
           <li id="trips-profile-button">Trips</li>
-          <li id='hosted-profile-button'>Hosted Spots</li>
+          <li id='hosted-profile-button'onClick={() => history.push(`/hosted/spots/${user.id}`)} >Hosted Spots</li>
           <li>
             <button onClick={logout}>Log Out</button>
           </li>
