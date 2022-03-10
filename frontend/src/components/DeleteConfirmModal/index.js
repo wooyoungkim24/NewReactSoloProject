@@ -27,9 +27,14 @@ function DeleteConfirmModal ({id}) {
             id,
             type
         }
-        let deleteTest = await dispatch(deletePhotos(payload))
-        let deleteAmenityTest = await dispatch(deleteAmenity(payload))
-        
+        await dispatch(deletePhotos(payload))
+        await dispatch(deleteAmenity(payload))
+        await dispatch(deleteFloorPlan(payload))
+        await dispatch(deletePrivacy(payload))
+        await dispatch(deleteSpotSub(payloadSpecial))
+
+        await dispatch(deleteSpotType(payload))
+
         // const fetchPhotoDelete = fetch(`/api/spots/photosDelete`, {
         //     method: "POST",
         //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
@@ -37,27 +42,39 @@ function DeleteConfirmModal ({id}) {
         // })
 
         // const fetchAmenityDelete = fetch(`/api/spots/amenity`, {
-        //     method: "POST",
+        //     method: "DELETE",
         //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
         //     body: JSON.stringify(payload)
         // })
 
-        // const fetchFloorPlanDelete = fetch(`/api/spots/amenity`, {
-        //     method: "POST",
+        // const fetchFloorPlanDelete = fetch(`/api/spots/floorPlan`, {
+        //     method: "DELETE",
+        //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
+        //     body: JSON.stringify(payload)
+        // })
+        // const fetchPrivacyDelete = fetch(`/api/spots/privacyType`, {
+        //     method: "DELETE",
         //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
         //     body: JSON.stringify(payload)
         // })
 
+        // const fetchSpotSubDelete = fetch(`/api/spots/${type}SpotType`, {
+        //     method: "DELETE",
+        //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
+        //     body: JSON.stringify(payload)
+        // })
+
+        // const fetchSpotTypeDelete = fetch(`/api/spots/spotType`, {
+        //     method: "DELETE",
+        //     headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
+        //     body: JSON.stringify(payload)
+        // })
+
+        // Promise.all([fetchPhotoDelete, fetchAmenityDelete,fetchFloorPlanDelete,fetchPrivacyDelete, fetchSpotSubDelete, fetchSpotTypeDelete])
 
 
-        // await dispatch(deleteFloorPlan(payload))
-        // await dispatch(deletePrivacy(payload))
-        // await dispatch(deleteSpotSub(payloadSpecial))
 
-        // await dispatch(deleteSpotType(payload))
-
-
-        // await dispatch(deleteSpot(payload)).then(() =>history.goBack())
+        await dispatch(deleteSpot(payload)).then(() =>history.goBack())
     }
 
 

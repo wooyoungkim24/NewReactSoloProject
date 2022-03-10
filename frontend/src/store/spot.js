@@ -60,11 +60,15 @@ export const putPhoto = (payload) => async dispatch => {
 
 export const deletePhotos = (payload) => async dispatch => {
     console.log('testing payload', payload)
-    await csrfFetch(`/api/spots/photosDelete`, {
+    const res = await csrfFetch(`/api/spots/photosDelete`, {
         method: "POST",
         body: JSON.stringify(payload)
     })
-    return {}
+    if (res.ok) {
+        const stuff = await res.json();
+        return stuff
+    }
+
 }
 export const getSpot = (id) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${id}`);

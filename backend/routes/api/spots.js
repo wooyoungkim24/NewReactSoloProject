@@ -629,7 +629,7 @@ router.post(
         }
 
         console.log("are you done yet")
-        return {};
+        return res.json(bucketParams);
 
     })
 )
