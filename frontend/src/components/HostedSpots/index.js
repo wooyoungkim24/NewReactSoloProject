@@ -8,19 +8,19 @@ import { getSpotsUser } from "../../store/spot"
 
 
 
-function HostedSpots(){
+function HostedSpots() {
     const dispatch = useDispatch()
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
-    const {userId} = useParams();
-    useEffect(() =>{
+    const { userId } = useParams();
+    useEffect(() => {
         dispatch(getSpotsUser(userId)).then(() => setIsLoaded(true))
-    },[dispatch])
+    }, [dispatch])
 
-    const userSpots = useSelector(state =>{
+    const userSpots = useSelector(state => {
         return state.spots.userSpots
     });
-    const photos = useSelector(state =>{
+    const photos = useSelector(state => {
         return state.spots.photoObjAll
     })
 
@@ -35,9 +35,9 @@ function HostedSpots(){
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                if(upperLetter === ""){
+                if (upperLetter === "") {
                     upperLetter = curr
-                }else{
+                } else {
                     upperLetter2 = curr
                 }
             }
@@ -82,72 +82,77 @@ function HostedSpots(){
                     <>
                         <ol>
                             {userSpots.map((ele) => {
-                                    console.log('wher is my ele',ele)
-                                    let ourPhotos = photos[ele.id]
+                                console.log('wher is my ele', ele)
+                                let ourPhotos = photos[ele.id]
 
-                                    console.log(ourPhotos)
-                                    let newOurPhotos=[];
-                                    for(let i = 0 ; i < ourPhotos.length; i++){
-                                        newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${ele.id}/`+ourPhotos[i])
+                                console.log(ourPhotos)
+                                let newOurPhotos = [];
+                                for (let i = 0; i < ourPhotos.length; i++) {
+                                    newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])
+                                }
+                                // console.log(ele.id,newOurPhotos)
+                                const spotId = ele.id
+                                const privacyType = FilterTrue(ele.PrivacyType)[0]
+
+                                let privacyText;
+                                if (privacyType === 'privateRoom') {
+                                    privacyText = "Private Room"
+                                } else if (privacyType === 'entire') {
+                                    privacyText = "Entire Unit"
+                                } else if (privacyType === 'sharedRoom') {
+                                    privacyText = "Shared Room"
+                                }
+
+                                const amenitiesKeys = Object.keys(ele.Amenity)
+                                let amenitiesKeysTrue = []
+                                for (let i = 0; i < amenitiesKeys.length; i++) {
+                                    let curr = amenitiesKeys[i];
+
+
+                                    if (ele.Amenity[curr] === true) {
+
+                                        amenitiesKeysTrue.push(curr)
                                     }
-                                    // console.log(ele.id,newOurPhotos)
-                                    const spotId = ele.id
-                                    const privacyType = FilterTrue(ele.PrivacyType)[0]
+                                }
 
-                                    let privacyText;
-                                    if (privacyType === 'privateRoom') {
-                                        privacyText = "Private Room"
-                                    } else if (privacyType === 'entire') {
-                                        privacyText = "Entire Unit"
-                                    } else if (privacyType === 'sharedRoom') {
-                                        privacyText = "Shared Room"
-                                    }
-
-                                    const amenitiesKeys = Object.keys(ele.Amenity)
-                                    let amenitiesKeysTrue = []
-                                    for (let i = 0; i < amenitiesKeys.length; i++) {
-                                        let curr = amenitiesKeys[i];
-
-
-                                        if (ele.Amenity[curr] === true) {
-
-                                            amenitiesKeysTrue.push(curr)
-                                        }
-                                    }
-
-                                    return (
-                                        <div key={spotId} className="spot-component-container" onClick= {()=> history.push(`/profile/spot/${spotId}`)} >
-                                            <div className='component-img'>
-                                                <img id="spot-component-image" src={newOurPhotos[4]} />
+                                return (
+                                    <div key={spotId} className="spot-component-container" onClick={() => history.push(`/profile/spot/${spotId}`)} >
+                                        <div className='component-img'>
+                                            <img id="spot-component-image" src={newOurPhotos[4]} />
+                                        </div>
+                                        <div className='component-details'>
+                                            <div className="component-spot-type">
+                                                <p>{privacyText} in {splitAtCapital(ele.city)} </p>
                                             </div>
-                                            <div className='component-details'>
-                                                <div className="component-spot-type">
-                                                    <p>{privacyText} in {splitAtCapital(ele.city)} </p>
-                                                </div>
-                                                <div className='component-spot-title'>
-                                                    <h2>{ele.title}</h2>
-                                                </div>
-                                                <div className='component-floor-plan'>
-                                                    <p>
-                                                        {ele.FloorPlan.guests} Guest - {ele.FloorPlan.beds} Bed - {ele.FloorPlan.bedrooms} Bedroom - {ele.FloorPlan.bathrooms} Bath
-                                                    </p>
-                                                </div>
-                                                <div className='component-amenities'>
-                                                    {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
+                                            <div className='component-spot-title'>
+                                                <h2>{ele.title}</h2>
+                                            </div>
+                                            <div className='component-floor-plan'>
+                                                <p>
+                                                    {ele.FloorPlan.guests} Guest - {ele.FloorPlan.beds} Bed - {ele.FloorPlan.bedrooms} Bedroom - {ele.FloorPlan.bathrooms} Bath
+                                                </p>
+                                            </div>
+                                            <div className='component-amenities'>
+                                                {amenitiesKeysTrue.length >= 3 &&
+                                                    <>
+                                                        {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
+                                                    </>
+                                                }
 
-                                                </div>
-                                                <div className='component-price'>
-                                                    <span className='dollarAmount'>
-                                                        ${ele.costPerNight}
-                                                    </span>
-                                                    <span>
-                                                        / night
-                                                    </span>
-                                                </div>
+
+                                            </div>
+                                            <div className='component-price'>
+                                                <span className='dollarAmount'>
+                                                    ${ele.costPerNight}
+                                                </span>
+                                                <span>
+                                                    / night
+                                                </span>
                                             </div>
                                         </div>
-                                    )
-                                }
+                                    </div>
+                                )
+                            }
 
 
                             )}

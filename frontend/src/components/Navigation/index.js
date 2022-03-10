@@ -3,9 +3,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import Search from "../Search"
 
-
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -23,12 +23,22 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+    <div className='navbar'>
+      <div className='navbar-top'>
+        <ul>
+          <li>
+            <NavLink exact to="/">Home</NavLink>
+            {isLoaded && sessionLinks}
+          </li>
+        </ul>
+      </div>
+
+      <div className='navbar-bottom'>
+        <Search />
+      </div>
+    </div>
+
+
   );
 }
 

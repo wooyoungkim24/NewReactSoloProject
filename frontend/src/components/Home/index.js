@@ -6,12 +6,12 @@ import Navigation from "../../components/Navigation";
 
 function Home() {
 
-   
+
 
     return(
         <div>
             Home
-            <Search />
+
         </div>
     )
 }

@@ -12,6 +12,10 @@ import NewSpotDetailForm from '../NewSpotDetailForm';
 
 function NewSpotForm() {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const [error, setError] =useState(false)
+    const [errorMessages, setErrorMessages] = useState([])
+
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -40,10 +44,10 @@ function NewSpotForm() {
     const [newWasher, setNewWasher] = useState(false)
 
 
-    const [newGuests, setNewGuests] = useState(0);
-    const [newBeds, setNewBeds] = useState(0);
-    const [newBedrooms, setNewBedrooms] = useState(0);
-    const [newBathrooms, setNewBathrooms] = useState(0);
+    const [newGuests, setNewGuests] = useState(1);
+    const [newBeds, setNewBeds] = useState(1);
+    const [newBedrooms, setNewBedrooms] = useState(1);
+    const [newBathrooms, setNewBathrooms] = useState(1);
 
     const [privacyState, setPrivacyState]= useState("");
     const updatePrivacy = (e) =>{
@@ -148,16 +152,18 @@ function NewSpotForm() {
             address,
             city
         }
-        await dispatch(createSpot(payload))
+        let createdSpot = await dispatch(createSpot(payload))
             .then((res) => newSpot = res)
-            .then(() => console.log('where is ym spot', newSpot))
-            .then(() => setFirstDone(true))
+
+
+
 
         const selectedFiles1 = document.getElementById('add-photo-input1').files[0];
         const selectedFiles2 = document.getElementById('add-photo-input2').files[0];
         const selectedFiles3 = document.getElementById('add-photo-input3').files[0];
         const selectedFiles4 = document.getElementById('add-photo-input4').files[0];
         const selectedFiles5 = document.getElementById('add-photo-input5').files[0];
+
 
         const key1 = `Spot${newSpot.id}_${selectedFiles1.name}`
         const key2 = `Spot${newSpot.id}_${selectedFiles2.name}`
@@ -209,6 +215,8 @@ function NewSpotForm() {
             body: formData5
         })
         Promise.all([fetch1, fetch2, fetch3, fetch4, fetch5]);
+
+
         const spotTypePayload = {
             spotId: newSpot.id,
         }
@@ -220,7 +228,7 @@ function NewSpotForm() {
         subTypePayload[newSpotSub] = true;
         let newSpotTypeObject = await dispatch(addSpotType(spotTypePayload))
         let newSpotSubObject = await dispatch(addSpotSub(subTypePayload))
-        console.log('is this whats wrong', newSpot.id)
+        // console.log('is this whats wrong', newSpot.id)
         const amenityPayload = {
             spotId: newSpot.id,
             pool: newPool,
@@ -248,6 +256,7 @@ function NewSpotForm() {
         }
         let newFloorPlan = await dispatch(addFloorPlan(floorPlanPayload))
 
+
         const privacyPayload = {
             spotId: newSpot.id,
         }
@@ -255,8 +264,11 @@ function NewSpotForm() {
 
         let newPrivacy = await dispatch(addPrivacy(privacyPayload))
 
+        history.goBack();
+
 
     }
+
 
 
     return (
@@ -271,13 +283,14 @@ function NewSpotForm() {
                         type="text"
                         value={title}
                         onChange={updateTitle}
+                        required
                     >
                     </input>
 
                     <label htmlFor="new-desc-input">Description: </label>
                     <textarea
                         htmlFor="new-desc-input"
-
+                        required
                         value={description}
                         onChange={updateDescription}
                     >
@@ -289,6 +302,7 @@ function NewSpotForm() {
                         type="number"
                         value={costPerNight}
                         onChange={updateCost}
+                        required
                     >
                     </input>
 
@@ -298,6 +312,7 @@ function NewSpotForm() {
                         type="text"
                         value={address}
                         onChange={updateAddress}
+                        required
                     >
                     </input>
 
@@ -307,6 +322,7 @@ function NewSpotForm() {
                         type="text"
                         value={city}
                         onChange={updateCity}
+                        required
                     >
                     </input>
                     {firstDone &&
@@ -319,6 +335,7 @@ function NewSpotForm() {
                                         id="add-photo-input1"
                                         type="file"
                                         accept="image/*"
+                                        required
                                     >
                                     </input>
                                 </div>
@@ -328,6 +345,7 @@ function NewSpotForm() {
                                         id="add-photo-input2"
                                         type="file"
                                         accept="image/*"
+                                        required
                                     >
                                     </input>
                                 </div>
@@ -337,6 +355,7 @@ function NewSpotForm() {
                                         id="add-photo-input3"
                                         type="file"
                                         accept="image/*"
+                                        required
                                     >
                                     </input>
                                 </div>
@@ -346,6 +365,7 @@ function NewSpotForm() {
                                         id="add-photo-input4"
                                         type="file"
                                         accept="image/*"
+                                        required
                                     >
                                     </input>
                                 </div>
@@ -355,6 +375,7 @@ function NewSpotForm() {
                                         id="add-photo-input5"
                                         type="file"
                                         accept="image/*"
+                                        required
                                     >
                                     </input>
                                 </div>
@@ -363,9 +384,11 @@ function NewSpotForm() {
                             <div className='spot-types-upload-container'>
                                 <label htmlFor="add-spotType-input">Change Spot Type</label>
                                 <select
+                                    required
                                     id="add-spotType-input"
                                     value={newSpotType}
                                     onChange={updateSpotType}>
+                                    <option value="">--Pick a new spot type</option>
                                     <option value="apartment">1--Apartment</option>
                                     <option value="house">2--House</option>
                                     <option value="secondaryUnit">3--Secondary Unit</option>
@@ -374,9 +397,18 @@ function NewSpotForm() {
                                 </select>
                                 <label htmlFor="add-subtType-input">Change Spot SubType</label>
                                 <select
+                                    required
                                     id="add-subType-input"
                                     value={newSpotSub}
                                     onChange={updateSpotSub}>
+
+                                    {newSpotType === "" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                        </>
+                                    }
+
+
                                     {newSpotType === "house" &&
                                         <>
                                             <option value="">--Pick a new spot subtype</option>
@@ -386,7 +418,7 @@ function NewSpotForm() {
                                             <option value="townhouse">4--Townhouse</option>
                                         </>
                                     }
-                                    {newSpotType === "apartment" || newSpotType === "" &&
+                                    {newSpotType === "apartment" &&
                                         <>
                                             <option value="">--Pick a new spot subtype</option>
                                             <option value="rental">1--Rental</option>
@@ -419,6 +451,7 @@ function NewSpotForm() {
 
                                 <label htmlFor="add-amenity-input">Pool</label>
                                 <input
+
                                     id="add-amenity-input"
                                     type="checkbox"
 
@@ -526,35 +559,39 @@ function NewSpotForm() {
 
                             <div className='floorPlan-upload-container'>
 
-                                <label htmlFor="edit-floorplan-input">Change Guests</label>
+                                <label htmlFor="add-floorplan-input">Change Guests</label>
                                 <input
-                                    id="edit-floorplan-input"
+                                    required
+                                    id="add-floorplan-input"
                                     type="number"
-                                    min="0"
+                                    min="1"
                                     value={newGuests}
                                     onChange={updateGuests}>
                                 </input>
-                                <label htmlFor="edit-floorplan-input">Change Beds</label>
+                                <label htmlFor="add-floorplan-input">Change Beds</label>
                                 <input
-                                    id="edit-floorplan-input"
+                                    required
+                                    id="add-floorplan-input"
                                     type="number"
-                                    min="0"
+                                    min="1"
                                     value={newBeds}
                                     onChange={updateBeds}>
                                 </input>
-                                <label htmlFor="edit-floorplan-input">Change Bedrooms</label>
+                                <label htmlFor="add-floorplan-input">Change Bedrooms</label>
                                 <input
-                                    id="edit-floorplan-input"
+                                    required
+                                    id="add-floorplan-input"
                                     type="number"
-                                    min="0"
+                                    min="1"
                                     value={newBedrooms}
                                     onChange={updateBedrooms}>
                                 </input>
-                                <label htmlFor="edit-floorplan-input">Change Bathrooms</label>
+                                <label htmlFor="add-floorplan-input">Change Bathrooms</label>
                                 <input
-                                    id="edit-floorplan-input"
+                                    required
+                                    id="add-floorplan-input"
                                     type="number"
-                                    min="0"
+                                    min="1"
                                     value={newBathrooms}
                                     onChange={updateBathrooms}>
                                 </input>
@@ -565,26 +602,32 @@ function NewSpotForm() {
 
                             <div className='privacy-upload-container'>
 
-                                <label htmlFor="edit-privacy-input">Entire: </label>
+                                <label htmlFor="add-privacy-input">Entire: </label>
                                 <input
-                                    id="edit-privacy-input"
+                                    required
+                                    id="add-privacy-input"
                                     type="radio"
                                     value="entire"
+                                    name="privacyRadio"
                                     checked={privacyState === "entire"}
                                     onChange={updatePrivacy}>
                                 </input>
-                                <label htmlFor="edit-privacy-input">Private Room: </label>
+                                <label htmlFor="add-privacy-input">Private Room: </label>
                                 <input
-                                    id="edit-privacy-input"
+
+                                    id="add-privacy-input"
                                     type="radio"
+                                    name="privacyRadio"
                                     checked={privacyState === "privateRoom"}
                                     value="privateRoom"
                                     onChange={updatePrivacy}>
                                 </input>
-                                <label htmlFor="edit-privacy-input">Shared Room: </label>
+                                <label htmlFor="add-privacy-input">Shared Room: </label>
                                 <input
-                                    id="edit-privacy-input"
+
+                                    id="add-privacy-input"
                                     type="radio"
+                                    name="privacyRadio"
                                     checked={privacyState === "sharedRoom"}
                                     value="sharedRoom"
                                     onChange={updatePrivacy}>

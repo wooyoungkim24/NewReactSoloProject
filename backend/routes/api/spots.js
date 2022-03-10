@@ -13,6 +13,7 @@ const router = express.Router();
 const formidable = require('express-formidable');
 const fs = require("fs");
 const path = require('path')
+const spotValidations = require("../../validations/spots")
 
 
 
@@ -217,6 +218,7 @@ router.get(
 //Spot Stuff
 router.post(
     "/",
+    spotValidations.validateCreateSpot,
     asyncHandler(async (req, res) => {
         const newSpot = await Spot.create(req.body);
         return res.json(newSpot)
@@ -535,9 +537,9 @@ router.post(
                 bucketParamsAdd.Key
             );
         } catch (err) {
-            console.log("Error", err);
+            throw new Error("Error", err);
         }
-        return {};
+        return res.json(bucketParamsAdd);
     }))
 
 
@@ -572,7 +574,7 @@ router.post(
                 bucketParamsAdd.Key
             );
         } catch (err) {
-            console.log("Error", err);
+            throw new Error("Error", err);
         }
 
         const bucketParamsDelete = { Bucket: "citybrbphotos", Key: oldKey };
@@ -580,9 +582,9 @@ router.post(
             const data = await s3Client.send(new DeleteObjectCommand(bucketParamsDelete));
             console.log("Success. Object deleted.", data);
         } catch (err) {
-            console.log("Error", err);
+            throw new Error("Error", err);
         }
-        return {};
+        return res.json(bucketParamsAdd);
     })
 )
 
@@ -599,7 +601,7 @@ router.post(
 
             // return data; // For unit tests.
         } catch (err) {
-            console.log("Error", err);
+            throw new Error("Error", err);
         }
 
         const tester = `Spot${id}`
@@ -620,11 +622,15 @@ router.post(
         for (let i = 0; i < keyVault.length; i++) {
             const bucketParams = { Bucket: "citybrbphotos", Key: keyVault[i] };
 
-
-            await s3Client.send(new DeleteObjectCommand(bucketParams));
+            try {
+                await s3Client.send(new DeleteObjectCommand(bucketParams));
+            }
+            catch (err) {
+                throw new Error("Error", err);
+            }
             // console.log("Success. Object deleted.", data);
 
-            console.log(keyVault[i])
+            // console.log(keyVault[i])
 
         }
 
@@ -639,9 +645,13 @@ router.post(
 //FloorPlan stuff
 router.post(
     "/floorPlan",
+    spotValidations.validateCreateFloorPlan,
     asyncHandler(async (req, res) => {
+
         const newFloorPlan = await FloorPlan.create(req.body);
         return res.json(newFloorPlan)
+
+
     })
 )
 router.put(

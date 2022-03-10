@@ -25,16 +25,22 @@ const load_payload = (payload) => ({
 })
 
 
-export const createSpot = (payload) => async dispatch =>{
-    const res = await csrfFetch("/api/spots", {
-        method: "POST",
-        body: JSON.stringify(payload)
-    });
-    if(res.ok){
-        const newSpot = await res.json();
-        console.log("this is my spot", newSpot)
-        return newSpot;
+export const createSpot = (payload) => async dispatch => {
+    try {
+        const res = await csrfFetch("/api/spots", {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            const newSpot = await res.json();
+            console.log("this is my spot", newSpot)
+            return newSpot;
+        }
+    } catch (e) {
+        const error = await e.json();
+        return error
     }
+
 
 }
 
@@ -89,76 +95,86 @@ export const getSpotsUser = (userId) => async dispatch => {
     }
 }
 
-export const addAmenity = (payload) => async dispatch =>{
+export const addAmenity = (payload) => async dispatch => {
     console.log("testing amenity", payload)
-    const res = await csrfFetch(`/api/spots/amenity`,{
+    const res = await csrfFetch(`/api/spots/amenity`, {
         method: "POST",
         body: JSON.stringify(payload)
     })
 }
 
-export const editAmenity = (payload)=>async dispatch =>{
+export const editAmenity = (payload) => async dispatch => {
     console.log(payload)
     const res1 = await csrfFetch(`/api/spots/amenity`, {
         method: "PUT",
         body: JSON.stringify(payload)
     })
 }
-export const deleteAmenity = (payload) => async dispatch =>{
+export const deleteAmenity = (payload) => async dispatch => {
     const res = await csrfFetch(`/api/spots/amenity`, {
         method: "DELETE",
         body: JSON.stringify(payload)
     })
-    if(res.ok){
+    if (res.ok) {
         const deleted = res.json();
         return deleted
     }
 }
 
-export const addFloorPlan = (payload) => async dispatch =>{
-    const res1 = await csrfFetch(`/api/spots/floorPlan`, {
-        method: "POST",
-        body: JSON.stringify(payload)
-    })
+export const addFloorPlan = (payload) => async dispatch => {
+    try {
+        const res1 = await csrfFetch(`/api/spots/floorPlan`, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        })
+        if(res1.ok){
+            const newFloorPlan = await res1.json();
+            return newFloorPlan
+        }
+    }catch(e){
+        const error = await e.json();
+        return error
+    }
+
 }
 
-export const editFloorPlan = (payload) => async dispatch =>{
+export const editFloorPlan = (payload) => async dispatch => {
     const res1 = await csrfFetch(`/api/spots/floorPlan`, {
         method: "PUT",
         body: JSON.stringify(payload)
     })
 }
-export const deleteFloorPlan = (payload) => async dispatch =>{
+export const deleteFloorPlan = (payload) => async dispatch => {
     const res1 = await csrfFetch(`/api/spots/floorPlan`, {
         method: "DELETE",
         body: JSON.stringify(payload)
     })
-    if(res1.ok){
+    if (res1.ok) {
         const deleted = res1.json();
         return deleted
     }
 }
 
-export const addPrivacy = (payload) => async dispatch =>{
+export const addPrivacy = (payload) => async dispatch => {
     const res1 = await csrfFetch(`/api/spots/privacyType`, {
         method: "POST",
         body: JSON.stringify(payload)
     })
 }
 
-export const editPrivacy = (payload) => async dispatch =>{
+export const editPrivacy = (payload) => async dispatch => {
     const res1 = await csrfFetch(`/api/spots/privacyType`, {
         method: "PUT",
         body: JSON.stringify(payload)
     })
 }
 
-export const deletePrivacy = (payload) => async dispatch =>{
+export const deletePrivacy = (payload) => async dispatch => {
     const res1 = await csrfFetch(`/api/spots/privacyType`, {
         method: "DELETE",
         body: JSON.stringify(payload)
     })
-    if(res1.ok){
+    if (res1.ok) {
         let deleted = res1.json();
         return deleted
     }
@@ -172,7 +188,7 @@ export const addSpotType = (payload) => async dispatch => {
     })
 }
 export const addSpotSub = (payload) => async dispatch => {
-    const{newSpotType} = payload
+    const { newSpotType } = payload
     delete payload.newSpotType
     const res2 = await csrfFetch(`/api/spots/${newSpotType}SpotType`, {
         method: "POST",
@@ -194,27 +210,27 @@ export const deleteSpotType = (payload) => async dispatch => {
         method: "DELETE",
         body: JSON.stringify(payload)
     })
-    if(res1.ok){
+    if (res1.ok) {
         let deleted = res1.json();
         return deleted
     }
 }
 
-export  const deleteSpotSub = (payload) => async dispatch =>{
-    const {type} = payload
+export const deleteSpotSub = (payload) => async dispatch => {
+    const { type } = payload
     delete payload.type
-    const res = await csrfFetch(`/api/spots/${type}SpotType`,{
-        method:"DELETE",
+    const res = await csrfFetch(`/api/spots/${type}SpotType`, {
+        method: "DELETE",
         body: JSON.stringify(payload)
     });
-    if(res.ok){
+    if (res.ok) {
         let deleted = res.json();
         return deleted
     }
 
 }
 export const editSpotSub = (payload) => async dispatch => {
-    const{oldSpotType, newSpotType} = payload
+    const { oldSpotType, newSpotType } = payload
 
     delete payload.oldSpotType
     delete payload.newSpotType
@@ -250,7 +266,7 @@ export const editSpotStuff = (payload) => async dispatch => {
             method: "PUT",
             body: JSON.stringify({
                 description,
-                // id: spotId
+                id: spotId
             })
         })
         if (res.ok) {
@@ -289,12 +305,12 @@ export const editSpotStuff = (payload) => async dispatch => {
     }
 }
 
-export const deleteSpot = (payload) => async dispatch =>{
-    const res = await csrfFetch(`/api/spots`,{
+export const deleteSpot = (payload) => async dispatch => {
+    const res = await csrfFetch(`/api/spots`, {
         method: "DELETE",
         body: JSON.stringify(payload)
     })
-    if(res.ok){
+    if (res.ok) {
         let deleted = res.json();
         return deleted;
     }

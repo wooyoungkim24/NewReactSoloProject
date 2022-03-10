@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { editPrivacy,editFloorPlan,editSpotStuff, getSpot, putPhoto, editSpotType, editSpotSub, editAmenity } from "../../store/spot"
+import { editPrivacy, editFloorPlan, editSpotStuff, getSpot, putPhoto, editSpotType, editSpotSub, editAmenity } from "../../store/spot"
 import { csrfFetch } from '../../store/csrf'
 import Cookies from 'js-cookie';
 
@@ -21,7 +21,7 @@ function EditFormPage() {
 
     const [newTitle, setNewTitle] = useState("")
     const [newDesc, setNewDesc] = useState("")
-    const [newCost, setNewCost] = useState("")
+    const [newCost, setNewCost] = useState(0)
     const [newAddress, setNewAddress] = useState("")
     const [newCity, setNewCity] = useState("")
     const [newSpotType, setNewSpotType] = useState("")
@@ -42,36 +42,36 @@ function EditFormPage() {
     const [newKitchen, setNewKitchen] = useState(false)
     const [newWasher, setNewWasher] = useState(false)
 
-    const [newGuests, setNewGuests] = useState(0);
-    const [newBeds, setNewBeds] = useState(0);
-    const [newBedrooms, setNewBedrooms] = useState(0);
-    const [newBathrooms, setNewBathrooms] = useState(0);
+    const [newGuests, setNewGuests] = useState(1);
+    const [newBeds, setNewBeds] = useState(1);
+    const [newBedrooms, setNewBedrooms] = useState(1);
+    const [newBathrooms, setNewBathrooms] = useState(1);
 
     const [oldPrivacyState, setOldPrivacyState] = useState("")
-    const [privacyState, setPrivacyState]= useState("");
+    const [privacyState, setPrivacyState] = useState("");
     // const [entire, setEntire] = useState(false)
     // const [privateR, setPrivateR] = useState(false)
     // const [shared, setShared]= useState(false)
 
 
     console.log(privacyState)
-    const updatePrivacy = (e) =>{
+    const updatePrivacy = (e) => {
         setPrivacyState(e.target.value)
     }
 
 
 
-    const updateGuests = (e) =>{
+    const updateGuests = (e) => {
         setNewGuests(e.target.value)
     }
 
-    const updateBeds = (e) =>{
+    const updateBeds = (e) => {
         setNewBeds(e.target.value)
     }
-    const updateBedrooms = (e) =>{
+    const updateBedrooms = (e) => {
         setNewBedrooms(e.target.value)
     }
-    const updateBathrooms = (e) =>{
+    const updateBathrooms = (e) => {
         setNewBathrooms(e.target.value)
     }
 
@@ -191,7 +191,7 @@ function EditFormPage() {
     const spotInfo = useSelector(state => {
         return state.spots.individualSpot.spot
     })
-    const spotInfoSub = useSelector(state =>{
+    const spotInfoSub = useSelector(state => {
         return state.spots.individualSpot.subType
     })
     const photos = useSelector(state => {
@@ -232,11 +232,14 @@ function EditFormPage() {
         formData.append('File', selectedFile);
         console.log('form', formData)
         // dispatch(putPhoto(payload))
+
+
         await fetch(`/api/spots/photoPost/${key}`, {
             method: "POST",
             headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
             body: formData
         })
+
     }
 
     const handleTitleSubmit = async (e) => {
@@ -284,19 +287,19 @@ function EditFormPage() {
         e.preventDefault();
         const payload = {
             spotId: id,
-            pool:newPool,
-            patio:newPatio,
-            firePit:newFirePit,
-            firePlace:newFirePlace,
-            exerciseEquipment:newExerciseEquipment,
-            wifi:newWifi,
-            tv:newTv,
-            kitchen:newKitchen,
-            washer:newWasher,
-            airConditioning:newAirConditioning,
-            smokeAlarm:newSmokeAlarm,
-            firstAidKit:newFirstAidKit,
-            fireExtinguisher:newFireExtinguisher
+            pool: newPool,
+            patio: newPatio,
+            firePit: newFirePit,
+            firePlace: newFirePlace,
+            exerciseEquipment: newExerciseEquipment,
+            wifi: newWifi,
+            tv: newTv,
+            kitchen: newKitchen,
+            washer: newWasher,
+            airConditioning: newAirConditioning,
+            smokeAlarm: newSmokeAlarm,
+            firstAidKit: newFirstAidKit,
+            fireExtinguisher: newFireExtinguisher
         }
         let editedAmenity = await dispatch(editAmenity(payload))
         history.goBack();
@@ -304,30 +307,30 @@ function EditFormPage() {
     const handleSpotTypeSubmit = async (e) => {
         e.preventDefault();
         console.log("are u working")
-        const oldSpotType= FilterTrue(spotInfo.SpotType)[0]
-        const oldSpotSub= FilterTrue(spotInfoSub)[0]
+        const oldSpotType = FilterTrue(spotInfo.SpotType)[0]
+        const oldSpotSub = FilterTrue(spotInfoSub)[0]
         const payload1 = {
             id,
         }
         const payload2 = {
-            spotId:id,
+            spotId: id,
             oldSpotType,
             newSpotType,
         }
-        payload1[oldSpotType]=false;
-        payload1[newSpotType]=true;
+        payload1[oldSpotType] = false;
+        payload1[newSpotType] = true;
         payload2[oldSpotSub] = false;
-        payload2[newSpotSub] =true;
+        payload2[newSpotSub] = true;
         let editedSpotType = await dispatch(editSpotType(payload1))
         let editedSpotSub = await dispatch(editSpotSub(payload2))
         history.goBack();
     }
 
 
-    const handleFloorPlanSubmit = async (e) =>{
+    const handleFloorPlanSubmit = async (e) => {
         e.preventDefault();
         const payload = {
-            spotId:id,
+            spotId: id,
             guests: newGuests,
             beds: newBeds,
             bedrooms: newBedrooms,
@@ -336,10 +339,10 @@ function EditFormPage() {
         let editedFloorPlan = await dispatch(editFloorPlan(payload))
         history.goBack();
     }
-    const handlePrivacySubmit = async (e) =>{
+    const handlePrivacySubmit = async (e) => {
         e.preventDefault();
         const payload = {
-            spotId:id
+            spotId: id
         }
         payload[oldPrivacyState] = false;
         payload[privacyState] = true
@@ -362,10 +365,11 @@ function EditFormPage() {
                             <form onSubmit={handlePhotoSubmit}>
                                 <label htmlFor="edit-photo-input">Select new Photo</label>
                                 <input
+
                                     id="edit-photo-input"
                                     type="file"
                                     accept="image/*"
-
+                                    required
                                 >
                                 </input>
 
@@ -375,7 +379,9 @@ function EditFormPage() {
                                     id="which-photo-input"
                                     type="number"
                                     min="1"
+                                    max="5"
                                     value={photoNumber}
+                                    required
                                     onChange={updatePhotoNumber}>
 
                                 </input>
@@ -408,7 +414,7 @@ function EditFormPage() {
                                 <textarea
                                     id="edit-description-input"
 
-
+                                    required
                                     value={newDesc}
                                     onChange={updateDesc}>
 
@@ -427,7 +433,7 @@ function EditFormPage() {
                                     id="edit-cost-input"
                                     type='number'
                                     min="0"
-
+                                    required
                                     value={newCost}
                                     onChange={updateCost}>
 
@@ -445,14 +451,14 @@ function EditFormPage() {
                                 <input
                                     id="edit-address-input"
 
-
+                                    required
                                     value={newAddress}
                                     onChange={updateAddress}>
                                 </input>
                                 <label htmlFor="edit-city-input">Change City</label>
                                 <input
                                     id="edit-city-input"
-
+                                    required
                                     value={newCity}
                                     onChange={updateCity}>
                                 </input>
@@ -466,6 +472,7 @@ function EditFormPage() {
                             <form onSubmit={handleSpotTypeSubmit}>
                                 <label htmlFor="edit-spotType-input">Change Address</label>
                                 <select
+                                    required
                                     id="edit-spotType-input"
                                     value={newSpotType}
                                     onChange={updateSpotType}>
@@ -477,9 +484,16 @@ function EditFormPage() {
                                 </select>
                                 <label htmlFor="edit-subtType-input">Change City</label>
                                 <select
+                                    required
                                     id="edit-subType-input"
                                     value={newSpotSub}
                                     onChange={updateSpotSub}>
+
+                                    {newSpotType === "" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                        </>
+                                    }
                                     {newSpotType === "house" &&
                                         <>
                                             <option value="">--Pick a new spot subtype</option>
@@ -530,7 +544,7 @@ function EditFormPage() {
                                     id="edit-amenity-input"
                                     type="checkbox"
 
-                                    checked = {newPool}
+                                    checked={newPool}
 
                                     onChange={updatePool}>
                                 </input>
@@ -538,7 +552,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newPatio}
+                                    checked={newPatio}
 
                                     onChange={updatePatio}>
                                 </input>
@@ -546,7 +560,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newFirePit}
+                                    checked={newFirePit}
 
                                     onChange={updateFirePit}>
                                 </input>
@@ -554,7 +568,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newFirePlace}
+                                    checked={newFirePlace}
 
                                     onChange={updateFirePlace}>
                                 </input>
@@ -562,7 +576,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newExerciseEquipment}
+                                    checked={newExerciseEquipment}
 
                                     onChange={updateExerciseEquipment}>
                                 </input>
@@ -570,7 +584,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newWifi}
+                                    checked={newWifi}
 
                                     onChange={updateWifi}>
                                 </input>
@@ -578,7 +592,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newTv}
+                                    checked={newTv}
 
                                     onChange={updateTv}>
                                 </input>
@@ -586,7 +600,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newKitchen}
+                                    checked={newKitchen}
 
                                     onChange={updateKitchen}>
                                 </input>
@@ -594,7 +608,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newWasher}
+                                    checked={newWasher}
 
                                     onChange={updateWasher}>
                                 </input>
@@ -602,7 +616,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newAirConditioning}
+                                    checked={newAirConditioning}
 
                                     onChange={updateAirConditioning}>
                                 </input>
@@ -610,7 +624,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newSmokeAlarm}
+                                    checked={newSmokeAlarm}
 
                                     onChange={updateSmokeAlarm}>
                                 </input>
@@ -618,7 +632,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newFirstAidKit}
+                                    checked={newFirstAidKit}
 
                                     onChange={updateFirstAidKit}>
                                 </input>
@@ -626,7 +640,7 @@ function EditFormPage() {
                                 <input
                                     id="edit-amenity-input"
                                     type="checkbox"
-                                    checked = {newFireExtinguisher}
+                                    checked={newFireExtinguisher}
 
                                     onChange={updateFireExtinguisher}>
                                 </input>
@@ -640,33 +654,38 @@ function EditFormPage() {
                             <form onSubmit={handleFloorPlanSubmit}>
                                 <label htmlFor="edit-floorplan-input">Change Guests</label>
                                 <input
+                                    required
+
                                     id="edit-floorplan-input"
                                     type="number"
-                                    min = "0"
+                                    min="1"
                                     value={newGuests}
                                     onChange={updateGuests}>
                                 </input>
                                 <label htmlFor="edit-floorplan-input">Change Beds</label>
                                 <input
+                                    required
                                     id="edit-floorplan-input"
                                     type="number"
-                                    min = "0"
+                                    min="1"
                                     value={newBeds}
                                     onChange={updateBeds}>
                                 </input>
                                 <label htmlFor="edit-floorplan-input">Change Bedrooms</label>
                                 <input
+                                    required
                                     id="edit-floorplan-input"
                                     type="number"
-                                    min = "0"
+                                    min="1"
                                     value={newBedrooms}
                                     onChange={updateBedrooms}>
                                 </input>
                                 <label htmlFor="edit-floorplan-input">Change Bathrooms</label>
                                 <input
+                                    required
                                     id="edit-floorplan-input"
                                     type="number"
-                                    min = "0"
+                                    min="1"
                                     value={newBathrooms}
                                     onChange={updateBathrooms}>
                                 </input>
@@ -681,16 +700,19 @@ function EditFormPage() {
                                 <label htmlFor="edit-privacy-input">Entire: </label>
                                 <input
                                     id="edit-privacy-input"
+                                    required
                                     type="radio"
-                                    value = "entire"
-                                    checked = {privacyState === "entire"}
+                                    value="entire"
+                                    name="privacyRadio"
+                                    checked={privacyState === "entire"}
                                     onChange={updatePrivacy}>
                                 </input>
                                 <label htmlFor="edit-privacy-input">Private Room: </label>
                                 <input
                                     id="edit-privacy-input"
                                     type="radio"
-                                    checked = {privacyState === "privateRoom"}
+                                    checked={privacyState === "privateRoom"}
+                                    name="privacyRadio"
                                     value="privateRoom"
                                     onChange={updatePrivacy}>
                                 </input>
@@ -698,7 +720,8 @@ function EditFormPage() {
                                 <input
                                     id="edit-privacy-input"
                                     type="radio"
-                                    checked = {privacyState === "sharedRoom"}
+                                    name="privacyRadio"
+                                    checked={privacyState === "sharedRoom"}
                                     value="sharedRoom"
                                     onChange={updatePrivacy}>
                                 </input>
