@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { getSpot } from "../../store/spot"
+import { getSpot, deleteSpot } from "../../store/spot"
 import "./index.css"
 import EditFormPage from '../EditFormPage';
+import { Modal } from '../../context/Modal';
+import DeleteConfirmModal from '../DeleteConfirmModal';
 
 
 function HostedSpotIndividual() {
@@ -13,6 +15,7 @@ function HostedSpotIndividual() {
     const dispatch = useDispatch();
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         dispatch(getSpot(id)).then(() => setIsLoaded(true))
     }, [dispatch])
@@ -95,6 +98,7 @@ function HostedSpotIndividual() {
         for (let i = 0; i < ourPhotos.length; i++) {
             newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
+
         amenityKey = Object.keys(spotInfo.Amenity)
         const idIndex = amenityKey.indexOf("id")
         amenityKey.splice(idIndex, 1)
@@ -311,6 +315,13 @@ function HostedSpotIndividual() {
                         </div>
                     </div>
                 </div>}
+
+                <button type="button" onClick={()=> setShowModal(true)}>Delete</button>
+                {showModal && (
+                    <Modal onClose = {() => setShowModal(false)}>
+                        <DeleteConfirmModal id = {id}/>
+                    </Modal>
+                )}
         </div>
 
     )

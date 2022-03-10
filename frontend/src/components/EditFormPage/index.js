@@ -42,10 +42,10 @@ function EditFormPage() {
     const [newKitchen, setNewKitchen] = useState(false)
     const [newWasher, setNewWasher] = useState(false)
 
-    const [newGuests, setNewGuests] = useState();
-    const [newBeds, setNewBeds] = useState();
-    const [newBedrooms, setNewBedrooms] = useState();
-    const [newBathrooms, setNewBathrooms] = useState();
+    const [newGuests, setNewGuests] = useState(0);
+    const [newBeds, setNewBeds] = useState(0);
+    const [newBedrooms, setNewBedrooms] = useState(0);
+    const [newBathrooms, setNewBathrooms] = useState(0);
 
     const [oldPrivacyState, setOldPrivacyState] = useState("")
     const [privacyState, setPrivacyState]= useState("");

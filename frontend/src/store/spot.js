@@ -54,9 +54,18 @@ export const putPhoto = (payload) => async dispatch => {
         headers: { "Content-Type": "multipart/form-data" },
         body: payload
     })
-
 }
 
+
+
+export const deletePhotos = (payload) => async dispatch => {
+    console.log('testing payload', payload)
+    await csrfFetch(`/api/spots/photosDelete`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+    return {}
+}
 export const getSpot = (id) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${id}`);
     if (res.ok) {
@@ -76,10 +85,35 @@ export const getSpotsUser = (userId) => async dispatch => {
     }
 }
 
+export const addAmenity = (payload) => async dispatch =>{
+    console.log("testing amenity", payload)
+    const res = await csrfFetch(`/api/spots/amenity`,{
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+}
+
 export const editAmenity = (payload)=>async dispatch =>{
     console.log(payload)
     const res1 = await csrfFetch(`/api/spots/amenity`, {
         method: "PUT",
+        body: JSON.stringify(payload)
+    })
+}
+export const deleteAmenity = (payload) => async dispatch =>{
+    const res = await csrfFetch(`/api/spots/amenity`, {
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    if(res.ok){
+        const deleted = res.json();
+        return deleted
+    }
+}
+
+export const addFloorPlan = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/floorPlan`, {
+        method: "POST",
         body: JSON.stringify(payload)
     })
 }
@@ -90,12 +124,40 @@ export const editFloorPlan = (payload) => async dispatch =>{
         body: JSON.stringify(payload)
     })
 }
+export const deleteFloorPlan = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/floorPlan`, {
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    if(res1.ok){
+        const deleted = res1.json();
+        return deleted
+    }
+}
+
+export const addPrivacy = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/privacyType`, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    })
+}
 
 export const editPrivacy = (payload) => async dispatch =>{
     const res1 = await csrfFetch(`/api/spots/privacyType`, {
         method: "PUT",
         body: JSON.stringify(payload)
     })
+}
+
+export const deletePrivacy = (payload) => async dispatch =>{
+    const res1 = await csrfFetch(`/api/spots/privacyType`, {
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    if(res1.ok){
+        let deleted = res1.json();
+        return deleted
+    }
 }
 
 export const addSpotType = (payload) => async dispatch => {
@@ -121,6 +183,31 @@ export const editSpotType = (payload) => async dispatch => {
         method: "PUT",
         body: JSON.stringify(payload)
     })
+}
+
+export const deleteSpotType = (payload) => async dispatch => {
+    const res1 = await csrfFetch(`/api/spots/spotType`, {
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    if(res1.ok){
+        let deleted = res1.json();
+        return deleted
+    }
+}
+
+export  const deleteSpotSub = (payload) => async dispatch =>{
+    const {type} = payload
+    delete payload.type
+    const res = await csrfFetch(`/api/spots/${type}SpotType`,{
+        method:"DELETE",
+        body: JSON.stringify(payload)
+    });
+    if(res.ok){
+        let deleted = res.json();
+        return deleted
+    }
+
 }
 export const editSpotSub = (payload) => async dispatch => {
     const{oldSpotType, newSpotType} = payload
@@ -195,6 +282,17 @@ export const editSpotStuff = (payload) => async dispatch => {
             const costChanged = await res.json();
             return costChanged;
         }
+    }
+}
+
+export const deleteSpot = (payload) => async dispatch =>{
+    const res = await csrfFetch(`/api/spots`,{
+        method: "DELETE",
+        body: JSON.stringify(payload)
+    })
+    if(res.ok){
+        let deleted = res.json();
+        return deleted;
     }
 }
 

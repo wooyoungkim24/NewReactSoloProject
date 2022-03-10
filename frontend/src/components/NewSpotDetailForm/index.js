@@ -18,6 +18,7 @@ function NewSpotDetailForm({ newSpot }) {
     const [newSpotType, setNewSpotType] = useState("")
     const [newSpotSub, setNewSpotSub] = useState("")
 
+    const [formIsDone, setFormIsDone] = useState(false)
     const updateSpotType = (e) => {
         setNewSpotType(e.target.value)
     }
@@ -25,8 +26,7 @@ function NewSpotDetailForm({ newSpot }) {
         setNewSpotSub(e.target.value)
     }
 
-
-    console.log(newSpot)
+    console.log('do i hav emy spot',newSpot)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -87,16 +87,19 @@ function NewSpotDetailForm({ newSpot }) {
         // })
         // Promise.all([fetch1, fetch2, fetch3, fetch4, fetch5]);
         const spotTypePayload = {
-            spotId:newSpot.id,
+            spotId: newSpot.id,
         }
-        spotTypePayload[newSpotType]=true;
+        spotTypePayload[newSpotType] = true;
         const subTypePayload = {
-            spotId:newSpot.id,
+            spotId: newSpot.id,
             newSpotType
         }
-        subTypePayload[newSpotSub]=true;
+        subTypePayload[newSpotSub] = true;
         let newSpotTypeObject = await dispatch(addSpotType(spotTypePayload))
         let newSpotSubObject = await dispatch(addSpotSub(subTypePayload))
+
+
+
     }
 
 
@@ -104,7 +107,7 @@ function NewSpotDetailForm({ newSpot }) {
     return (
 
         <div className='new-spot-form-container-bottom'>
-            <form className='really-big-form-2' onSubmit={handleSubmit}>
+
                 <div className='photo-upload-container'>
                     <div className='photo-upload-input-div1'>
                         Photos1:
@@ -170,7 +173,7 @@ function NewSpotDetailForm({ newSpot }) {
                         id="add-subType-input"
                         value={newSpotSub}
                         onChange={updateSpotSub}>
-                        {newSpotType === "house"  &&
+                        {newSpotType === "house" &&
                             <>
                                 <option value="">--Pick a new spot subtype</option>
                                 <option value="residential">1--Residential</option>
@@ -179,7 +182,7 @@ function NewSpotDetailForm({ newSpot }) {
                                 <option value="townhouse">4--Townhouse</option>
                             </>
                         }
-                        {newSpotType === "apartment" ||newSpotType === ""&&
+                        {newSpotType === "apartment" || newSpotType === "" &&
                             <>
                                 <option value="">--Pick a new spot subtype</option>
                                 <option value="rental">1--Rental</option>
@@ -207,10 +210,13 @@ function NewSpotDetailForm({ newSpot }) {
                         }
 
                     </select>
+                </div >
+                <div className='spot-types-upload-container'>
+
                 </div>
 
-                <button type="submit">Add</button>
-            </form>
+
+
         </div>
     )
 }

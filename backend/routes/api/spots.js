@@ -15,6 +15,7 @@ const fs = require("fs");
 const path = require('path')
 
 
+
 const upload = multer();
 // router.use(formidable())
 
@@ -30,7 +31,7 @@ router.get(
         try {
             const data = await s3Client.send(new ListObjectsCommand(bucketParams));
             //   console.log("Success", Object.keys(data));
-            //   console.log("Success", data.Contents[0], data.Contents[1]);
+            console.log("Success", data.Contents[0]);
             for (let i = 0; i < data.Contents.length; i++) {
                 let currFile = data.Contents[i]
                 let fileKey = currFile.Key;
@@ -55,7 +56,7 @@ router.get(
             },
             include: [SpotType, Amenity, FloorPlan, Photo, PrivacyType, User]
         })
-        console.log(spots)
+        // console.log(spots)
         return res.json({
             spots,
             photoObj
@@ -237,15 +238,16 @@ router.put(
 router.delete(
     "/",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const spotDelete = Spot.findOne({
+        const { id } = req.body
+        console.log('this is my id', id)
+        const spotDelete = await Spot.findOne({
             where: {
-                id: spotId
+                id
             }
         })
         await Spot.destroy({
             where: {
-                id: spotId
+                id
             }
         })
         return res.json(spotDelete)
@@ -265,7 +267,7 @@ router.post(
 router.put(
     "/spotType",
     asyncHandler(async (req, res) => {
-        const { id} = req.body
+        const { id } = req.body
         console.log(req.body)
         const spotTypeUpdate = await SpotType.findOne({
             where: {
@@ -284,12 +286,12 @@ router.delete(
         const { id } = req.body
         const spotTypeDelete = await SpotType.findOne({
             where: {
-                id
+                spotId: id
             }
         })
         await SpotType.destroy({
             where: {
-                id
+                spotId: id
             }
         })
         return res.json(spotTypeDelete)
@@ -322,15 +324,15 @@ router.put(
 router.delete(
     "/apartmentSpotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
+        const { id } = req.body
         const apartmentSpotTypeDelete = await ApartmentSpotType.findOne({
             where: {
-                spotId
+                spotId: id
             }
         })
         await ApartmentSpotType.destroy({
             where: {
-                spotId
+                spotId: id
             }
         })
         return res.json(apartmentSpotTypeDelete)
@@ -364,16 +366,16 @@ router.put(
 router.delete(
     "/houseSpotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        console.log('thjis is the payload',req.body)
+        const { id } = req.body
+        console.log('thjis is the payload', req.body)
         const houseSpotTypeDelete = await HouseSpotType.findOne({
             where: {
-                spotId
+                spotId: id
             }
         })
         await HouseSpotType.destroy({
             where: {
-                spotId
+                spotId: id
             }
         })
         return res.json(houseSpotTypeDelete)
@@ -406,15 +408,15 @@ router.put(
 router.delete(
     "/secondaryUnitSpotType",
     asyncHandler(async (req, res) => {
-        const {spotId} = req.body
+        const { id } = req.body
         const secondarySpotTypeDelete = await SecondarySpotType.findOne({
             where: {
-                spotId
+                spotId: id
             }
         })
         await SecondarySpotType.destroy({
             where: {
-                spotId
+                spotId: id
             }
         })
         return res.json(secondarySpotTypeDelete)
@@ -447,15 +449,15 @@ router.put(
 router.delete(
     "/bnbSpotType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
+        const { id } = req.body
         const bnbSpotTypeDelete = await BnBSpotType.findOne({
             where: {
-                spotId
+                spotId: id
             }
         })
         await BnBSpotType.destroy({
             where: {
-                spotId
+                spotId: id
             }
         })
         return res.json(bnbSpotTypeDelete)
@@ -487,15 +489,15 @@ router.put(
 router.delete(
     "/privacyType",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const privacyTypeDelete = PrivacyType.findOne({
+        const { id } = req.body
+        const privacyTypeDelete = await PrivacyType.findOne({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         await PrivacyType.destroy({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         return res.json(privacyTypeDelete)
@@ -510,7 +512,7 @@ router.delete(
 router.post(
     "/photoAdd/:key",
     upload.single("File"),
-    asyncHandler(async(req,res) =>{
+    asyncHandler(async (req, res) => {
         const key = req.params.key
         const keyPrep = key.split("_")
         const newKey = keyPrep.join("/")
@@ -536,7 +538,7 @@ router.post(
             console.log("Error", err);
         }
         return {};
-}))
+    }))
 
 
 router.post(
@@ -584,6 +586,54 @@ router.post(
     })
 )
 
+router.post(
+    "/photosDelete",
+    asyncHandler(async (req, res) => {
+
+        const { id } = req.body
+        const bucketParams = { Bucket: "citybrbphotos" };
+        let data;
+        try {
+            data = await s3Client.send(new ListObjectsCommand(bucketParams));
+            console.log("are you rerunning")
+
+            // return data; // For unit tests.
+        } catch (err) {
+            console.log("Error", err);
+        }
+
+        const tester = `Spot${id}`
+
+        const keyVault = []
+        for (let i = 0; i < data.Contents.length; i++) {
+
+            let curr = data.Contents[i].Key
+            let currTestPrep = curr.split("/")
+            let currTest = currTestPrep[0]
+            // console.log(currTestPrep)
+            if (currTest === tester) {
+                keyVault.push(curr)
+            }
+
+        }
+        // console.log(keyVault)
+        for (let i = 0; i < keyVault.length; i++) {
+            const bucketParams = { Bucket: "citybrbphotos", Key: keyVault[i] };
+
+
+            await s3Client.send(new DeleteObjectCommand(bucketParams));
+            // console.log("Success. Object deleted.", data);
+
+            console.log(keyVault[i])
+
+        }
+
+        console.log("are you done yet")
+        return {};
+
+    })
+)
+
 
 
 //FloorPlan stuff
@@ -610,15 +660,15 @@ router.put(
 router.delete(
     "/floorPlan",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const floorPlanDelete = FloorPlan.findOne({
+        const { id } = req.body
+        const floorPlanDelete = await FloorPlan.findOne({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         await FloorPlan.destroy({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         return res.json(floorPlanDelete)
@@ -631,6 +681,7 @@ router.delete(
 router.post(
     "/amenity",
     asyncHandler(async (req, res) => {
+        console.log(req.body)
         const amenities = await Amenity.create(req.body);
         return res.json(amenities)
     })
@@ -654,15 +705,15 @@ router.put(
 router.delete(
     "/amenity",
     asyncHandler(async (req, res) => {
-        const { spotId } = req.body
-        const amenityDelete = Amenity.findOne({
+        const { id } = req.body
+        const amenityDelete = await Amenity.findOne({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         await Amenity.destroy({
             where: {
-                spotId: spotId
+                spotId: id
             }
         })
         return res.json(amenityDelete)

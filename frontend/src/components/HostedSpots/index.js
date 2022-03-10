@@ -82,8 +82,9 @@ function HostedSpots(){
                     <>
                         <ol>
                             {userSpots.map((ele) => {
-
+                                    console.log('wher is my ele',ele)
                                     let ourPhotos = photos[ele.id]
+
                                     console.log(ourPhotos)
                                     let newOurPhotos=[];
                                     for(let i = 0 ; i < ourPhotos.length; i++){
