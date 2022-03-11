@@ -394,15 +394,15 @@ router.put(
 router.delete(
     "/apartmentSpotType",
     asyncHandler(async (req, res) => {
-        const { id } = req.body
+        const { spotId } = req.body
         const apartmentSpotTypeDelete = await ApartmentSpotType.findOne({
             where: {
-                spotId: id
+                spotId
             }
         })
         await ApartmentSpotType.destroy({
             where: {
-                spotId: id
+                spotId
             }
         })
         return res.json(apartmentSpotTypeDelete)
@@ -436,16 +436,16 @@ router.put(
 router.delete(
     "/houseSpotType",
     asyncHandler(async (req, res) => {
-        const { id } = req.body
+        const { spotId } = req.body
         console.log('thjis is the payload', req.body)
         const houseSpotTypeDelete = await HouseSpotType.findOne({
             where: {
-                spotId: id
+                spotId
             }
         })
         await HouseSpotType.destroy({
             where: {
-                spotId: id
+                spotId
             }
         })
         return res.json(houseSpotTypeDelete)
@@ -478,15 +478,15 @@ router.put(
 router.delete(
     "/secondaryUnitSpotType",
     asyncHandler(async (req, res) => {
-        const { id } = req.body
+        const { spotId } = req.body
         const secondarySpotTypeDelete = await SecondarySpotType.findOne({
             where: {
-                spotId: id
+                spotId
             }
         })
         await SecondarySpotType.destroy({
             where: {
-                spotId: id
+                spotId
             }
         })
         return res.json(secondarySpotTypeDelete)
@@ -519,15 +519,15 @@ router.put(
 router.delete(
     "/bnbSpotType",
     asyncHandler(async (req, res) => {
-        const { id } = req.body
+        const { spotId } = req.body
         const bnbSpotTypeDelete = await BnBSpotType.findOne({
             where: {
-                spotId: id
+                spotId
             }
         })
         await BnBSpotType.destroy({
             where: {
-                spotId: id
+                spotId
             }
         })
         return res.json(bnbSpotTypeDelete)

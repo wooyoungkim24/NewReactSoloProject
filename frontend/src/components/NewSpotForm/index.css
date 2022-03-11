@@ -39,3 +39,135 @@
 #new-city-input{
     width:150px;
 }
+
+.photo-upload-container input[type=file]::file-selector-button{
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+
+.preview1 img,.preview2 img,.preview3 img,.preview4 img,.preview5 img{
+    height: 150px;
+    width: auto;
+    margin-left: 50px;
+}
+.preview1,.preview2,.preview3,.preview4,.preview5{
+    border-top:rgb(221,221,221) 2px solid;
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+.preview1 li,.preview2 li,.preview3 li,.preview4 li,.preview5 li{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.preview1 ol,.preview2 ol,.preview3 ol,.preview4 ol,.preview5 ol{
+    padding:0px;
+}
+.photo-upload-container > div{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.spot-types-upload-container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+
+.spot-types-upload-container div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 900px;
+
+    padding-bottom:20px;
+    padding-top: 20px;
+}
+.spot-types-upload-container label{
+    margin-right: 20px;
+}
+.spot-types-upload-container select{
+    font-size: 16px;
+    height: 28px;
+    width: 210px;
+}
+
+.amenity-upload-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 200px;
+    padding-bottom:15px;
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+.amenity-upload-container div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding-top: 15px;
+}
+.amenity-upload-container label{
+    margin-right: 10px;
+}
+.amenity-upload-container input{
+    margin:0px;
+    cursor: pointer;
+}
+
+.floorPlan-upload-container{
+    display: flex;
+    flex-direction: column;
+
+    border-bottom:rgb(221,221,221) 2px solid;
+    padding-bottom:10px;
+    padding-top: 20px;
+}
+.floorPlan-upload-container div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-right: 1050px;
+}
+.floorPlan-upload-container input{
+    height: 25px;
+    font-size: 18px;
+    width: 70px;
+}
+.privacy-upload-container{
+
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+.privacy-upload-container div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.privacy-upload-container input{
+    cursor: pointer;
+    margin: 0px;
+    margin-right: 1100px;
+}
+.new-spot-form-container .button-div{
+    margin-top: 20px;
+    padding-bottom: 15px;
+}
+.new-spot-form-container .button-div #add-button{
+    margin-left: 0px;
+
+}
+.new-spot-form-container .button-div #cancel-button{
+    margin-right: 0px;
+
+}

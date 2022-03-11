@@ -24,7 +24,7 @@ function DeleteConfirmModal ({id}) {
         }
         let type = FilterTrue(spotInfo.SpotType)
         const payloadSpecial = {
-            id,
+            spotId:id,
             type
         }
         await dispatch(deletePhotos(payload))

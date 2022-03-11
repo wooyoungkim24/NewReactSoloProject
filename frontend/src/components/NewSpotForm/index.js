@@ -377,9 +377,9 @@ function NewSpotForm() {
 
                         <div className='photo-upload-container'>
                             <div className='photo-upload-input-div1'>
-                                Photos1:
+                                Photo #1:
                                 <input
-                                    onChange={() =>updateImageDisplay("add-photo-input1", '.preview1')}
+                                    onChange={() => updateImageDisplay("add-photo-input1", '.preview1')}
                                     id="add-photo-input1"
                                     type="file"
                                     accept="image/*"
@@ -392,9 +392,9 @@ function NewSpotForm() {
                             </div>
 
                             <div className='photo-upload-input-div2'>
-                                Photos:
+                                Photo #2:
                                 <input
-                                    onChange={() =>updateImageDisplay("add-photo-input2", '.preview2')}
+                                    onChange={() => updateImageDisplay("add-photo-input2", '.preview2')}
                                     id="add-photo-input2"
                                     type="file"
                                     accept="image/*"
@@ -406,9 +406,9 @@ function NewSpotForm() {
                                 <p>No files currently selected for upload</p>
                             </div>
                             <div className='photo-upload-input-div3'>
-                                Photos:
+                                Photo #3:
                                 <input
-                                    onChange={() =>updateImageDisplay("add-photo-input3", '.preview3')}
+                                    onChange={() => updateImageDisplay("add-photo-input3", '.preview3')}
                                     id="add-photo-input3"
                                     type="file"
                                     accept="image/*"
@@ -420,9 +420,9 @@ function NewSpotForm() {
                                 <p>No files currently selected for upload</p>
                             </div>
                             <div className='photo-upload-input-div4'>
-                                Photos:
+                                Photo #4:
                                 <input
-                                    onChange={() =>updateImageDisplay("add-photo-input4", '.preview4')}
+                                    onChange={() => updateImageDisplay("add-photo-input4", '.preview4')}
                                     id="add-photo-input4"
                                     type="file"
                                     accept="image/*"
@@ -434,9 +434,9 @@ function NewSpotForm() {
                                 <p>No files currently selected for upload</p>
                             </div>
                             <div className='photo-upload-input-div5'>
-                                Photos:
+                                Photo #5:
                                 <input
-                                    onChange={() =>updateImageDisplay("add-photo-input5", '.preview5')}
+                                    onChange={() => updateImageDisplay("add-photo-input5", '.preview5')}
                                     id="add-photo-input5"
                                     type="file"
                                     accept="image/*"
@@ -450,256 +450,328 @@ function NewSpotForm() {
                         </div>
 
                         <div className='spot-types-upload-container'>
-                            <label htmlFor="add-spotType-input">Change Spot Type</label>
-                            <select
-                                required
-                                id="add-spotType-input"
-                                value={newSpotType}
-                                onChange={updateSpotType}>
-                                <option value="">--Pick a new spot type</option>
-                                <option value="apartment">1--Apartment</option>
-                                <option value="house">2--House</option>
-                                <option value="secondaryUnit">3--Secondary Unit</option>
-                                <option value="bnb">4--BnB</option>
+                            <div>
+                                <label htmlFor="add-spotType-input">Spot Type: </label>
+                                <select
+                                    required
+                                    id="add-spotType-input"
+                                    value={newSpotType}
+                                    onChange={updateSpotType}>
+                                    <option value="">--Pick a new spot type</option>
+                                    <option value="apartment">1--Apartment</option>
+                                    <option value="house">2--House</option>
+                                    <option value="secondaryUnit">3--Secondary Unit</option>
+                                    <option value="bnb">4--BnB</option>
 
-                            </select>
-                            <label htmlFor="add-subtType-input">Change Spot SubType</label>
-                            <select
-                                required
-                                id="add-subType-input"
-                                value={newSpotSub}
-                                onChange={updateSpotSub}>
+                                </select>
+                            </div>
 
-                                {newSpotType === "" &&
-                                    <>
-                                        <option value="">--Pick a new spot subtype</option>
-                                    </>
-                                }
+                            <div>
+                                <label htmlFor="add-subtType-input">Spot SubType: </label>
+                                <select
+                                    required
+                                    id="add-subType-input"
+                                    value={newSpotSub}
+                                    onChange={updateSpotSub}>
+
+                                    {newSpotType === "" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                        </>
+                                    }
 
 
-                                {newSpotType === "house" &&
-                                    <>
-                                        <option value="">--Pick a new spot subtype</option>
-                                        <option value="residential">1--Residential</option>
-                                        <option value="cabin">2--Cabin</option>
-                                        <option value="villa">3--Villa</option>
-                                        <option value="townhouse">4--Townhouse</option>
-                                    </>
-                                }
-                                {newSpotType === "apartment" &&
-                                    <>
-                                        <option value="">--Pick a new spot subtype</option>
-                                        <option value="rental">1--Rental</option>
-                                        <option value="condo">2--Condo</option>
-                                        <option value="loft">3--Loft</option>
-                                        <option value="vacationHome">4--Vacation Home</option>
-                                    </>
-                                }
-                                {newSpotType === "bnb" &&
-                                    <>
-                                        <option value="">--Pick a new spot subtype</option>
-                                        <option value="bnb">1--BnB</option>
-                                        <option value="natureLodge">2--Nature Lodge</option>
-                                        <option value="farmStay">3--Farm Stay</option>
-                                    </>
-                                }
-                                {newSpotType === "secondaryUnit" &&
-                                    <>
-                                        <option value="">--Pick a new spot subtype</option>
-                                        <option value="guestHouse">1--Guest House</option>
-                                        <option value="guestSuite">2--Guest Suite</option>
-                                        <option value="farmStay">3--Farm Stay</option>
-                                        <option value="vacationHome">4--Vacation Home</option>
-                                    </>
-                                }
+                                    {newSpotType === "house" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                            <option value="residential">1--Residential</option>
+                                            <option value="cabin">2--Cabin</option>
+                                            <option value="villa">3--Villa</option>
+                                            <option value="townhouse">4--Townhouse</option>
+                                        </>
+                                    }
+                                    {newSpotType === "apartment" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                            <option value="rental">1--Rental</option>
+                                            <option value="condo">2--Condo</option>
+                                            <option value="loft">3--Loft</option>
+                                            <option value="vacationHome">4--Vacation Home</option>
+                                        </>
+                                    }
+                                    {newSpotType === "bnb" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                            <option value="bnb">1--BnB</option>
+                                            <option value="natureLodge">2--Nature Lodge</option>
+                                            <option value="farmStay">3--Farm Stay</option>
+                                        </>
+                                    }
+                                    {newSpotType === "secondaryUnit" &&
+                                        <>
+                                            <option value="">--Pick a new spot subtype</option>
+                                            <option value="guestHouse">1--Guest House</option>
+                                            <option value="guestSuite">2--Guest Suite</option>
+                                            <option value="farmStay">3--Farm Stay</option>
+                                            <option value="vacationHome">4--Vacation Home</option>
+                                        </>
+                                    }
 
-                            </select>
+                                </select>
+                            </div>
+
                         </div >
                         <div className='amenity-upload-container'>
+                            <div>
+                                <label htmlFor="add-amenity-input">Pool</label>
+                                <input
 
-                            <label htmlFor="add-amenity-input">Pool</label>
-                            <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
 
-                                id="add-amenity-input"
-                                type="checkbox"
+                                    checked={newPool}
 
-                                checked={newPool}
+                                    onChange={updatePool}>
+                                </input>
+                            </div>
 
-                                onChange={updatePool}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Patio</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newPatio}
+                            <div>
+                                <label htmlFor="add-amenity-input">Patio</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newPatio}
 
-                                onChange={updatePatio}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Fire Pit</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newFirePit}
+                                    onChange={updatePatio}>
+                                </input>
+                            </div>
 
-                                onChange={updateFirePit}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Fire Place</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newFirePlace}
 
-                                onChange={updateFirePlace}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Exercise Equipment</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newExerciseEquipment}
+                            <div>
+                                <label htmlFor="add-amenity-input">Fire Pit</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newFirePit}
 
-                                onChange={updateExerciseEquipment}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Wifi</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newWifi}
+                                    onChange={updateFirePit}>
+                                </input>
+                            </div>
 
-                                onChange={updateWifi}>
-                            </input>
-                            <label htmlFor="add-amenity-input">TV</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newTv}
 
-                                onChange={updateTv}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Kitchen</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newKitchen}
+                            <div>
+                                <label htmlFor="add-amenity-input">Fire Place</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newFirePlace}
 
-                                onChange={updateKitchen}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Washer</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newWasher}
+                                    onChange={updateFirePlace}>
+                                </input>
+                            </div>
 
-                                onChange={updateWasher}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Air Conditioning</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newAirConditioning}
 
-                                onChange={updateAirConditioning}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Smoke Alarm</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newSmokeAlarm}
+                            <div>
+                                <label htmlFor="add-amenity-input">Exercise Equipment</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newExerciseEquipment}
 
-                                onChange={updateSmokeAlarm}>
-                            </input>
-                            <label htmlFor="add-amenity-input">First Aid Kit</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newFirstAidKit}
+                                    onChange={updateExerciseEquipment}>
+                                </input>
+                            </div>
 
-                                onChange={updateFirstAidKit}>
-                            </input>
-                            <label htmlFor="add-amenity-input">Fire Extinguisher</label>
-                            <input
-                                id="add-amenity-input"
-                                type="checkbox"
-                                checked={newFireExtinguisher}
 
-                                onChange={updateFireExtinguisher}>
-                            </input>
+                            <div>
+                                <label htmlFor="add-amenity-input">Wifi</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newWifi}
+
+                                    onChange={updateWifi}>
+                                </input>
+                            </div>
+
+
+                            <div>
+                                <label htmlFor="add-amenity-input">TV</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newTv}
+
+                                    onChange={updateTv}>
+                                </input>
+                            </div>
+
+
+                            <div>
+                                <label htmlFor="add-amenity-input">Kitchen</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newKitchen}
+
+                                    onChange={updateKitchen}>
+                                </input>
+                            </div>
+
+                            <div>
+                                <label htmlFor="add-amenity-input">Washer</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newWasher}
+
+                                    onChange={updateWasher}>
+                                </input>
+                            </div>
+
+
+                            <div>
+                                <label htmlFor="add-amenity-input">Air Conditioning</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newAirConditioning}
+
+                                    onChange={updateAirConditioning}>
+                                </input>
+                            </div>
+
+                            <div>
+                                <label htmlFor="add-amenity-input">Smoke Alarm</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newSmokeAlarm}
+
+                                    onChange={updateSmokeAlarm}>
+                                </input>
+                            </div>
+
+
+                            <div>
+                                <label htmlFor="add-amenity-input">First Aid Kit</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newFirstAidKit}
+
+                                    onChange={updateFirstAidKit}>
+                                </input>
+                            </div>
+
+                            <div>
+                                <label htmlFor="add-amenity-input">Fire Extinguisher</label>
+                                <input
+                                    id="add-amenity-input"
+                                    type="checkbox"
+                                    checked={newFireExtinguisher}
+
+                                    onChange={updateFireExtinguisher}>
+                                </input>
+                            </div>
+
                         </div>
 
                         <div className='floorPlan-upload-container'>
+                            <div>
+                                <label htmlFor="add-floorplan-input">Guests: </label>
+                                <input
+                                    required
+                                    id="add-floorplan-input"
+                                    type="number"
+                                    min="1"
+                                    value={newGuests}
+                                    onChange={updateGuests}>
+                                </input>
+                            </div>
 
-                            <label htmlFor="add-floorplan-input">Change Guests</label>
-                            <input
-                                required
-                                id="add-floorplan-input"
-                                type="number"
-                                min="1"
-                                value={newGuests}
-                                onChange={updateGuests}>
-                            </input>
-                            <label htmlFor="add-floorplan-input">Change Beds</label>
-                            <input
-                                required
-                                id="add-floorplan-input"
-                                type="number"
-                                min="1"
-                                value={newBeds}
-                                onChange={updateBeds}>
-                            </input>
-                            <label htmlFor="add-floorplan-input">Change Bedrooms</label>
-                            <input
-                                required
-                                id="add-floorplan-input"
-                                type="number"
-                                min="1"
-                                value={newBedrooms}
-                                onChange={updateBedrooms}>
-                            </input>
-                            <label htmlFor="add-floorplan-input">Change Bathrooms</label>
-                            <input
-                                required
-                                id="add-floorplan-input"
-                                type="number"
-                                min="1"
-                                value={newBathrooms}
-                                onChange={updateBathrooms}>
-                            </input>
+
+                            <div>
+                                <label htmlFor="add-floorplan-input">Beds: </label>
+                                <input
+                                    required
+                                    id="add-floorplan-input"
+                                    type="number"
+                                    min="1"
+                                    value={newBeds}
+                                    onChange={updateBeds}>
+                                </input>
+                            </div>
+
+                            <div>
+                                <label htmlFor="add-floorplan-input">Bedrooms: </label>
+                                <input
+                                    required
+                                    id="add-floorplan-input"
+                                    type="number"
+                                    min="1"
+                                    value={newBedrooms}
+                                    onChange={updateBedrooms}>
+                                </input>
+                            </div>
+
+                            <div>
+                                <label htmlFor="add-floorplan-input">Bathrooms: </label>
+                                <input
+                                    required
+                                    id="add-floorplan-input"
+                                    type="number"
+                                    min="1"
+                                    value={newBathrooms}
+                                    onChange={updateBathrooms}>
+                                </input>
+                            </div>
+
 
 
 
                         </div>
 
                         <div className='privacy-upload-container'>
+                            <div>
+                                <label htmlFor="add-privacy-input">Entire Unit: </label>
+                                <input
+                                    required
+                                    id="add-privacy-input"
+                                    type="radio"
+                                    value="entire"
+                                    name="privacyRadio"
+                                    checked={privacyState === "entire"}
+                                    onChange={updatePrivacy}>
+                                </input>
+                            </div>
 
-                            <label htmlFor="add-privacy-input">Entire: </label>
-                            <input
-                                required
-                                id="add-privacy-input"
-                                type="radio"
-                                value="entire"
-                                name="privacyRadio"
-                                checked={privacyState === "entire"}
-                                onChange={updatePrivacy}>
-                            </input>
-                            <label htmlFor="add-privacy-input">Private Room: </label>
-                            <input
+                            <div>
+                                <label htmlFor="add-privacy-input">Private Room: </label>
+                                <input
 
-                                id="add-privacy-input"
-                                type="radio"
-                                name="privacyRadio"
-                                checked={privacyState === "privateRoom"}
-                                value="privateRoom"
-                                onChange={updatePrivacy}>
-                            </input>
-                            <label htmlFor="add-privacy-input">Shared Room: </label>
-                            <input
+                                    id="add-privacy-input"
+                                    type="radio"
+                                    name="privacyRadio"
+                                    checked={privacyState === "privateRoom"}
+                                    value="privateRoom"
+                                    onChange={updatePrivacy}>
+                                </input>
+                            </div>
 
-                                id="add-privacy-input"
-                                type="radio"
-                                name="privacyRadio"
-                                checked={privacyState === "sharedRoom"}
-                                value="sharedRoom"
-                                onChange={updatePrivacy}>
-                            </input>
+                            <div>
+                                <label htmlFor="add-privacy-input">Shared Room: </label>
+                                <input
+
+                                    id="add-privacy-input"
+                                    type="radio"
+                                    name="privacyRadio"
+                                    checked={privacyState === "sharedRoom"}
+                                    value="sharedRoom"
+                                    onChange={updatePrivacy}>
+                                </input>
+                            </div>
+
 
                         </div>
 
@@ -708,7 +780,7 @@ function NewSpotForm() {
 
                 </form>
                 <div className='button-div'>
-                    <button id='add-button' form="add-spot-form" type='submit'>Change</button>
+                    <button id='add-button' form="add-spot-form" type='submit'>Add</button>
                     <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                 </div>
             </div>
