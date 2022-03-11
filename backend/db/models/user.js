@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         len: [3, 256]
       }
     },
+    photo:{
+      type: DataTypes.TEXT
+    },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
@@ -55,6 +58,8 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     // User.hasMany(models.Business, {foreignKey: "ownerId"})
     // User.hasMany(models.Review, {foreignKey: "userId"})
+    User.hasMany(models.Spot, {foreignKey: "userId"})
+    User.hasMany(models.Booking, {foreignKey:"userId"})
   };
 
 

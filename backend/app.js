@@ -7,12 +7,13 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const { environment } = require('./config');
 const { ValidationError } = require('sequelize');
+const fileUpload = require('express-fileupload');
 
 
 const isProduction = environment === 'production';
 
 const app = express();
-
+app.use(fileUpload());
 app.use(morgan('dev'));
 
 app.use(cookieParser());
