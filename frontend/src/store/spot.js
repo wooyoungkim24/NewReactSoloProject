@@ -25,6 +25,7 @@ const load_payload = (payload) => ({
 })
 
 
+
 export const createSpot = (payload) => async dispatch => {
     try {
         const res = await csrfFetch("/api/spots", {

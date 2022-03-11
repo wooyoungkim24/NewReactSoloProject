@@ -21,12 +21,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      bookedStart:{
-        type: Sequelize.DATEONLY
-      },
-      bookedEnd:{
-        type:Sequelize.DATEONLY
-      },
       description: {
         allowNull: false,
         type: Sequelize.TEXT

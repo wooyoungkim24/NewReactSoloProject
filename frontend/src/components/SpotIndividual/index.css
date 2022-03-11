@@ -86,3 +86,50 @@ div.intro-profile-photo{
     padding-bottom:15px;
     border-bottom: rgb(221,221,221) 2px solid;
 }
+.description{
+    border-bottom: rgb(221,221,221) 2px solid;
+}
+.amenitiesContainer{
+    margin-top: 20px;
+    display:flex;
+    flex-direction: row;
+
+}
+#rightAmenities{
+    margin-left: 15px;
+}
+#leftAmenities > div{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+#rightAmenities > div{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+#leftAmenities > div > div{
+    margin-right: 10px;
+}
+#rightAmenities > div > div{
+    margin-right: 10px;
+}
+#showMoreButton, #showLessButton{
+    cursor: pointer;
+    background-color: white;
+    border: rgb(221,221,221) 2px solid;
+    border-radius: 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.amenities{
+    border-bottom: rgb(221,221,221) 2px solid;
+}
+.calendar{
+    margin-top: 20px;
+}
+.calendar-end{
+    margin-left: 40px;
+}

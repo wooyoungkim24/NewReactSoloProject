@@ -145,6 +145,8 @@ router.get(
     }))
 
 
+
+
 //Read Spots - Specific
 //Find by primary key
 router.get(
@@ -729,4 +731,11 @@ router.delete(
         return res.json(amenityDelete)
     })
 )
+
+
+
+
+
+
+
 module.exports = router;

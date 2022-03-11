@@ -6,6 +6,7 @@ import Navigation from '../Navigation';
 import { getSpots } from "../../store/spot"
 import "./index.css"
 import moment from 'moment'
+import { getBookings } from '../../store/booking';
 
 function SpotsLocation() {
     const dispatch = useDispatch();
@@ -37,17 +38,44 @@ function SpotsLocation() {
     let endSearchDateFull = new Date(endSearchYear, endSearchMonth,endSearchDate)
 
     const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoadedSecond, setIsLoadedSecond] = useState(false)
+    const [bookingsLocation, setBookingsLocation] = useState({})
 
 
-
-
-
+    const bookings = useSelector(state =>{
+        return state.bookings.bookings
+    })
     useEffect(() => {
         dispatch(sessionActions.restoreUser())
+
+        dispatch(getBookings())
         dispatch(getSpots(city)).then(() => setIsLoaded(true))
+
     }, [dispatch])
 
 
+    const didMountRef = useRef(0)
+    useEffect (() =>{
+        if(didMountRef.current === 1){
+            for(let i = 0 ; i < bookings.length; i ++){
+                let curr = bookings[i]
+                // console.log(curr)
+                let currId = curr.spotId
+                // console.log(curr.Spot.city,city)
+                if(curr.Spot.city === city){
+                    if(!bookingsLocation[currId]){
+                        bookingsLocation[currId] = [curr]
+                    }
+                    else{
+                        bookingsLocation[currId] = [...bookingsLocation[currId], curr]
+                    }
+                }
+            }
+            setIsLoadedSecond(true)
+        }
+        console.log(bookingsLocation)
+        didMountRef.current +=1;
+    },[isLoaded])
 
     const photos = useSelector(state =>{
         return state.spots.photoObjAll
@@ -107,19 +135,16 @@ function SpotsLocation() {
 
     return (
         <div className="spots-page">
-            <div className='navbar-spots'>
 
-            </div>
 
             <div className='spots-list-container'>
-                {isLoaded &&
+                {isLoadedSecond &&
                     <>
                         <ol>
                             {allSpots.map((ele) => {
-                                const start = ele.bookedStart;
-                                const end = ele.bookedStart;
-                                let ourPhotos = photos[ele.id]
 
+                                let ourPhotos = photos[ele.id]
+                                let placeholder = false;
                                 let newOurPhotos = [];
                                 for(let i = 0 ; i < ourPhotos.length; i++){
                                     newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${ele.id}/`+ourPhotos[i])
@@ -141,23 +166,49 @@ function SpotsLocation() {
                                 //     endMonth = months.indexOf(end.split(" ")[0])
                                 //     endDate = parseInt(end.split(" ")[1])
                                 // }
-                                let beforeOk = false;
-                                let afterOk = false;
-                                if (start && end) {
-                                    if (startSearchDateFull < start && endSearchDateFull< start) {
-                                        beforeOk = true;
+                                let currId = ele.id;
+                                // console.log(bookingsLocation)
+                                console.log("testing", currId in bookingsLocation)
+                                if(!(currId in bookingsLocation)){
+                                    placeholder = true
+                                }else{
+                                    for(let i = 0; i < bookingsLocation[currId].length; i ++){
+
+                                        let currBooking = bookingsLocation[currId][i];
+                                        let startBooked = new Date(currBooking.checkIn)
+                                        let endBooked = new Date(currBooking.checkOut)
+                                        // console.log("where are my dates",startSearchDateFull, endSearchDateFull)
+
+                                        let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >=startBooked)
+                                        let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >=startBooked)
+                                        let thirdLogic = (startSearchDateFull<=startBooked && endSearchDateFull >=endBooked)
+                                        console.log('testingxd', firstLogic, secondLogic, currId)
+                                        console.log('what is the placeholder',placeholder)
+                                        if(firstLogic){
+                                            placeholder = false;
+                                            break;
+                                        }
+                                        if(secondLogic){
+                                            placeholder=false;
+                                            break;
+                                        }
+                                        if(thirdLogic){
+                                            placeholder=false;
+                                            break;
+                                        }
+                                        placeholder=true;
+                                        // if(!firstLogic){
+                                        //     placeholder=true;
+                                        // }
+                                        // if(!secondLogic){
+                                        //     placeholder=true;
+                                        // }
                                     }
-                                    if (startSearchDateFull > end && endSearchDateFull>end) {
-                                        afterOk = true;
-                                    }
-                                }
-                                if (!start && !end) {
-                                    beforeOk = true;
-                                    afterOk = true;
+
                                 }
 
 
-                                if (beforeOk || afterOk) {
+                                if (placeholder) {
                                     const spotId = ele.id
                                     const privacyType = FilterTrue(ele.PrivacyType)[0]
 

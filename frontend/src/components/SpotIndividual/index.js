@@ -4,6 +4,7 @@ import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
 import { getSpots, getSpot } from "../../store/spot"
+import { getBookingsId } from '../../store/booking';
 import "./index.css"
 
 import Calendar from 'react-calendar'
@@ -13,36 +14,36 @@ import moment from 'moment'
 function SpotIndividual() {
     const dispatch = useDispatch();
     const { idDates } = useParams();
-    console.log(idDates)
+    console.log('this is my search', idDates)
+
     const id = idDates.split("_")[0]
     const start = idDates.split("_")[1];
     const end = idDates.split("_")[2];
-    let checkedStart = null;
-    let checkedEnd = null;
-    if (start) {
-        checkedStart = new Date(start)
-    }
-    if (end) {
-        checkedEnd = new Date(end)
-    }
+    let checkedStart=new Date(start);
+    let checkedEnd = new Date(end);
+
 
 
 
     const history = useHistory();
-    const [dateStateStart, setDateStateStart] = useState(new Date())
-    const [dateStateEnd, setDateStateEnd] = useState(new Date())
+    const [dateStateStart, setDateStateStart] = useState(checkedStart)
+    const [dateStateEnd, setDateStateEnd] = useState(checkedEnd)
     const [isLoaded, setIsLoaded] = useState(false);
     const [privacyText, setPrivacyText] = useState("")
     const [spotType, setSpotType] = useState("")
     const [spotTypeSub, setSpotTypeSub] = useState("")
     const [showMore, setShowMore] = useState(false);
-    const [bookedStart, setBookedStart] = useState(new Date())
+    const [newBookings, setNewBookings] = useState([])
+
     const [bookedEnd, setBookedEnd] = useState(new Date())
     const individualSpot = useSelector(state => {
         return state.spots.individualSpot
     })
-    const photos = useSelector(state =>{
+    const photos = useSelector(state => {
         return state.spots.individualSpot.photoObj
+    })
+    const bookings = useSelector(state =>{
+        return state.bookings.bookings
     })
     const changeDateStart = (e) => {
         setDateStateStart(e)
@@ -61,10 +62,9 @@ function SpotIndividual() {
         return arr;
     }
 
-    let disabledArray = [];
-    if (bookedStart && bookedEnd) {
-        disabledArray = getDisabledArray(bookedStart, bookedEnd)
-    }
+
+
+
 
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
@@ -77,9 +77,9 @@ function SpotIndividual() {
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                if(upperLetter === ""){
+                if (upperLetter === "") {
                     upperLetter = curr
-                }else{
+                } else {
                     upperLetter2 = curr
                 }
             }
@@ -115,11 +115,12 @@ function SpotIndividual() {
     }
     useEffect(() => {
         dispatch(sessionActions.restoreUser())
+        dispatch(getBookingsId({spotId:id}))
         dispatch(getSpot(id)).then(() => setIsLoaded(true))
     }, [dispatch])
 
     const didMountRef = useRef(0);
-
+    let disabledArray =[];
     useEffect(() => {
         if (didMountRef.current === 1) {
             let spotTypeTemp = FilterTrue(individualSpot.spot.SpotType)
@@ -140,29 +141,34 @@ function SpotIndividual() {
             else {
                 setPrivacyText(camelToWord(privacyType[0]))
             }
+            setNewBookings(bookings)
 
 
-            setBookedStart(individualSpot.spot.bookedStart)
-            setBookedEnd(individualSpot.spot.bookedEnd)
+
+
+            // console.log('timing',disabledArray)
+
+
+
         }
         didMountRef.current += 1;
     }, [isLoaded])
 
     let amenitiesShow;
     let ourPhotos;
-    let newOurPhotos =[];
+    let newOurPhotos = [];
     if (isLoaded) {
         ourPhotos = photos[id]
 
-        ourPhotos.map(ele =>{
-            let newString = `https://citybrbphotos.s3.amazonaws.com/`+`Spot${id}/`+ele;
+        ourPhotos.map(ele => {
+            let newString = `https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ele;
             // console.log(newString)
             return newString
         })
-        for(let i = 0 ; i < ourPhotos.length; i++){
-            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${id}/`+ourPhotos[i])
+        for (let i = 0; i < ourPhotos.length; i++) {
+            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
-        console.log('new',newOurPhotos)
+        console.log('new', newOurPhotos)
 
 
 
@@ -316,8 +322,6 @@ function SpotIndividual() {
                                 </div>
                             </div>
                         }
-                    </div>
-                    <div id="rightAmenities">
                         {exerciseEquipment &&
                             <div id="orderAmenities">
                                 <div id="amenityIconUp">
@@ -381,6 +385,9 @@ function SpotIndividual() {
                                 </div>
                             </div>
                         }
+                    </div>
+                    <div id="rightAmenities">
+
                         {kitchen &&
                             <div id="orderAmenities">
                                 <div id="amenityIconUp">
@@ -513,6 +520,11 @@ function SpotIndividual() {
             )
         }
     }
+    for(let i = 0; i < newBookings.length; i ++){
+        let curr = newBookings[i]
+        // console.log('checkingIn', getDisabledArray(new Date(curr.checkIn), new Date(curr.checkOut)))
+        disabledArray = [...disabledArray,...getDisabledArray(new Date(curr.checkIn), new Date(curr.checkOut))]
+    }
 
 
     return (
@@ -574,6 +586,7 @@ function SpotIndividual() {
 
                             <div className='calendar'>
                                 <div className='calendar-start'>
+                                    {/* {console.log('where is my disabled array', disabledArray)} */}
                                     <Calendar
                                         minDate={new Date()}
                                         value={dateStateStart}
@@ -585,6 +598,7 @@ function SpotIndividual() {
                                                 date.getMonth() === disabledDate.getMonth() &&
                                                 date.getDate() === disabledDate.getDate()
                                             )}
+
                                     />
                                 </div>
                                 <div className='calendar-end'>
@@ -599,6 +613,7 @@ function SpotIndividual() {
                                                 date.getMonth() === disabledDate.getMonth() &&
                                                 date.getDate() === disabledDate.getDate()
                                             )}
+
                                     />
                                 </div>
                             </div>

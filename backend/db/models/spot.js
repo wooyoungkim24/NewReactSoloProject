@@ -5,8 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     costPerNight: DataTypes.INTEGER,
-    bookedStart: DataTypes.DATEONLY,
-    bookedEnd:DataTypes.DATEONLY,
     address: DataTypes.STRING,
     city: DataTypes.STRING
   }, {});

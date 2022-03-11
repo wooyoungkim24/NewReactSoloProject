@@ -57,7 +57,7 @@ module.exports = {
      {userId: 2,title: "Brand new designer entire apartment/LES", description: descriptionsNewYork[4], costPerNight: 110, address: "189 Bowery, New York, New York", city: "NewYork"},
 
     //Chicago
-     {userId: 2,title: "Clean & Renovated, Walking to distance to lake!", description: descriptionsChicago[0], costPerNight: 85, address: "1366 North Dearborn Street, Chicago, Illinois", city: "Chicago", bookedStart:new Date(), bookedEnd:new Date()},
+     {userId: 2,title: "Clean & Renovated, Walking to distance to lake!", description: descriptionsChicago[0], costPerNight: 85, address: "1366 North Dearborn Street, Chicago, Illinois", city: "Chicago"},
      {userId: 3,title: "Perfect 4 long term Ultra Sophisticated large room", description: descriptionsChicago[1], costPerNight: 40, address: "4713 North Drake Ave, Chicago, Illinois", city: "Chicago"},
      {userId: 4,title: "Cozy 1 bedroom Condo in wonderful neighborhood", description: descriptionsChicago[2], costPerNight: 60, address: "4451 South Greenwood Ave, Chicago, Illinois", city: "Chicago"},
      {userId: 7,title: "Pierce Place Garden", description: descriptionsChicago[3], costPerNight: 81, address: "2300 West Wabansia Ave, Chicago, Illinois", city: "Chicago"},
