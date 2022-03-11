@@ -541,7 +541,7 @@ function SpotIndividual() {
 
                     <div className='individual-image-container'>
                         <div id='individual-image-big-container'>
-                            <img id="individual-image-big" src={newOurPhotos[4]} />
+                            <img id="individual-image-big" src={newOurPhotos[0]} />
                         </div>
 
                         <div id='individual-image-small-container'>

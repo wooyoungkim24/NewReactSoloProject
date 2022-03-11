@@ -6,7 +6,7 @@ import Navigation from '../Navigation';
 import { editPrivacy, editFloorPlan, editSpotStuff, getSpot, putPhoto, editSpotType, editSpotSub, editAmenity } from "../../store/spot"
 import { csrfFetch } from '../../store/csrf'
 import Cookies from 'js-cookie';
-
+import "./index.css"
 
 function EditFormPage() {
     const dispatch = useDispatch();
@@ -242,6 +242,56 @@ function EditFormPage() {
 
     }
 
+    function returnFileSize(number) {
+        if (number < 1024) {
+            return number + 'bytes';
+        } else if (number >= 1024 && number < 1048576) {
+            return (number / 1024).toFixed(1) + 'KB';
+        } else if (number >= 1048576) {
+            return (number / 1048576).toFixed(1) + 'MB';
+        }
+    }
+
+
+
+    function updateImageDisplay() {
+        const photoInput = document.getElementById('edit-photo-input')
+
+        const preview = document.querySelector('.preview');
+        while (preview.firstChild) {
+            preview.removeChild(preview.firstChild);
+        }
+
+
+        const curFiles = photoInput.files
+        if (curFiles.length === 0) {
+            const para = document.createElement('p');
+            para.textContent = 'No files currently selected for upload';
+            preview.appendChild(para);
+        } else {
+            const list = document.createElement('ol');
+            preview.appendChild(list);
+            const listItem = document.createElement('li')
+            const file = curFiles[0]
+            const para = document.createElement('p')
+            para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+            const image = document.createElement('img')
+            image.src = URL.createObjectURL(file)
+
+            listItem.appendChild(para);
+            listItem.appendChild(image);
+
+
+            list.appendChild(listItem)
+        }
+    }
+
+
+
+
+
+
+
     const handleTitleSubmit = async (e) => {
         e.preventDefault();
         const payload = {
@@ -358,53 +408,72 @@ function EditFormPage() {
     return (
         <>
             {isLoaded &&
-                <div>
+                <div className='edit-form-container'>
                     {console.log(formType)}
                     {formType === "photo" &&
                         <div>
-                            <form onSubmit={handlePhotoSubmit}>
-                                <label htmlFor="edit-photo-input">Select new Photo</label>
-                                <input
+                            <form className='edit-photo-form' onSubmit={handlePhotoSubmit}>
+                                <div className='edit-photo-top'>
+                                    <div className='photo-file-input'>
+                                        <label id='edit-photo-input-label' htmlFor="edit-photo-input">Select new Photo</label>
+                                        <input
+                                            onChange={updateImageDisplay}
+                                            id="edit-photo-input"
+                                            type="file"
+                                            accept="image/*"
+                                            required
+                                        >
+                                        </input>
+                                    </div>
 
-                                    id="edit-photo-input"
-                                    type="file"
-                                    accept="image/*"
-                                    required
-                                >
-                                </input>
+
+                                    <div class="preview">
+                                        <p>No files currently selected for upload</p>
+                                    </div>
+                                </div>
+                                <div className='edit-photo-bottom'>
+                                    <label htmlFor="which-photo-input">Which Photo to Replace</label>
+                                    <input
+                                        id="which-photo-input"
+                                        type="number"
+                                        min="1"
+                                        max="5"
+                                        value={photoNumber}
+                                        required
+                                        onChange={updatePhotoNumber}>
+                                    </input>
+                                </div>
 
 
-                                <label htmlFor="which-photo-input">Which Photo to Replace</label>
-                                <input
-                                    id="which-photo-input"
-                                    type="number"
-                                    min="1"
-                                    max="5"
-                                    value={photoNumber}
-                                    required
-                                    onChange={updatePhotoNumber}>
 
-                                </input>
-                                <button type='submit'>Add</button>
 
                             </form>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-photo-form" type='submit'>Add</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
+
                         </div>
                     }
                     {formType === "title" &&
                         <div>
-                            <form onSubmit={handleTitleSubmit}>
-                                <label htmlFor="edit-title-input">Edit Title</label>
+                            <form id='edit-title-form' onSubmit={handleTitleSubmit}>
+                                <label htmlFor="edit-title-input">Edit Title: </label>
                                 <input
                                     id="edit-title-input"
                                     type="text"
-
+                                    required
                                     value={newTitle}
                                     onChange={updateTitle}>
 
                                 </input>
-                                <button type='submit'>Change</button>
+
 
                             </form>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-title-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
                     {formType === "description" &&
@@ -422,12 +491,13 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
 
                     {formType === "cost" &&
                         <div>
-                            <form onSubmit={handleCostSubmit}>
+                            <form id='cost-form-edit' onSubmit={handleCostSubmit}>
                                 <label htmlFor="edit-cost-input">Change Cost per Night</label>
                                 <input
                                     id="edit-cost-input"
@@ -438,9 +508,11 @@ function EditFormPage() {
                                     onChange={updateCost}>
 
                                 </input>
-                                <button type='submit'>Change</button>
+
 
                             </form>
+                            <button form='cost-form-edit' type='submit'>Change</button>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
 
@@ -465,6 +537,7 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
                     {formType === "spotType" &&
@@ -534,6 +607,7 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
                     {formType === "amenity" &&
@@ -647,6 +721,7 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
                     {formType === "floorPlan" &&
@@ -692,6 +767,7 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
                     {formType === "privacy" &&
@@ -728,6 +804,7 @@ function EditFormPage() {
                                 <button type='submit'>Change</button>
 
                             </form>
+                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                         </div>
                     }
 

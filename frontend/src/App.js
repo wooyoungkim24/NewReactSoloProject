@@ -57,7 +57,7 @@ function App() {
             <NewSpotForm />
           </Route>
         </Switch>
-      )
+
     </>
   );
 }

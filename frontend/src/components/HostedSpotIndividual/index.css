@@ -12,3 +12,115 @@
     width: 700px;
     height:auto;
 }
+
+.profile-render-div{
+
+    margin:auto;
+    width: 1150px;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}
+.profile-render-div button{
+    cursor: pointer;
+    margin-left: 20px;
+    height: 40px;
+    width: 150px;
+    font-size: 16px;
+}
+.profile-hosted-spot-container{
+    margin-top:20px;
+}
+
+.edit-title-top,.edit-desc-top,.edit-cost-top,.edit-address-top,.edit-spotType-top,.edit-amenities-top,.edit-floorPlan-top,.edit-privacyType-top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+#edit-picture-button{
+    margin:0;
+}
+.bottom-profile-hosted-spot{
+    margin-top: 20px;
+}
+
+.edit-title-div{
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-desc-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-desc-bottom p{
+    line-height: 25px;
+}
+.edit-cost-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-cost-bottom p{
+    font-size: 20px;
+}
+.edit-address-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-address-bottom p{
+    font-size: 20px;
+}
+.edit-spotType-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-spotType-bottom p{
+    font-size: 20px;
+}
+.edit-amenities-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-amenities-bottom div{
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+}
+#amenity-name-edit-yes,#amenity-name-edit-no {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.edit-amenities-bottom{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap ;
+}
+.edit-floorPlan-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-floorPlan-bottom p{
+    font-size: 16px;
+}
+.edit-privacyType-div{
+    margin-top:20px;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 20px;
+}
+.edit-privacyType-bottom p{
+    font-size: 22px;
+    font-weight: 550;
+}
+#delete-spot-button{
+    margin:0px;
+    margin-top: 20px;
+}

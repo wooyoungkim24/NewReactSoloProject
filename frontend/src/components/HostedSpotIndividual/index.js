@@ -113,24 +113,33 @@ function HostedSpotIndividual() {
 
     return (
         <div className='profile-render-div'>
-
             {isLoaded &&
                 <div className='profile-hosted-spot-container'>
                     <div className='top-profile-hosted-spot'>
-                        <div className='profile-user-photo'>
-                            <img src={spotInfo.User.photo}></img>
-                        </div>
+
                         <div className='hosted-spot-photo-container'>
-                            <div className='hosted-spot-photo'>
+                            <div className='individual-image-container'>
+                                <div id='individual-image-big-container'>
+                                    <img id="individual-image-big" src={newOurPhotos[0]} />
+                                </div>
 
-                                <img src={newOurPhotos[4]}></img>
-
+                                <div id='individual-image-small-container'>
+                                    <div id='individual-image-small-top'>
+                                        <img id="individual-image-small" src={newOurPhotos[1]} />
+                                        <img id="individual-image-small" src={newOurPhotos[2]} />
+                                    </div>
+                                    <div id='individual-image-small-bottom'>
+                                        <img id="individual-image-small" src={newOurPhotos[3]} />
+                                        <img id="individual-image-small" src={newOurPhotos[4]} />
+                                    </div>
+                                </div>
                             </div>
                             <div className='hosted-spot-photo-nav'>
                                 <button
+                                    id="edit-picture-button"
                                     type="button"
                                     onClick={() => history.push(`/profile/edit/${pushTermPhoto}`)}
-                                >Edit
+                                >Edit Pictures
                                 </button>
 
                             </div>
@@ -140,15 +149,15 @@ function HostedSpotIndividual() {
                     <div className='bottom-profile-hosted-spot'>
                         <div className='edit-title-div'>
                             <div className='edit-title-top'>
-                                <span>
-                                    <h2>Title: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermTitle}`)}
-                                    >Edit</button>
-                                </span>
+                                <div id='edit-title-top'>
+                                    <p>Title: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    id='edit-title-button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermTitle}`)}
+                                >Edit Title</button>
                             </div>
                             <div className='edit-title-bottom'>
                                 <p>{spotInfo.title}</p>
@@ -158,15 +167,15 @@ function HostedSpotIndividual() {
 
                         <div className='edit-desc-div'>
                             <div className='edit-desc-top'>
-                                <span>
-                                    <h2>Description: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermDesc}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Description: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermDesc}`)}
+                                >Edit Description</button>
+
                             </div>
                             <div className='edit-desc-bottom'>
                                 <p>{spotInfo.description}</p>
@@ -176,33 +185,33 @@ function HostedSpotIndividual() {
 
                         <div className='edit-cost-div'>
                             <div className='edit-cost-top'>
-                                <span>
-                                    <h2>Cost per Night: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermCost}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Cost per Night: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermCost}`)}
+                                >Edit Cost</button>
+
                             </div>
                             <div className='edit-cost-bottom'>
-                                <p>${spotInfo.costPerNight}/Night</p>
+                                <p>${spotInfo.costPerNight}/ night</p>
                             </div>
                         </div>
 
 
                         <div className='edit-address-div'>
                             <div className='edit-address-top'>
-                                <span>
-                                    <h2>Address/City: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermWhere}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Address/City: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermWhere}`)}
+                                >Edit Address</button>
+
                             </div>
                             <div className='edit-address-bottom'>
                                 <p>{spotInfo.address}/ {spotInfo.city}</p>
@@ -213,15 +222,15 @@ function HostedSpotIndividual() {
 
                         <div className='edit-spotType-div'>
                             <div className='edit-spotType-top'>
-                                <span>
-                                    <h2>Spot Types: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermSpotType}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Spot Types: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermSpotType}`)}
+                                >Edit Spot Type</button>
+
                             </div>
                             <div className='edit-spotType-bottom'>
                                 {/* <p>
@@ -234,15 +243,15 @@ function HostedSpotIndividual() {
                         </div>
                         <div className='edit-amenities-div'>
                             <div className='edit-amenities-top'>
-                                <span>
-                                    <h2>Amenities: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermAmenities}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Amenities: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermAmenities}`)}
+                                >Edit Amenities</button>
+
                             </div>
                             <div className='edit-amenities-bottom'>
 
@@ -252,12 +261,20 @@ function HostedSpotIndividual() {
                                         <div key={ele}>
                                             {spotInfo.Amenity[ele] &&
                                                 <>
-                                                    {camelToWord(ele)} <i className="fas fa-thumbs-up fa-2x"></i>
+                                                    <span id='amenity-name-edit-yes'>
+                                                         {camelToWord(ele)}
+                                                    </span>
+
+                                                    <i className="fas fa-thumbs-up fa-2x"></i>
                                                 </>
                                             }
                                             {spotInfo.Amenity[ele] === false &&
                                                 <>
-                                                    {camelToWord(ele)} <i className="fas fa-thumbs-down fa-2x"></i>
+                                                    <div id='amenity-name-edit-no'>
+                                                        {camelToWord(ele)}
+                                                    </div>
+
+                                                     <i className="fas fa-thumbs-down fa-2x"></i>
                                                 </>
                                             }
                                         </div>
@@ -268,15 +285,15 @@ function HostedSpotIndividual() {
                         </div>
                         <div className='edit-floorPlan-div'>
                             <div className='edit-floorPlan-top'>
-                                <span>
-                                    <h2>Floor Plan: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermFloorPlan}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Floor Plan: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermFloorPlan}`)}
+                                >Edit Floor Plan</button>
+
                             </div>
                             <div className='edit-floorPlan-bottom'>
                                 {Object.keys(spotInfo.FloorPlan).map(ele => {
@@ -284,8 +301,8 @@ function HostedSpotIndividual() {
 
                                     if (!(not.includes(ele))) {
                                         return (
-                                            <div key ={ele} className="profile-floorPlan-info">
-                                                {camelToWord(ele)}: {spotInfo.FloorPlan[ele]}
+                                            <div key={ele} className="profile-floorPlan-info">
+                                                <p>{camelToWord(ele)}: {spotInfo.FloorPlan[ele]}</p>
                                             </div>
                                         )
                                     }
@@ -297,18 +314,22 @@ function HostedSpotIndividual() {
                         </div>
                         <div className='edit-privacyType-div'>
                             <div className='edit-privacyType-top'>
-                                <span>
-                                    <h2>Privacy Type: </h2>
-                                </span>
-                                <span>
-                                    <button
-                                        type='button'
-                                        onClick={() => history.push(`/profile/edit/${pushTermPrivacy}`)}
-                                    >Edit</button>
-                                </span>
+                                <div>
+                                    <p>Privacy Type: </p>
+                                </div>
+
+                                <button
+                                    type='button'
+                                    onClick={() => history.push(`/profile/edit/${pushTermPrivacy}`)}
+                                >Edit Privacy Type</button>
+
                             </div>
                             <div className='edit-privacyType-bottom'>
-                                <h3>{camelToWord(FilterTrue(spotInfo.PrivacyType)[0])}</h3>
+                                {camelToWord(FilterTrue(spotInfo.PrivacyType)[0]) === "Entire"
+                                    ?<p>{camelToWord(FilterTrue(spotInfo.PrivacyType)[0])} Unit</p>
+                                    :<p>{camelToWord(FilterTrue(spotInfo.PrivacyType)[0])}</p>
+                                }
+
 
                             </div>
 
@@ -316,12 +337,12 @@ function HostedSpotIndividual() {
                     </div>
                 </div>}
 
-                <button type="button" onClick={()=> setShowModal(true)}>Delete</button>
-                {showModal && (
-                    <Modal onClose = {() => setShowModal(false)}>
-                        <DeleteConfirmModal id = {id}/>
-                    </Modal>
-                )}
+            <button id="delete-spot-button" type="button" onClick={() => setShowModal(true)}>Delete Spot</button>
+            {showModal && (
+                <Modal onClose={() => setShowModal(false)}>
+                    <DeleteConfirmModal id={id} />
+                </Modal>
+            )}
         </div>
 
     )
