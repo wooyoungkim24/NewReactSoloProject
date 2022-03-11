@@ -4,7 +4,7 @@ import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
 import { getSpotsUser } from "../../store/spot"
-
+import "./index.css"
 
 
 
@@ -125,7 +125,10 @@ function HostedSpots() {
                                                 <p>{privacyText} in {splitAtCapital(ele.city)} </p>
                                             </div>
                                             <div className='component-spot-title'>
-                                                <h2>{ele.title}</h2>
+                                                <p>{ele.title}</p>
+                                            </div>
+                                            <div className='divider'>
+
                                             </div>
                                             <div className='component-floor-plan'>
                                                 <p>
@@ -134,9 +137,9 @@ function HostedSpots() {
                                             </div>
                                             <div className='component-amenities'>
                                                 {amenitiesKeysTrue.length >= 3 &&
-                                                    <>
+                                                    <p>
                                                         {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
-                                                    </>
+                                                    </p>
                                                 }
 
 

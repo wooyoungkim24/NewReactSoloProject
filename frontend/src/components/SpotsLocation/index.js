@@ -34,15 +34,15 @@ function SpotsLocation() {
     const endSearchDate = parseInt(endSearch.split(" ")[1])
     const endSearchYear = parseInt(endSearch.split(" ")[2])
 
-    let startSearchDateFull = new Date(startSearchYear, startSearchMonth,startSearchDate)
-    let endSearchDateFull = new Date(endSearchYear, endSearchMonth,endSearchDate)
+    let startSearchDateFull = new Date(startSearchYear, startSearchMonth, startSearchDate)
+    let endSearchDateFull = new Date(endSearchYear, endSearchMonth, endSearchDate)
 
     const [isLoaded, setIsLoaded] = useState(false)
     const [isLoadedSecond, setIsLoadedSecond] = useState(false)
     const [bookingsLocation, setBookingsLocation] = useState({})
 
 
-    const bookings = useSelector(state =>{
+    const bookings = useSelector(state => {
         return state.bookings.bookings
     })
     useEffect(() => {
@@ -55,18 +55,18 @@ function SpotsLocation() {
 
 
     const didMountRef = useRef(0)
-    useEffect (() =>{
-        if(didMountRef.current === 1){
-            for(let i = 0 ; i < bookings.length; i ++){
+    useEffect(() => {
+        if (didMountRef.current === 1) {
+            for (let i = 0; i < bookings.length; i++) {
                 let curr = bookings[i]
                 // console.log(curr)
                 let currId = curr.spotId
                 // console.log(curr.Spot.city,city)
-                if(curr.Spot.city === city){
-                    if(!bookingsLocation[currId]){
+                if (curr.Spot.city === city) {
+                    if (!bookingsLocation[currId]) {
                         bookingsLocation[currId] = [curr]
                     }
-                    else{
+                    else {
                         bookingsLocation[currId] = [...bookingsLocation[currId], curr]
                     }
                 }
@@ -74,10 +74,10 @@ function SpotsLocation() {
             setIsLoadedSecond(true)
         }
         console.log(bookingsLocation)
-        didMountRef.current +=1;
-    },[isLoaded])
+        didMountRef.current += 1;
+    }, [isLoaded])
 
-    const photos = useSelector(state =>{
+    const photos = useSelector(state => {
         return state.spots.photoObjAll
     })
     const allSpots = useSelector(state => {
@@ -96,9 +96,9 @@ function SpotsLocation() {
         for (let i = 0; i < string.length; i++) {
             let curr = string.charAt(i);
             if (curr === curr.toUpperCase()) {
-                if(upperLetter === ""){
+                if (upperLetter === "") {
                     upperLetter = curr
-                }else{
+                } else {
                     upperLetter2 = curr
                 }
             }
@@ -146,8 +146,8 @@ function SpotsLocation() {
                                 let ourPhotos = photos[ele.id]
                                 let placeholder = false;
                                 let newOurPhotos = [];
-                                for(let i = 0 ; i < ourPhotos.length; i++){
-                                    newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/`+`Spot${ele.id}/`+ourPhotos[i])
+                                for (let i = 0; i < ourPhotos.length; i++) {
+                                    newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])
                                 }
 
                                 // let startYear;
@@ -169,34 +169,34 @@ function SpotsLocation() {
                                 let currId = ele.id;
                                 // console.log(bookingsLocation)
                                 console.log("testing", currId in bookingsLocation)
-                                if(!(currId in bookingsLocation)){
+                                if (!(currId in bookingsLocation)) {
                                     placeholder = true
-                                }else{
-                                    for(let i = 0; i < bookingsLocation[currId].length; i ++){
+                                } else {
+                                    for (let i = 0; i < bookingsLocation[currId].length; i++) {
 
                                         let currBooking = bookingsLocation[currId][i];
                                         let startBooked = new Date(currBooking.checkIn)
                                         let endBooked = new Date(currBooking.checkOut)
                                         // console.log("where are my dates",startSearchDateFull, endSearchDateFull)
 
-                                        let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >=startBooked)
-                                        let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >=startBooked)
-                                        let thirdLogic = (startSearchDateFull<=startBooked && endSearchDateFull >=endBooked)
+                                        let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >= startBooked)
+                                        let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >= startBooked)
+                                        let thirdLogic = (startSearchDateFull <= startBooked && endSearchDateFull >= endBooked)
                                         console.log('testingxd', firstLogic, secondLogic, currId)
-                                        console.log('what is the placeholder',placeholder)
-                                        if(firstLogic){
+                                        console.log('what is the placeholder', placeholder)
+                                        if (firstLogic) {
                                             placeholder = false;
                                             break;
                                         }
-                                        if(secondLogic){
-                                            placeholder=false;
+                                        if (secondLogic) {
+                                            placeholder = false;
                                             break;
                                         }
-                                        if(thirdLogic){
-                                            placeholder=false;
+                                        if (thirdLogic) {
+                                            placeholder = false;
                                             break;
                                         }
-                                        placeholder=true;
+                                        placeholder = true;
                                         // if(!firstLogic){
                                         //     placeholder=true;
                                         // }
@@ -255,7 +255,12 @@ function SpotsLocation() {
                                                     </p>
                                                 </div>
                                                 <div className='component-amenities'>
-                                                    <p>{camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}</p>
+                                                    {amenitiesKeysTrue.length >= 3 &&
+                                                        <p>
+                                                            {camelToWord(amenitiesKeysTrue[0])} - {camelToWord(amenitiesKeysTrue[1])} - {camelToWord(amenitiesKeysTrue[2])}
+                                                        </p>
+                                                    }
+
 
                                                 </div>
                                                 <div className='component-price'>
