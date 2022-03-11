@@ -1,7 +1,7 @@
 // frontend/src/App.js
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React, { useState, useEffect , useRef} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useLocation, Redirect } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import SpotsLocation from "./components/SpotsLocation"
@@ -14,12 +14,40 @@ import HostedSpotIndividual from "./components/HostedSpotIndividual";
 import EditFormPage from "./components/EditFormPage";
 import NewSpotForm from "./components/NewSpotForm";
 
+
+
+function PrivateRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === true
+        ? <Component {...props} />
+        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+    />
+  )
+}
+
+
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [auth, setAuth] = useState(false)
+  const user = useSelector(state=>{
+    return state.session.user
+})
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+  // const didMountRef = useRef(0)
+  // useEffect(() =>{
+  //   if(didMountRef.current ===1){
+  //     if(user){
+  //       setAuth(true)
+  //     }
+  //   }
+  //   didMountRef.current +=1
+  // }, [isLoaded])
 
   return (
     <>
@@ -45,6 +73,8 @@ function App() {
           <Route exact path = "/hosted/spots/:userId">
             <HostedSpots />
           </Route>
+          {/* <PrivateRoute authed={auth} exact path = "/hosted/spots/:userId" component={HostedSpots} /> */}
+
 
           <Route exact path="/profile/spot/:id">
             <HostedSpotIndividual />

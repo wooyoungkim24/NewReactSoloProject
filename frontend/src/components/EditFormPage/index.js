@@ -328,7 +328,7 @@ function EditFormPage() {
         const payload = {
             spotId: id,
             address: newAddress,
-            city: newCity,
+            city: newCity.replace(/\s+/g, ''),
             type: 'address'
         }
         let editedAddress = await dispatch(editSpotStuff(payload))
@@ -428,7 +428,7 @@ function EditFormPage() {
                                     </div>
 
 
-                                    <div class="preview">
+                                    <div className="preview">
                                         <p>No files currently selected for upload</p>
                                     </div>
                                 </div>

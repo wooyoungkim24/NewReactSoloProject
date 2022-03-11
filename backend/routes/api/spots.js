@@ -215,6 +215,72 @@ router.get(
     })
 )
 
+router.get(
+    "/special/:id",
+    requireAuth,
+    asyncHandler(async (req, res) => {
+        let subType;
+        const spotId = req.params.id;
+        const spot = await Spot.findByPk(spotId,
+            { include: [SpotType, Amenity, FloorPlan, Photo, PrivacyType, User] }
+        );
+        let photoObj = {};
+
+        try {
+            const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+            //   console.log("Success", Object.keys(data));
+            //   console.log("Success", data.Contents[0], data.Contents[1]);
+            for (let i = 0; i < data.Contents.length; i++) {
+                let currFile = data.Contents[i]
+                let fileKey = currFile.Key;
+                let fileKeyNumberPrep = fileKey.split("/")[0]
+                let num = parseInt(fileKeyNumberPrep.match(/\d+/g)[0]);
+
+                if (!photoObj[num]) {
+                    photoObj[num] = [fileKey.split("/")[1]]
+                } else {
+                    photoObj[num].push(fileKey.split("/")[1])
+                }
+            }
+            //   console.log(photoObj)
+            // return data; // For unit tests.
+        } catch (err) {
+            console.log("Error", err);
+        }
+
+        let type = spot.SpotType;
+        if (type.apartment) {
+            subType = await ApartmentSpotType.findOne({
+                where: {
+                    spotId: spotId
+                }
+            })
+        } else if (type.house) {
+            subType = await HouseSpotType.findOne({
+                where: {
+                    spotId: spotId
+                }
+            })
+        } else if (type.secondaryUnit) {
+            subType = await SecondarySpotType.findOne({
+                where: {
+                    spotId: spotId
+                }
+            })
+        } else if (type.bnb) {
+            subType = await BnBSpotType.findOne({
+                where: {
+                    spotId: spotId
+                }
+            })
+        }
+        return res.json({
+            spot: spot,
+            subType: subType,
+            photoObj: photoObj
+        })
+    })
+)
 
 
 //Spot Stuff

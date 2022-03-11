@@ -13,15 +13,30 @@ function HostedSpots() {
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
     const { userId } = useParams();
+    const [errors, setErrors] = useState([]);
     useEffect(() => {
-        dispatch(getSpotsUser(userId)).then(() => setIsLoaded(true))
+        dispatch(getSpotsUser(userId))
+        .then(() => setIsLoaded(true))
+        .catch(async (res) => {
+            const data = await res.json();
+            history.goBack();
+        });
+
+
     }, [dispatch])
+
+
+
+
 
     const userSpots = useSelector(state => {
         return state.spots.userSpots
     });
     const photos = useSelector(state => {
         return state.spots.photoObjAll
+    })
+    const user = useSelector(state=>{
+        return state.session.user
     })
 
     function FilterTrue(obj) {

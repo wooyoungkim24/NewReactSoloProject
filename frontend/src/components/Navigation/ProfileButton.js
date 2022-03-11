@@ -7,6 +7,7 @@ import "./index.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+
   const [showMenu, setShowMenu] = useState(false);
   const history = useHistory();
   const openMenu = () => {
@@ -29,7 +30,9 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    dispatch(sessionActions.logout())
+    .then(() => history.push('/login'))
+
   };
 
   return (

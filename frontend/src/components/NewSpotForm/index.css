@@ -1,0 +1,41 @@
+.new-spot-form-container{
+    width: 1300px;
+    margin: auto;
+    border:rgb(221,221,221) 2px solid;
+    border-radius: 20px;
+    margin-top: 50px;
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}
+.add-form-title{
+    padding-left:30px;
+}
+.top-form{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.simple-stuff{
+    display: flex;
+    flex-direction: column;
+    border-bottom: rgb(221,221,221) 2px solid;
+    padding-bottom: 10px;
+}
+.simple-stuff textarea{
+    height: 200px;
+    resize: none ;
+    margin-bottom: 10px;
+}
+.simple-stuff input{
+    margin-bottom: 10px;
+}
+#new-title-input{
+    width: 700px;
+}
+#new-cost-input{
+    width: 130px;
+}
+#new-address-input{
+    width:700px;
+}
+#new-city-input{
+    width:150px;
+}

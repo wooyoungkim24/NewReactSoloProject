@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { getSpot, deleteSpot } from "../../store/spot"
+import { getSpot, deleteSpot, getSpotSpecial } from "../../store/spot"
 import "./index.css"
 import EditFormPage from '../EditFormPage';
 import { Modal } from '../../context/Modal';
@@ -17,7 +17,12 @@ function HostedSpotIndividual() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [showModal, setShowModal] = useState(false);
     useEffect(() => {
-        dispatch(getSpot(id)).then(() => setIsLoaded(true))
+        dispatch(getSpotSpecial(id))
+        .then(() => setIsLoaded(true))
+        .catch(async (res) => {
+            const data = await res.json();
+            history.goBack();
+        });
     }, [dispatch])
     const spotInfo = useSelector(state => {
         return state.spots.individualSpot.spot

@@ -86,6 +86,16 @@ export const getSpot = (id) => async dispatch => {
     }
 }
 
+export const getSpotSpecial = (id) => async dispatch =>{
+    const res = await csrfFetch(`/api/spots/special/${id}`);
+    if (res.ok) {
+        const spot = await res.json();
+        dispatch(load_one(spot));
+        return spot
+    }
+}
+
+
 export const getSpotsUser = (userId) => async dispatch => {
     const res = await csrfFetch(`/api/spots/all/user/${userId}`);
 

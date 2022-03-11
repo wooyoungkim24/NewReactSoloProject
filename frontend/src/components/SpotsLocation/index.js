@@ -57,12 +57,15 @@ function SpotsLocation() {
     const didMountRef = useRef(0)
     useEffect(() => {
         if (didMountRef.current === 1) {
+
             for (let i = 0; i < bookings.length; i++) {
                 let curr = bookings[i]
                 // console.log(curr)
                 let currId = curr.spotId
-                // console.log(curr.Spot.city,city)
+                console.log('wtf',curr.Spot.city,cityParam)
+
                 if (curr.Spot.city === city) {
+
                     if (!bookingsLocation[currId]) {
                         bookingsLocation[currId] = [curr]
                     }
@@ -70,10 +73,11 @@ function SpotsLocation() {
                         bookingsLocation[currId] = [...bookingsLocation[currId], curr]
                     }
                 }
+
             }
             setIsLoadedSecond(true)
         }
-        console.log(bookingsLocation)
+
         didMountRef.current += 1;
     }, [isLoaded])
 
@@ -167,7 +171,7 @@ function SpotsLocation() {
                                 //     endDate = parseInt(end.split(" ")[1])
                                 // }
                                 let currId = ele.id;
-                                // console.log(bookingsLocation)
+                                console.log('hello',currId, bookingsLocation)
                                 console.log("testing", currId in bookingsLocation)
                                 if (!(currId in bookingsLocation)) {
                                     placeholder = true
@@ -178,7 +182,7 @@ function SpotsLocation() {
                                         let startBooked = new Date(currBooking.checkIn)
                                         let endBooked = new Date(currBooking.checkOut)
                                         // console.log("where are my dates",startSearchDateFull, endSearchDateFull)
-
+                                        console.log('checking',startSearchDateFull, endSearchDateFull )
                                         let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >= startBooked)
                                         let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >= startBooked)
                                         let thirdLogic = (startSearchDateFull <= startBooked && endSearchDateFull >= endBooked)

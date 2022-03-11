@@ -7,13 +7,13 @@ import { addAmenity, createSpot, addSpotType, addSpotSub, editPrivacy, editFloor
 import { csrfFetch } from '../../store/csrf'
 import Cookies from 'js-cookie';
 import NewSpotDetailForm from '../NewSpotDetailForm';
-
+import "./index.css"
 
 
 function NewSpotForm() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [error, setError] =useState(false)
+    const [error, setError] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
 
@@ -49,8 +49,8 @@ function NewSpotForm() {
     const [newBedrooms, setNewBedrooms] = useState(1);
     const [newBathrooms, setNewBathrooms] = useState(1);
 
-    const [privacyState, setPrivacyState]= useState("");
-    const updatePrivacy = (e) =>{
+    const [privacyState, setPrivacyState] = useState("");
+    const updatePrivacy = (e) => {
         setPrivacyState(e.target.value)
     }
 
@@ -270,375 +270,447 @@ function NewSpotForm() {
     }
 
 
+    function returnFileSize(number) {
+        if (number < 1024) {
+            return number + 'bytes';
+        } else if (number >= 1024 && number < 1048576) {
+            return (number / 1024).toFixed(1) + 'KB';
+        } else if (number >= 1048576) {
+            return (number / 1048576).toFixed(1) + 'MB';
+        }
+    }
+    function updateImageDisplay(inputName, previewName) {
+        const photoInput = document.getElementById(inputName)
+        console.log("/////", previewName)
+        const preview = document.querySelector(previewName);
+        console.log('????', preview)
+        while (preview.firstChild) {
+            preview.removeChild(preview.firstChild);
+        }
+
+
+        const curFiles = photoInput.files
+        if (curFiles.length === 0) {
+            const para = document.createElement('p');
+            para.textContent = 'No files currently selected for upload';
+            preview.appendChild(para);
+        } else {
+            const list = document.createElement('ol');
+            preview.appendChild(list);
+            const listItem = document.createElement('li')
+            const file = curFiles[0]
+            const para = document.createElement('p')
+            para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+            const image = document.createElement('img')
+            image.src = URL.createObjectURL(file)
+
+            listItem.appendChild(para);
+            listItem.appendChild(image);
+
+
+            list.appendChild(listItem)
+        }
+    }
+
 
     return (
 
         <div className='new-spot-form-container'>
-
+            <div className='add-form-title'>
+                <h2>Add Form</h2>
+            </div>
             <div className='top-form'>
-                <form className='really-big-form' onSubmit={handleFirstSubmit}>
-                    <label htmlFor="new-title-input">Title: </label>
-                    <input
-                        htmlFor="new-title-input"
-                        type="text"
-                        value={title}
-                        onChange={updateTitle}
-                        required
-                    >
-                    </input>
+                <form id='add-spot-form' className='really-big-form' onSubmit={handleFirstSubmit}>
+                    <div className='simple-stuff'>
+                        <label htmlFor="new-title-input">Title: </label>
+                        <input
+                            id="new-title-input"
+                            type="text"
+                            value={title}
+                            onChange={updateTitle}
+                            required
+                        >
+                        </input>
 
-                    <label htmlFor="new-desc-input">Description: </label>
-                    <textarea
-                        htmlFor="new-desc-input"
-                        required
-                        value={description}
-                        onChange={updateDescription}
-                    >
-                    </textarea>
+                        <label htmlFor="new-desc-input">Description: </label>
+                        <textarea
+                            id="new-desc-input"
+                            required
+                            value={description}
+                            onChange={updateDescription}
+                        >
+                        </textarea>
 
-                    <label htmlFor="new-cost-input">Cost: </label>
-                    <input
-                        htmlFor="new-cost-input"
-                        type="number"
-                        value={costPerNight}
-                        onChange={updateCost}
-                        required
-                    >
-                    </input>
+                        <label htmlFor="new-cost-input">Cost Per Night: </label>
+                        <input
+                            id="new-cost-input"
+                            type="number"
+                            value={costPerNight}
+                            onChange={updateCost}
+                            required
+                        >
+                        </input>
 
-                    <label htmlFor="new-address-input">Address: </label>
-                    <input
-                        htmlFor="new-address-input"
-                        type="text"
-                        value={address}
-                        onChange={updateAddress}
-                        required
-                    >
-                    </input>
+                        <label htmlFor="new-address-input">Address: </label>
+                        <input
+                            id="new-address-input"
+                            type="text"
+                            value={address}
+                            onChange={updateAddress}
+                            required
+                        >
+                        </input>
 
-                    <label htmlFor="new-city-input">City: </label>
-                    <input
-                        htmlFor="new-city-input"
-                        type="text"
-                        value={city}
-                        onChange={updateCity}
-                        required
-                    >
-                    </input>
-                    {firstDone &&
-                        <div className='new-spot-form-container-bottom'>
+                        <label htmlFor="new-city-input">City: </label>
+                        <input
+                            id="new-city-input"
+                            type="text"
+                            value={city}
+                            onChange={updateCity}
+                            required
+                        >
+                        </input>
 
-                            <div className='photo-upload-container'>
-                                <div className='photo-upload-input-div1'>
-                                    Photos1:
-                                    <input
-                                        id="add-photo-input1"
-                                        type="file"
-                                        accept="image/*"
-                                        required
-                                    >
-                                    </input>
-                                </div>
-                                <div className='photo-upload-input-div2'>
-                                    Photos:
-                                    <input
-                                        id="add-photo-input2"
-                                        type="file"
-                                        accept="image/*"
-                                        required
-                                    >
-                                    </input>
-                                </div>
-                                <div className='photo-upload-input-div3'>
-                                    Photos:
-                                    <input
-                                        id="add-photo-input3"
-                                        type="file"
-                                        accept="image/*"
-                                        required
-                                    >
-                                    </input>
-                                </div>
-                                <div className='photo-upload-input-div4'>
-                                    Photos:
-                                    <input
-                                        id="add-photo-input4"
-                                        type="file"
-                                        accept="image/*"
-                                        required
-                                    >
-                                    </input>
-                                </div>
-                                <div className='photo-upload-input-div5'>
-                                    Photos:
-                                    <input
-                                        id="add-photo-input5"
-                                        type="file"
-                                        accept="image/*"
-                                        required
-                                    >
-                                    </input>
-                                </div>
-                            </div>
+                    </div>
 
-                            <div className='spot-types-upload-container'>
-                                <label htmlFor="add-spotType-input">Change Spot Type</label>
-                                <select
+                    <div className='new-spot-form-container-bottom'>
+
+                        <div className='photo-upload-container'>
+                            <div className='photo-upload-input-div1'>
+                                Photos1:
+                                <input
+                                    onChange={() =>updateImageDisplay("add-photo-input1", '.preview1')}
+                                    id="add-photo-input1"
+                                    type="file"
+                                    accept="image/*"
                                     required
-                                    id="add-spotType-input"
-                                    value={newSpotType}
-                                    onChange={updateSpotType}>
-                                    <option value="">--Pick a new spot type</option>
-                                    <option value="apartment">1--Apartment</option>
-                                    <option value="house">2--House</option>
-                                    <option value="secondaryUnit">3--Secondary Unit</option>
-                                    <option value="bnb">4--BnB</option>
-
-                                </select>
-                                <label htmlFor="add-subtType-input">Change Spot SubType</label>
-                                <select
-                                    required
-                                    id="add-subType-input"
-                                    value={newSpotSub}
-                                    onChange={updateSpotSub}>
-
-                                    {newSpotType === "" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                        </>
-                                    }
-
-
-                                    {newSpotType === "house" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="residential">1--Residential</option>
-                                            <option value="cabin">2--Cabin</option>
-                                            <option value="villa">3--Villa</option>
-                                            <option value="townhouse">4--Townhouse</option>
-                                        </>
-                                    }
-                                    {newSpotType === "apartment" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="rental">1--Rental</option>
-                                            <option value="condo">2--Condo</option>
-                                            <option value="loft">3--Loft</option>
-                                            <option value="vacationHome">4--Vacation Home</option>
-                                        </>
-                                    }
-                                    {newSpotType === "bnb" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="bnb">1--BnB</option>
-                                            <option value="natureLodge">2--Nature Lodge</option>
-                                            <option value="farmStay">3--Farm Stay</option>
-                                        </>
-                                    }
-                                    {newSpotType === "secondaryUnit" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="guestHouse">1--Guest House</option>
-                                            <option value="guestSuite">2--Guest Suite</option>
-                                            <option value="farmStay">3--Farm Stay</option>
-                                            <option value="vacationHome">4--Vacation Home</option>
-                                        </>
-                                    }
-
-                                </select>
-                            </div >
-                            <div className='amenity-upload-container'>
-
-                                <label htmlFor="add-amenity-input">Pool</label>
-                                <input
-
-                                    id="add-amenity-input"
-                                    type="checkbox"
-
-                                    checked={newPool}
-
-                                    onChange={updatePool}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Patio</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newPatio}
-
-                                    onChange={updatePatio}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Fire Pit</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirePit}
-
-                                    onChange={updateFirePit}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Fire Place</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirePlace}
-
-                                    onChange={updateFirePlace}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Exercise Equipment</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newExerciseEquipment}
-
-                                    onChange={updateExerciseEquipment}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Wifi</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newWifi}
-
-                                    onChange={updateWifi}>
-                                </input>
-                                <label htmlFor="add-amenity-input">TV</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newTv}
-
-                                    onChange={updateTv}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Kitchen</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newKitchen}
-
-                                    onChange={updateKitchen}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Washer</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newWasher}
-
-                                    onChange={updateWasher}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Air Conditioning</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newAirConditioning}
-
-                                    onChange={updateAirConditioning}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Smoke Alarm</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newSmokeAlarm}
-
-                                    onChange={updateSmokeAlarm}>
-                                </input>
-                                <label htmlFor="add-amenity-input">First Aid Kit</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirstAidKit}
-
-                                    onChange={updateFirstAidKit}>
-                                </input>
-                                <label htmlFor="add-amenity-input">Fire Extinguisher</label>
-                                <input
-                                    id="add-amenity-input"
-                                    type="checkbox"
-                                    checked={newFireExtinguisher}
-
-                                    onChange={updateFireExtinguisher}>
+                                >
                                 </input>
                             </div>
-
-                            <div className='floorPlan-upload-container'>
-
-                                <label htmlFor="add-floorplan-input">Change Guests</label>
-                                <input
-                                    required
-                                    id="add-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newGuests}
-                                    onChange={updateGuests}>
-                                </input>
-                                <label htmlFor="add-floorplan-input">Change Beds</label>
-                                <input
-                                    required
-                                    id="add-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBeds}
-                                    onChange={updateBeds}>
-                                </input>
-                                <label htmlFor="add-floorplan-input">Change Bedrooms</label>
-                                <input
-                                    required
-                                    id="add-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBedrooms}
-                                    onChange={updateBedrooms}>
-                                </input>
-                                <label htmlFor="add-floorplan-input">Change Bathrooms</label>
-                                <input
-                                    required
-                                    id="add-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBathrooms}
-                                    onChange={updateBathrooms}>
-                                </input>
-
-
-
+                            <div className="preview1">
+                                <p>No files currently selected for upload</p>
                             </div>
 
-                            <div className='privacy-upload-container'>
-
-                                <label htmlFor="add-privacy-input">Entire: </label>
+                            <div className='photo-upload-input-div2'>
+                                Photos:
                                 <input
+                                    onChange={() =>updateImageDisplay("add-photo-input2", '.preview2')}
+                                    id="add-photo-input2"
+                                    type="file"
+                                    accept="image/*"
                                     required
-                                    id="add-privacy-input"
-                                    type="radio"
-                                    value="entire"
-                                    name="privacyRadio"
-                                    checked={privacyState === "entire"}
-                                    onChange={updatePrivacy}>
+                                >
                                 </input>
-                                <label htmlFor="add-privacy-input">Private Room: </label>
-                                <input
-
-                                    id="add-privacy-input"
-                                    type="radio"
-                                    name="privacyRadio"
-                                    checked={privacyState === "privateRoom"}
-                                    value="privateRoom"
-                                    onChange={updatePrivacy}>
-                                </input>
-                                <label htmlFor="add-privacy-input">Shared Room: </label>
-                                <input
-
-                                    id="add-privacy-input"
-                                    type="radio"
-                                    name="privacyRadio"
-                                    checked={privacyState === "sharedRoom"}
-                                    value="sharedRoom"
-                                    onChange={updatePrivacy}>
-                                </input>
-
                             </div>
+                            <div className="preview2">
+                                <p>No files currently selected for upload</p>
+                            </div>
+                            <div className='photo-upload-input-div3'>
+                                Photos:
+                                <input
+                                    onChange={() =>updateImageDisplay("add-photo-input3", '.preview3')}
+                                    id="add-photo-input3"
+                                    type="file"
+                                    accept="image/*"
+                                    required
+                                >
+                                </input>
+                            </div>
+                            <div className="preview3">
+                                <p>No files currently selected for upload</p>
+                            </div>
+                            <div className='photo-upload-input-div4'>
+                                Photos:
+                                <input
+                                    onChange={() =>updateImageDisplay("add-photo-input4", '.preview4')}
+                                    id="add-photo-input4"
+                                    type="file"
+                                    accept="image/*"
+                                    required
+                                >
+                                </input>
+                            </div>
+                            <div className="preview4">
+                                <p>No files currently selected for upload</p>
+                            </div>
+                            <div className='photo-upload-input-div5'>
+                                Photos:
+                                <input
+                                    onChange={() =>updateImageDisplay("add-photo-input5", '.preview5')}
+                                    id="add-photo-input5"
+                                    type="file"
+                                    accept="image/*"
+                                    required
+                                >
+                                </input>
+                            </div>
+                            <div className="preview5">
+                                <p>No files currently selected for upload</p>
+                            </div>
+                        </div>
+
+                        <div className='spot-types-upload-container'>
+                            <label htmlFor="add-spotType-input">Change Spot Type</label>
+                            <select
+                                required
+                                id="add-spotType-input"
+                                value={newSpotType}
+                                onChange={updateSpotType}>
+                                <option value="">--Pick a new spot type</option>
+                                <option value="apartment">1--Apartment</option>
+                                <option value="house">2--House</option>
+                                <option value="secondaryUnit">3--Secondary Unit</option>
+                                <option value="bnb">4--BnB</option>
+
+                            </select>
+                            <label htmlFor="add-subtType-input">Change Spot SubType</label>
+                            <select
+                                required
+                                id="add-subType-input"
+                                value={newSpotSub}
+                                onChange={updateSpotSub}>
+
+                                {newSpotType === "" &&
+                                    <>
+                                        <option value="">--Pick a new spot subtype</option>
+                                    </>
+                                }
+
+
+                                {newSpotType === "house" &&
+                                    <>
+                                        <option value="">--Pick a new spot subtype</option>
+                                        <option value="residential">1--Residential</option>
+                                        <option value="cabin">2--Cabin</option>
+                                        <option value="villa">3--Villa</option>
+                                        <option value="townhouse">4--Townhouse</option>
+                                    </>
+                                }
+                                {newSpotType === "apartment" &&
+                                    <>
+                                        <option value="">--Pick a new spot subtype</option>
+                                        <option value="rental">1--Rental</option>
+                                        <option value="condo">2--Condo</option>
+                                        <option value="loft">3--Loft</option>
+                                        <option value="vacationHome">4--Vacation Home</option>
+                                    </>
+                                }
+                                {newSpotType === "bnb" &&
+                                    <>
+                                        <option value="">--Pick a new spot subtype</option>
+                                        <option value="bnb">1--BnB</option>
+                                        <option value="natureLodge">2--Nature Lodge</option>
+                                        <option value="farmStay">3--Farm Stay</option>
+                                    </>
+                                }
+                                {newSpotType === "secondaryUnit" &&
+                                    <>
+                                        <option value="">--Pick a new spot subtype</option>
+                                        <option value="guestHouse">1--Guest House</option>
+                                        <option value="guestSuite">2--Guest Suite</option>
+                                        <option value="farmStay">3--Farm Stay</option>
+                                        <option value="vacationHome">4--Vacation Home</option>
+                                    </>
+                                }
+
+                            </select>
+                        </div >
+                        <div className='amenity-upload-container'>
+
+                            <label htmlFor="add-amenity-input">Pool</label>
+                            <input
+
+                                id="add-amenity-input"
+                                type="checkbox"
+
+                                checked={newPool}
+
+                                onChange={updatePool}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Patio</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newPatio}
+
+                                onChange={updatePatio}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Fire Pit</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newFirePit}
+
+                                onChange={updateFirePit}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Fire Place</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newFirePlace}
+
+                                onChange={updateFirePlace}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Exercise Equipment</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newExerciseEquipment}
+
+                                onChange={updateExerciseEquipment}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Wifi</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newWifi}
+
+                                onChange={updateWifi}>
+                            </input>
+                            <label htmlFor="add-amenity-input">TV</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newTv}
+
+                                onChange={updateTv}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Kitchen</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newKitchen}
+
+                                onChange={updateKitchen}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Washer</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newWasher}
+
+                                onChange={updateWasher}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Air Conditioning</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newAirConditioning}
+
+                                onChange={updateAirConditioning}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Smoke Alarm</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newSmokeAlarm}
+
+                                onChange={updateSmokeAlarm}>
+                            </input>
+                            <label htmlFor="add-amenity-input">First Aid Kit</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newFirstAidKit}
+
+                                onChange={updateFirstAidKit}>
+                            </input>
+                            <label htmlFor="add-amenity-input">Fire Extinguisher</label>
+                            <input
+                                id="add-amenity-input"
+                                type="checkbox"
+                                checked={newFireExtinguisher}
+
+                                onChange={updateFireExtinguisher}>
+                            </input>
+                        </div>
+
+                        <div className='floorPlan-upload-container'>
+
+                            <label htmlFor="add-floorplan-input">Change Guests</label>
+                            <input
+                                required
+                                id="add-floorplan-input"
+                                type="number"
+                                min="1"
+                                value={newGuests}
+                                onChange={updateGuests}>
+                            </input>
+                            <label htmlFor="add-floorplan-input">Change Beds</label>
+                            <input
+                                required
+                                id="add-floorplan-input"
+                                type="number"
+                                min="1"
+                                value={newBeds}
+                                onChange={updateBeds}>
+                            </input>
+                            <label htmlFor="add-floorplan-input">Change Bedrooms</label>
+                            <input
+                                required
+                                id="add-floorplan-input"
+                                type="number"
+                                min="1"
+                                value={newBedrooms}
+                                onChange={updateBedrooms}>
+                            </input>
+                            <label htmlFor="add-floorplan-input">Change Bathrooms</label>
+                            <input
+                                required
+                                id="add-floorplan-input"
+                                type="number"
+                                min="1"
+                                value={newBathrooms}
+                                onChange={updateBathrooms}>
+                            </input>
+
+
 
                         </div>
-                    }
-                    <button type="submit">Create</button>
+
+                        <div className='privacy-upload-container'>
+
+                            <label htmlFor="add-privacy-input">Entire: </label>
+                            <input
+                                required
+                                id="add-privacy-input"
+                                type="radio"
+                                value="entire"
+                                name="privacyRadio"
+                                checked={privacyState === "entire"}
+                                onChange={updatePrivacy}>
+                            </input>
+                            <label htmlFor="add-privacy-input">Private Room: </label>
+                            <input
+
+                                id="add-privacy-input"
+                                type="radio"
+                                name="privacyRadio"
+                                checked={privacyState === "privateRoom"}
+                                value="privateRoom"
+                                onChange={updatePrivacy}>
+                            </input>
+                            <label htmlFor="add-privacy-input">Shared Room: </label>
+                            <input
+
+                                id="add-privacy-input"
+                                type="radio"
+                                name="privacyRadio"
+                                checked={privacyState === "sharedRoom"}
+                                value="sharedRoom"
+                                onChange={updatePrivacy}>
+                            </input>
+
+                        </div>
+
+                    </div>
+
+
                 </form>
+                <div className='button-div'>
+                    <button id='add-button' form="add-spot-form" type='submit'>Change</button>
+                    <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                </div>
             </div>
 
 
