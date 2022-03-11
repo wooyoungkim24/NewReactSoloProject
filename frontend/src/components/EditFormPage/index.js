@@ -239,7 +239,8 @@ function EditFormPage() {
             method: "POST",
             headers: { "XSRF-TOKEN": Cookies.get('XSRF-TOKEN') },
             body: formData
-        })
+        }).then(() => history.goBack())
+
 
     }
 
@@ -413,7 +414,7 @@ function EditFormPage() {
                     {console.log(formType)}
                     {formType === "photo" &&
                         <div>
-                            <form className='edit-photo-form' onSubmit={handlePhotoSubmit}>
+                            <form id='edit-photo-form' onSubmit={handlePhotoSubmit}>
                                 <div className='edit-photo-top'>
                                     <div className='photo-file-input'>
                                         <label id='edit-photo-input-label' htmlFor="edit-photo-input">Select new Photo</label>
@@ -450,7 +451,7 @@ function EditFormPage() {
 
                             </form>
                             <div className='button-div'>
-                                <button id='add-button' form="edit-photo-form" type='submit'>Add</button>
+                                <button id='add-button' form="edit-photo-form" type='submit'>Change</button>
                                 <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
                             </div>
 
