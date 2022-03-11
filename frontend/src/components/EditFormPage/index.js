@@ -151,6 +151,7 @@ function EditFormPage() {
             setNewAddress(spotInfo.address)
             setNewCity(spotInfo.city)
             setNewSpotType(FilterTrue(spotInfo.SpotType)[0])
+            setNewSpotSub(FilterTrue(spotInfoSub)[0])
 
 
 
@@ -478,8 +479,8 @@ function EditFormPage() {
                     }
                     {formType === "description" &&
                         <div>
-                            <form onSubmit={handleDescriptionSubmit}>
-                                <label htmlFor="edit-description-input">Edit Description</label>
+                            <form id="edit-description-form" onSubmit={handleDescriptionSubmit}>
+                                <label htmlFor="edit-description-input">Edit Description: </label>
                                 <textarea
                                     id="edit-description-input"
 
@@ -488,17 +489,20 @@ function EditFormPage() {
                                     onChange={updateDesc}>
 
                                 </textarea>
-                                <button type='submit'>Change</button>
+
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-description-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
 
                     {formType === "cost" &&
                         <div>
-                            <form id='cost-form-edit' onSubmit={handleCostSubmit}>
-                                <label htmlFor="edit-cost-input">Change Cost per Night</label>
+                            <form id='edit-cost-form' onSubmit={handleCostSubmit}>
+                                <label id='edit-cost-input' htmlFor="edit-cost-input">Change Cost per Night</label>
                                 <input
                                     id="edit-cost-input"
                                     type='number'
@@ -511,300 +515,406 @@ function EditFormPage() {
 
 
                             </form>
-                            <button form='cost-form-edit' type='submit'>Change</button>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-cost-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
 
                     {formType === "where" &&
                         <div>
-                            <form onSubmit={handleAddressSubmit}>
-                                <label htmlFor="edit-address-input">Change Address</label>
-                                <input
-                                    id="edit-address-input"
+                            <form id='edit-address-form' onSubmit={handleAddressSubmit}>
+                                <div className='edit-address-form-top'>
+                                    <label htmlFor="edit-address-input">Change Address: </label>
+                                    <input
+                                        id="edit-address-input"
 
-                                    required
-                                    value={newAddress}
-                                    onChange={updateAddress}>
-                                </input>
-                                <label htmlFor="edit-city-input">Change City</label>
-                                <input
-                                    id="edit-city-input"
-                                    required
-                                    value={newCity}
-                                    onChange={updateCity}>
-                                </input>
-                                <button type='submit'>Change</button>
+                                        required
+                                        value={newAddress}
+                                        onChange={updateAddress}>
+                                    </input>
+                                </div>
+
+                                <div className='edit-address-form-bottom'>
+                                    <label htmlFor="edit-city-input">Change City: </label>
+                                    <input
+                                        id="edit-city-input"
+                                        required
+                                        value={newCity}
+                                        onChange={updateCity}>
+                                    </input>
+                                </div>
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-address-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
                     {formType === "spotType" &&
                         <div>
-                            <form onSubmit={handleSpotTypeSubmit}>
-                                <label htmlFor="edit-spotType-input">Change Address</label>
-                                <select
-                                    required
-                                    id="edit-spotType-input"
-                                    value={newSpotType}
-                                    onChange={updateSpotType}>
-                                    <option value="apartment">1--Apartment</option>
-                                    <option value="house">2--House</option>
-                                    <option value="secondaryUnit">3--Secondary Unit</option>
-                                    <option value="bnb">4--BnB</option>
+                            <form id='edit-spotType-form' onSubmit={handleSpotTypeSubmit}>
+                                <div className='edit-spotType-form-top'>
+                                    <label htmlFor="edit-spotType-input">Change Spot Type: </label>
+                                    <select
+                                        required
+                                        id="edit-spotType-input"
+                                        value={newSpotType}
+                                        onChange={updateSpotType}>
+                                        <option value="">--Pick a new spot type</option>
+                                        <option value="apartment">1--Apartment</option>
+                                        <option value="house">2--House</option>
+                                        <option value="secondaryUnit">3--Secondary Unit</option>
+                                        <option value="bnb">4--BnB</option>
 
-                                </select>
-                                <label htmlFor="edit-subtType-input">Change City</label>
-                                <select
-                                    required
-                                    id="edit-subType-input"
-                                    value={newSpotSub}
-                                    onChange={updateSpotSub}>
+                                    </select>
+                                </div>
 
-                                    {newSpotType === "" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                        </>
-                                    }
-                                    {newSpotType === "house" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="residential">1--Residential</option>
-                                            <option value="cabin">2--Cabin</option>
-                                            <option value="villa">3--Villa</option>
-                                            <option value="townhouse">4--Townhouse</option>
-                                        </>
-                                    }
-                                    {newSpotType === "apartment" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="rental">1--Rental</option>
-                                            <option value="condo">2--Condo</option>
-                                            <option value="loft">3--Loft</option>
-                                            <option value="vacationHome">4--Vacation Home</option>
-                                        </>
-                                    }
-                                    {newSpotType === "bnb" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="bnb">1--BnB</option>
-                                            <option value="natureLodge">2--Nature Lodge</option>
-                                            <option value="farmStay">3--Farm Stay</option>
-                                        </>
-                                    }
-                                    {newSpotType === "secondaryUnit" &&
-                                        <>
-                                            <option value="">--Pick a new spot subtype</option>
-                                            <option value="guestHouse">1--Guest House</option>
-                                            <option value="guestSuite">2--Guest Suite</option>
-                                            <option value="farmStay">3--Farm Stay</option>
-                                            <option value="vacationHome">4--Vacation Home</option>
-                                        </>
-                                    }
+                                <div className='edit-spotType-form-bottom'>
+                                    <label htmlFor="edit-subtType-input">Change Spot Sub Type: </label>
+                                    <select
+                                        required
+                                        id="edit-subType-input"
+                                        value={newSpotSub}
+                                        onChange={updateSpotSub}>
 
-                                </select>
-                                <button type='submit'>Change</button>
+                                        {newSpotType === "" &&
+                                            <>
+                                                <option value="">--Pick a new spot subtype</option>
+                                            </>
+                                        }
+                                        {newSpotType === "house" &&
+                                            <>
+                                                <option value="">--Pick a new spot subtype</option>
+                                                <option value="residential">1--Residential</option>
+                                                <option value="cabin">2--Cabin</option>
+                                                <option value="villa">3--Villa</option>
+                                                <option value="townhouse">4--Townhouse</option>
+                                            </>
+                                        }
+                                        {newSpotType === "apartment" &&
+                                            <>
+                                                <option value="">--Pick a new spot subtype</option>
+                                                <option value="rental">1--Rental</option>
+                                                <option value="condo">2--Condo</option>
+                                                <option value="loft">3--Loft</option>
+                                                <option value="vacationHome">4--Vacation Home</option>
+                                            </>
+                                        }
+                                        {newSpotType === "bnb" &&
+                                            <>
+                                                <option value="">--Pick a new spot subtype</option>
+                                                <option value="bnb">1--BnB</option>
+                                                <option value="natureLodge">2--Nature Lodge</option>
+                                                <option value="farmStay">3--Farm Stay</option>
+                                            </>
+                                        }
+                                        {newSpotType === "secondaryUnit" &&
+                                            <>
+                                                <option value="">--Pick a new spot subtype</option>
+                                                <option value="guestHouse">1--Guest House</option>
+                                                <option value="guestSuite">2--Guest Suite</option>
+                                                <option value="farmStay">3--Farm Stay</option>
+                                                <option value="vacationHome">4--Vacation Home</option>
+                                            </>
+                                        }
+
+                                    </select>
+                                </div>
+
+
+
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-spotType-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
                     {formType === "amenity" &&
                         <div>
-                            <form onSubmit={handleAmenitySubmit}>
-                                <label htmlFor="edit-amenity-input">Pool</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
+                            <form id='edit-amenity-form' onSubmit={handleAmenitySubmit}>
+                                <div className='limit-amenities'>
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Pool</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
 
-                                    checked={newPool}
+                                            checked={newPool}
 
-                                    onChange={updatePool}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Patio</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newPatio}
+                                            onChange={updatePool}>
+                                        </input>
+                                    </div>
 
-                                    onChange={updatePatio}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Fire Pit</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirePit}
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Patio</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newPatio}
 
-                                    onChange={updateFirePit}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Fire Place</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirePlace}
+                                            onChange={updatePatio}>
+                                        </input>
+                                    </div>
 
-                                    onChange={updateFirePlace}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Exercise Equipment</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newExerciseEquipment}
 
-                                    onChange={updateExerciseEquipment}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Wifi</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newWifi}
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Fire Pit</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newFirePit}
 
-                                    onChange={updateWifi}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">TV</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newTv}
+                                            onChange={updateFirePit}>
+                                        </input>
+                                    </div>
 
-                                    onChange={updateTv}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Kitchen</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newKitchen}
 
-                                    onChange={updateKitchen}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Washer</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newWasher}
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Fire Place</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newFirePlace}
 
-                                    onChange={updateWasher}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Air Conditioning</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newAirConditioning}
+                                            onChange={updateFirePlace}>
+                                        </input>
+                                    </div>
 
-                                    onChange={updateAirConditioning}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Smoke Alarm</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newSmokeAlarm}
 
-                                    onChange={updateSmokeAlarm}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">First Aid Kit</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newFirstAidKit}
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Exercise Equipment</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newExerciseEquipment}
 
-                                    onChange={updateFirstAidKit}>
-                                </input>
-                                <label htmlFor="edit-amenity-input">Fire Extinguisher</label>
-                                <input
-                                    id="edit-amenity-input"
-                                    type="checkbox"
-                                    checked={newFireExtinguisher}
+                                            onChange={updateExerciseEquipment}>
+                                        </input>
+                                    </div>
 
-                                    onChange={updateFireExtinguisher}>
-                                </input>
-                                <button type='submit'>Change</button>
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Wifi</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newWifi}
+
+                                            onChange={updateWifi}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">TV</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newTv}
+
+                                            onChange={updateTv}>
+                                        </input>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Kitchen</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newKitchen}
+
+                                            onChange={updateKitchen}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Washer</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newWasher}
+
+                                            onChange={updateWasher}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Air Conditioning</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newAirConditioning}
+
+                                            onChange={updateAirConditioning}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Smoke Alarm</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newSmokeAlarm}
+
+                                            onChange={updateSmokeAlarm}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">First Aid Kit</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newFirstAidKit}
+
+                                            onChange={updateFirstAidKit}>
+                                        </input>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="edit-amenity-input">Fire Extinguisher</label>
+                                        <input
+                                            id="edit-amenity-input"
+                                            type="checkbox"
+                                            checked={newFireExtinguisher}
+
+                                            onChange={updateFireExtinguisher}>
+                                        </input>
+                                    </div>
+                                </div>
+
+
+
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-amenity-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
                     {formType === "floorPlan" &&
                         <div>
-                            <form onSubmit={handleFloorPlanSubmit}>
-                                <label htmlFor="edit-floorplan-input">Change Guests</label>
-                                <input
-                                    required
+                            <form id='edit-floorPlan-form' onSubmit={handleFloorPlanSubmit}>
+                                <div className='limit-floorPlan'>
+                                    <div>
+                                        <label htmlFor="edit-floorplan-input">Change Guests: </label>
+                                        <input
+                                            required
 
-                                    id="edit-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newGuests}
-                                    onChange={updateGuests}>
-                                </input>
-                                <label htmlFor="edit-floorplan-input">Change Beds</label>
-                                <input
-                                    required
-                                    id="edit-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBeds}
-                                    onChange={updateBeds}>
-                                </input>
-                                <label htmlFor="edit-floorplan-input">Change Bedrooms</label>
-                                <input
-                                    required
-                                    id="edit-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBedrooms}
-                                    onChange={updateBedrooms}>
-                                </input>
-                                <label htmlFor="edit-floorplan-input">Change Bathrooms</label>
-                                <input
-                                    required
-                                    id="edit-floorplan-input"
-                                    type="number"
-                                    min="1"
-                                    value={newBathrooms}
-                                    onChange={updateBathrooms}>
-                                </input>
-                                <button type='submit'>Change</button>
+                                            id="edit-floorplan-input"
+                                            type="number"
+                                            min="1"
+                                            value={newGuests}
+                                            onChange={updateGuests}>
+                                        </input>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="edit-floorplan-input">Change Beds: </label>
+                                        <input
+                                            required
+                                            id="edit-floorplan-input"
+                                            type="number"
+                                            min="1"
+                                            value={newBeds}
+                                            onChange={updateBeds}>
+                                        </input>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="edit-floorplan-input">Change Bedrooms: </label>
+                                        <input
+                                            required
+                                            id="edit-floorplan-input"
+                                            type="number"
+                                            min="1"
+                                            value={newBedrooms}
+                                            onChange={updateBedrooms}>
+                                        </input>
+                                    </div>
+
+
+                                    <div>
+                                        <label htmlFor="edit-floorplan-input">Change Bathrooms: </label>
+                                        <input
+                                            required
+                                            id="edit-floorplan-input"
+                                            type="number"
+                                            min="1"
+                                            value={newBathrooms}
+                                            onChange={updateBathrooms}>
+                                        </input>
+                                    </div>
+                                </div>
+
+
+
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-floorPlan-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
                     {formType === "privacy" &&
                         <div>
-                            <form onSubmit={handlePrivacySubmit}>
-                                <label htmlFor="edit-privacy-input">Entire: </label>
-                                <input
-                                    id="edit-privacy-input"
-                                    required
-                                    type="radio"
-                                    value="entire"
-                                    name="privacyRadio"
-                                    checked={privacyState === "entire"}
-                                    onChange={updatePrivacy}>
-                                </input>
-                                <label htmlFor="edit-privacy-input">Private Room: </label>
-                                <input
-                                    id="edit-privacy-input"
-                                    type="radio"
-                                    checked={privacyState === "privateRoom"}
-                                    name="privacyRadio"
-                                    value="privateRoom"
-                                    onChange={updatePrivacy}>
-                                </input>
-                                <label htmlFor="edit-privacy-input">Shared Room: </label>
-                                <input
-                                    id="edit-privacy-input"
-                                    type="radio"
-                                    name="privacyRadio"
-                                    checked={privacyState === "sharedRoom"}
-                                    value="sharedRoom"
-                                    onChange={updatePrivacy}>
-                                </input>
-                                <button type='submit'>Change</button>
+                            <form id='edit-privacyType-form' onSubmit={handlePrivacySubmit}>
+                                <div>
+                                    <label htmlFor="edit-privacy-input">Entire Unit: </label>
+                                    <input
+                                        id="edit-privacy-input"
+                                        required
+                                        type="radio"
+                                        value="entire"
+                                        name="privacyRadio"
+                                        checked={privacyState === "entire"}
+                                        onChange={updatePrivacy}>
+                                    </input>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="edit-privacy-input">Private Room: </label>
+                                    <input
+                                        id="edit-privacy-input"
+                                        type="radio"
+                                        checked={privacyState === "privateRoom"}
+                                        name="privacyRadio"
+                                        value="privateRoom"
+                                        onChange={updatePrivacy}>
+                                    </input>
+                                </div>
+
+
+                                <div>
+                                    <label htmlFor="edit-privacy-input">Shared Room: </label>
+                                    <input
+                                        id="edit-privacy-input"
+                                        type="radio"
+                                        name="privacyRadio"
+                                        checked={privacyState === "sharedRoom"}
+                                        value="sharedRoom"
+                                        onChange={updatePrivacy}>
+                                    </input>
+                                </div>
+
+
+
 
                             </form>
-                            <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            <div className='button-div'>
+                                <button id='add-button' form="edit-privacyType-form" type='submit'>Change</button>
+                                <button id='cancel-button' type='button' onClick={() => history.goBack()}>Cancel</button>
+                            </div>
                         </div>
                     }
 

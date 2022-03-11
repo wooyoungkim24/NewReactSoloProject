@@ -214,7 +214,7 @@ function HostedSpotIndividual() {
 
                             </div>
                             <div className='edit-address-bottom'>
-                                <p>{spotInfo.address}/ {spotInfo.city}</p>
+                                <p>Address: {spotInfo.address} ----- City: {spotInfo.city}</p>
                             </div>
 
                         </div>
