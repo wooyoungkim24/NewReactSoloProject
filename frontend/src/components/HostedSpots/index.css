@@ -1,0 +1,14 @@
+#host-new-spot-button{
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-size: 18px;
+    font-weight: 550;
+    color: white;
+    cursor: pointer;
+    width: 170px;
+    height: 55px;
+    margin-left:40px;
+    margin-top: 20px;
+    background-color: rgb(255,56,92);
+    border: none;
+    border-radius: 30px;
+}

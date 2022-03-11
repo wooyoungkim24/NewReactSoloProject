@@ -88,7 +88,7 @@ function HostedSpots() {
     return (
         <div className="user-spots-page">
             <div>
-                <button onClick={() => history.push("/profile/new/spot")}>Host a New Spot</button>
+                <button id='host-new-spot-button' onClick={() => history.push("/profile/new/spot")}>Host a New Spot</button>
             </div>
             <div className='user-spots-list-container'>
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
 import Navigation from "../../components/Navigation";
 import { NavLink } from 'react-router-dom';
-import { Route, Switch, useHistory} from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
@@ -81,9 +81,9 @@ function Search() {
         }
     }
 
-    const handleSearchSubmit = (e) =>{
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const searchPayload = guests+"_"+location+"_"+moment(startDate).format("MMMM D YYYY")+"_"+moment(endDate).format("MMMM D YYYY")
+        const searchPayload = guests + "_" + location + "_" + moment(startDate).format("MMMM D YYYY") + "_" + moment(endDate).format("MMMM D YYYY")
         history.push(`/spots/${searchPayload}`)
     }
 
@@ -93,7 +93,7 @@ function Search() {
         <div className="home-search-bar">
             <form className="search-bar" onSubmit={handleSearchSubmit}>
                 <input
-                    id = 'cityname-search'
+                    id='cityname-search'
                     type='search'
                     placeholder='City Name'
                     required
@@ -102,7 +102,10 @@ function Search() {
                 />
                 <div className="search-bar-start" onClick={handleStartClick}>
                     <div id="start-text">
-                        Start
+                        <div className="start-text-label">
+                            Check In:
+                        </div>
+                        {moment(startDate).format("MMMM D YYYY")}
                     </div>
                     <div
                         tabIndex="0"
@@ -119,7 +122,10 @@ function Search() {
                 </div>
                 <div className="search-bar-end" onClick={handleEndClick}>
                     <div id="end-text">
-                        End
+                        <div className="end-text-label">
+                            Check Out:
+                        </div>
+                        {moment(endDate).format("MMMM D YYYY")}
                     </div>
 
                     <div
@@ -131,7 +137,7 @@ function Search() {
                         {seeEnd &&
 
 
-                            <Calendar  id="calendar-search-end" value={endDate} onChange={changeDateEnd} minDate={startDate} />
+                            <Calendar id="calendar-search-end" value={endDate} onChange={changeDateEnd} minDate={startDate} />
                         }
                     </div>
 
@@ -144,7 +150,7 @@ function Search() {
                         required
                         value={guests}
                         onChange={updateGuests}
-                        id= "search-bar-guests-input"
+                        id="search-bar-guests-input"
                         min={0}
                     />
                 </div>
