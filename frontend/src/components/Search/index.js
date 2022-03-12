@@ -105,7 +105,10 @@ function Search() {
                         <div className="start-text-label">
                             Check In:
                         </div>
-                        {moment(startDate).format("MMMM D YYYY")}
+
+                        {startDate === new Date()
+                        ?<>Add dates</>
+                        :moment(startDate).format("MMMM D YYYY")}
                     </div>
                     <div
                         tabIndex="0"
@@ -125,7 +128,9 @@ function Search() {
                         <div className="end-text-label">
                             Check Out:
                         </div>
-                        {moment(endDate).format("MMMM D YYYY")}
+                        {endDate === new Date()
+                        ?<>Add dates</>
+                        :moment(endDate).format("MMMM D YYYY")}
                     </div>
 
                     <div

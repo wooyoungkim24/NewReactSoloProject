@@ -13,7 +13,7 @@ import HostedSpots from "./components/HostedSpots";
 import HostedSpotIndividual from "./components/HostedSpotIndividual";
 import EditFormPage from "./components/EditFormPage";
 import NewSpotForm from "./components/NewSpotForm";
-
+import Trips from "./components/Trips"
 
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -63,9 +63,12 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
+
           <Route exact path="/spots/:searchPayload">
             <SpotsLocation key={useLocation().pathname.split("/")[2]}/>
           </Route>
+
+
           <Route exact path = "/spot/:idDates">
             <SpotIndividual />
           </Route>
@@ -85,6 +88,11 @@ function App() {
 
           <Route exact path ="/profile/new/spot">
             <NewSpotForm />
+          </Route>
+
+
+          <Route exact path = "/profile/trips/:userId">
+            <Trips />
           </Route>
         </Switch>
 

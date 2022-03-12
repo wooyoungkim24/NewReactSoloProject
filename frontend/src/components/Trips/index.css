@@ -1,0 +1,48 @@
+.trips-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+}
+.trips-component{
+    display: flex;
+    flex-direction: row;
+    width: 380px;
+    cursor: pointer;
+}
+.trip-image{
+    height: 150px;
+    width: 150px;
+
+}
+
+img#trip-image{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+.trip-info{
+    margin-left:30px;
+}
+.trip-location{
+    font-size: 18px;
+    font-weight: 550;
+}
+.trip-start{
+    margin-bottom: 7px;
+}
+.delete-trip-div{
+    display: flex;
+    justify-content: end;
+    width: 380px;
+
+}
+.delete-trip-div button{
+    margin-right: 20px;
+    font-size: 16px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 function LoginFormPage() {
+  const location = useLocation()
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
@@ -15,15 +16,26 @@ function LoginFormPage() {
 
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-      .then(() => history.goBack())
+      .then(() => console.log(location.state, location.state.from))
+      .then(handleGoBack)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
   }
+
+  const handleGoBack = () =>{
+    if(location.state.from !== "/login" && location.state.from !== "/signup"){
+      history.goBack();
+    }else{
+      history.push("/")
+    }
+  }
+
 
   return (
     <form onSubmit={handleSubmit}>

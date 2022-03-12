@@ -29,12 +29,12 @@ module.exports = {
       checkIn: {
         allowNull: false,
         type: Sequelize.DATEONLY,
-        unique:true
+
       },
       checkOut: {
         allowNull: false,
         type: Sequelize.DATEONLY,
-        unique:true
+
       },
       createdAt: {
         allowNull: false,

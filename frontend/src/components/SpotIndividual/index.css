@@ -133,3 +133,106 @@ div.intro-profile-photo{
 .calendar-end{
     margin-left: 40px;
 }
+
+.create-booking-div{
+    margin-left: 40px;
+    border: rgb(221,221,221) 2px solid;
+    border-radius: 30px;
+    height: 390px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    position:sticky;
+    top: 7rem;
+}
+.create-booking-div:hover{
+    box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+}
+.cost-per-night-booking{
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    align-items: center;
+}
+.booking-cost-per-night-number{
+    font-size: 24px;
+    font-weight: 600;
+}
+.booking-cost-per-night-text{
+    font-size: 20px;
+}
+.booking-information{
+    width: 300px;
+    height: 135px;
+    border: rgb(221,221,221) 2px solid;
+    border-radius:20px;
+    margin-left: 20px;
+}
+.booking-information-top{
+    display: flex;
+    flex-direction: row;
+}
+
+.booking-checkIn-dropdown, .booking-checkOut-dropdown{
+    position:absolute;
+}
+.booking-checkIn-container{
+    border-right:rgb(221,221,221) 2px solid;
+    width: 130px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+.start-text-label, .end-text-label{
+    margin-bottom: 5px;
+    font-weight: 550;
+}
+.booking-checkOut-container{
+
+    width: 130px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    border-bottom:rgb(221,221,221) 2px solid;
+}
+.booking-information-bottom{
+    padding-left: 20px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.booking-information-bottom input{
+    width: 100px;
+    margin-left: 10px;
+    font-size:18px;
+}
+.booking-information-bottom label{
+    font-size: 18px;
+    font-weight: 550;
+}
+.submit-booking-button button{
+    /* background-color: rgb(255,56,92); */
+    background-image: radial-gradient(circle at center center, rgb(255, 56, 92) 0%, rgb(230, 30, 77) 27.5%, rgb(227, 28, 95) 40%, rgb(215, 4, 102) 57.5%, rgb(189, 30, 89) 75%, rgb(189, 30, 89) 100%);
+    color: white;
+    border: 0;
+    width: 300px;
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 50px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.total-cost-booking{
+    padding-left:20px;
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top:rgb(221,221,221) 2px solid;
+    font-weight: 600;
+    font-size:18px;
+}

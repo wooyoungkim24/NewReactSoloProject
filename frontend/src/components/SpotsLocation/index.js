@@ -63,7 +63,7 @@ function SpotsLocation() {
                 let curr = bookings[i]
                 // console.log(curr)
                 let currId = curr.spotId
-                console.log('wtf',curr.Spot.city,cityParam)
+                console.log('wtf', curr.Spot.city, cityParam)
 
                 if (curr.Spot.city === city) {
 
@@ -87,6 +87,9 @@ function SpotsLocation() {
     })
     const allSpots = useSelector(state => {
         return state.spots.spots
+    })
+    const user = useSelector(state => {
+        return state.session.user
     })
 
     // console.log(moment(searchPayload.dateStart).format("MMMM D YYYY"))
@@ -151,6 +154,7 @@ function SpotsLocation() {
                                 let ourPhotos = photos[ele.id]
                                 let placeholder = false;
                                 let guestsPlaceholder = false;
+                                let ownedPlaceholder = true;
                                 let newOurPhotos = [];
                                 for (let i = 0; i < ourPhotos.length; i++) {
                                     newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])
@@ -174,13 +178,22 @@ function SpotsLocation() {
                                 // }
                                 let currId = ele.id;
                                 console.log('testing guests', ele.FloorPlan.guests, guestNumberSearch)
+                                console.log('testing owned', ele.userId, ele.User.id)
+                                if (ele.FloorPlan.guests < guestNumberSearch) {
+                                    guestsPlaceholder = false;
+                                }
+                                else {
+                                    guestsPlaceholder = true;
+                                }
+                                if (user) {
+                                    if (ele.userId === user.id) {
+                                        ownedPlaceholder = false;
+                                    } else {
+                                        ownedPlaceholder = true;
+                                    }
+                                }
 
-                                if(ele.FloorPlan.guests < guestNumberSearch){
-                                    guestsPlaceholder= false;
-                                }
-                                else{
-                                    guestsPlaceholder= true;
-                                }
+
                                 if (!(currId in bookingsLocation)) {
                                     placeholder = true
                                 } else {
@@ -190,7 +203,7 @@ function SpotsLocation() {
                                         let startBooked = new Date(currBooking.checkIn)
                                         let endBooked = new Date(currBooking.checkOut)
                                         // console.log("where are my dates",startSearchDateFull, endSearchDateFull)
-                                        console.log('checking',startSearchDateFull, endSearchDateFull )
+                                        console.log('checking', startSearchDateFull, endSearchDateFull)
                                         let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >= startBooked)
                                         let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >= startBooked)
                                         let thirdLogic = (startSearchDateFull <= startBooked && endSearchDateFull >= endBooked)
@@ -219,8 +232,8 @@ function SpotsLocation() {
 
                                 }
 
-                                console.log('testing placeholders',placeholder, guestsPlaceholder)
-                                if (placeholder && guestsPlaceholder) {
+                                console.log('testing placeholders', placeholder, guestsPlaceholder)
+                                if (placeholder && guestsPlaceholder && ownedPlaceholder) {
                                     const spotId = ele.id
                                     const privacyType = FilterTrue(ele.PrivacyType)[0]
 
