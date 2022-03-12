@@ -32,7 +32,7 @@ function SpotIndividual() {
     if(end === "placeholder"){
         checkedEnd = new Date();
     }else{
-        checkedEnd= new Date(start);
+        checkedEnd= new Date(end);
     }
 
     const handleCheckInClick = () => {
@@ -692,8 +692,8 @@ function SpotIndividual() {
                                     {/* {console.log('where is my disabled array', disabledArray)} */}
                                     <Calendar
                                         minDate={new Date()}
-                                        value={dateStateStart}
-                                        onChange={changeDateStart}
+                                        value={bookingCheckIn}
+                                        onChange={updateBookingCheckIn}
                                         tileDisabled={({ date, view }) =>
                                             (view === 'month') && // Block day tiles only
                                             disabledArray.some(disabledDate =>
@@ -706,9 +706,9 @@ function SpotIndividual() {
                                 </div>
                                 <div className='calendar-end'>
                                     <Calendar
-                                        minDate={dateStateStart}
-                                        value={dateStateEnd}
-                                        onChange={changeDateEnd}
+                                        minDate={bookingCheckIn}
+                                        value={bookingCheckOut}
+                                        onChange={updateBookingCheckOut}
                                         tileDisabled={({ date, view }) =>
                                             (view === 'month') && // Block day tiles only
                                             disabledArray.some(disabledDate =>
