@@ -281,9 +281,9 @@ function NewSpotForm() {
     }
     function updateImageDisplay(inputName, previewName) {
         const photoInput = document.getElementById(inputName)
-        console.log("/////", previewName)
+        // console.log("/////", previewName)
         const preview = document.querySelector(previewName);
-        console.log('????', preview)
+        // console.log('????', preview)
         while (preview.firstChild) {
             preview.removeChild(preview.firstChild);
         }

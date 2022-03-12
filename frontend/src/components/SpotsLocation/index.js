@@ -63,7 +63,7 @@ function SpotsLocation() {
                 let curr = bookings[i]
                 // console.log(curr)
                 let currId = curr.spotId
-                console.log('wtf', curr.Spot.city, cityParam)
+                // console.log('wtf', curr.Spot.city, cityParam)
 
                 if (curr.Spot.city === city) {
 
@@ -177,8 +177,8 @@ function SpotsLocation() {
                                 //     endDate = parseInt(end.split(" ")[1])
                                 // }
                                 let currId = ele.id;
-                                console.log('testing guests', ele.FloorPlan.guests, guestNumberSearch)
-                                console.log('testing owned', ele.userId, ele.User.id)
+                                // console.log('testing guests', ele.FloorPlan.guests, guestNumberSearch)
+                                // console.log('testing owned', ele.userId, ele.User.id)
                                 if (ele.FloorPlan.guests < guestNumberSearch) {
                                     guestsPlaceholder = false;
                                 }
@@ -203,12 +203,12 @@ function SpotsLocation() {
                                         let startBooked = new Date(currBooking.checkIn)
                                         let endBooked = new Date(currBooking.checkOut)
                                         // console.log("where are my dates",startSearchDateFull, endSearchDateFull)
-                                        console.log('checking', startSearchDateFull, endSearchDateFull)
+                                        // console.log('checking', startSearchDateFull, endSearchDateFull)
                                         let firstLogic = (endBooked >= startSearchDateFull && startSearchDateFull >= startBooked)
                                         let secondLogic = (endBooked >= endSearchDateFull && endSearchDateFull >= startBooked)
                                         let thirdLogic = (startSearchDateFull <= startBooked && endSearchDateFull >= endBooked)
-                                        console.log('testingxd', firstLogic, secondLogic, currId)
-                                        console.log('what is the placeholder', placeholder)
+                                        // console.log('testingxd', firstLogic, secondLogic, currId)
+                                        // console.log('what is the placeholder', placeholder)
                                         if (firstLogic) {
                                             placeholder = false;
                                             break;
@@ -232,7 +232,7 @@ function SpotsLocation() {
 
                                 }
 
-                                console.log('testing placeholders', placeholder, guestsPlaceholder)
+                                // console.log('testing placeholders', placeholder, guestsPlaceholder)
                                 if (placeholder && guestsPlaceholder && ownedPlaceholder) {
                                     const spotId = ele.id
                                     const privacyType = FilterTrue(ele.PrivacyType)[0]

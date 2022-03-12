@@ -113,7 +113,7 @@ function HostedSpotIndividual() {
         amenityKey.splice(createdIndex, 1)
         const updatedIndex = amenityKey.indexOf("updatedAt")
         amenityKey.splice(updatedIndex, 1)
-        console.log(amenityKey)
+        // console.log(amenityKey)
     }
 
     return (
@@ -241,7 +241,7 @@ function HostedSpotIndividual() {
                                 {/* <p>
                                 {camelToWord(FilterTrue(spotInfo.SpotType)[0])}
                                 </p> */}
-                                {console.log(spotInfoSub)}
+                                {/* {console.log(spotInfoSub)} */}
                                 <p>{camelToWord(FilterTrue(spotInfo.SpotType)[0])}/ {camelToWord(FilterTrue(spotInfoSub)[0])}</p>
                             </div>
 

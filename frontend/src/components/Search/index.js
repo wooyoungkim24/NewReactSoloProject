@@ -37,7 +37,7 @@ function Search() {
     const updateGuests = (e) => setGuests(e.target.value)
 
     const handleStartClick = () => {
-        console.log("test")
+        // console.log("test")
         // console.log(document.getElementsByClassName("dropdown-start"))
         document.getElementsByClassName("dropdown-start")[0].focus();
     }

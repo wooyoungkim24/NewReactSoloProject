@@ -14,7 +14,7 @@ import moment from 'moment'
 function SpotIndividual() {
     const dispatch = useDispatch();
     const { idDates } = useParams();
-    console.log('this is my search', idDates)
+    // console.log('this is my search', idDates)
 
     const id = idDates.split("_")[0]
     const start = idDates.split("_")[1];
@@ -99,7 +99,7 @@ function SpotIndividual() {
     const getDisabledArray = function (start, end) {
         let arr = [];
         let dt = new Date(start);
-        console.log(dt)
+        // console.log(dt)
         while (dt <= end) {
             arr.push(new Date(dt))
             dt.setDate(dt.getDate() + 1)
@@ -180,14 +180,14 @@ function SpotIndividual() {
 
             if (privacyType[0] === "privateRoom" || privacyType === "sharedRoom") {
                 setPrivacyText(camelToWord(privacyType[0]) + " in");
-                console.log(privacyText)
+                // console.log(privacyText)
 
             }
             else {
                 setPrivacyText(camelToWord(privacyType[0]))
             }
             setNewBookings(bookings)
-            console.log('where is my user', user)
+            // console.log('where is my user', user)
             if (user) {
                 setLoggedIn(true)
                 for (let i = 0; i < bookings.length; i++) {

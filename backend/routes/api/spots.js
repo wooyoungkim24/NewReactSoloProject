@@ -309,7 +309,7 @@ router.delete(
     "/",
     asyncHandler(async (req, res) => {
         const { id } = req.body
-        console.log('this is my id', id)
+        // console.log('this is my id', id)
         const spotDelete = await Spot.findOne({
             where: {
                 id
@@ -338,7 +338,7 @@ router.put(
     "/spotType",
     asyncHandler(async (req, res) => {
         const { id } = req.body
-        console.log(req.body)
+        // console.log(req.body)
         const spotTypeUpdate = await SpotType.findOne({
             where: {
                 id
@@ -437,7 +437,7 @@ router.delete(
     "/houseSpotType",
     asyncHandler(async (req, res) => {
         const { spotId } = req.body
-        console.log('thjis is the payload', req.body)
+        // console.log('thjis is the payload', req.body)
         const houseSpotTypeDelete = await HouseSpotType.findOne({
             where: {
                 spotId
@@ -665,7 +665,7 @@ router.post(
         let data;
         try {
             data = await s3Client.send(new ListObjectsCommand(bucketParams));
-            console.log("are you rerunning")
+            // console.log("are you rerunning")
 
             // return data; // For unit tests.
         } catch (err) {
@@ -702,7 +702,7 @@ router.post(
 
         }
 
-        console.log("are you done yet")
+        // console.log("are you done yet")
         return res.json(bucketParams);
 
     })
@@ -759,7 +759,7 @@ router.delete(
 router.post(
     "/amenity",
     asyncHandler(async (req, res) => {
-        console.log(req.body)
+        // console.log(req.body)
         const amenities = await Amenity.create(req.body);
         return res.json(amenities)
     })
@@ -775,7 +775,7 @@ router.put(
             }
         })
         delete req.body.spotId
-        console.log(req.body)
+        // console.log(req.body)
         const amenityUpdated = await amenityUpdate.update(req.body)
         return res.json(amenityUpdated)
     })

@@ -21,7 +21,7 @@ function LoginFormPage() {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-      .then(() => console.log(location.state, location.state.from))
+      // .then(() => console.log(location.state, location.state.from))
       .then(handleGoBack)
       .catch(async (res) => {
         const data = await res.json();

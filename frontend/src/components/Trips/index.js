@@ -59,7 +59,7 @@ function Trips() {
             {isLoaded &&
                 <>
                     {bookings.map(ele => {
-                        console.log(ele.id)
+                        // console.log(ele.id)
                         const imageLink = `https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.spotId}/` + photoObj[ele.spotId][0]
                         return (
                             <div>

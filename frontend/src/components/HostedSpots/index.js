@@ -97,10 +97,10 @@ function HostedSpots() {
                     <>
                         <ol>
                             {userSpots.map((ele) => {
-                                console.log('wher is my ele', ele)
+                                // console.log('wher is my ele', ele)
                                 let ourPhotos = photos[ele.id]
 
-                                console.log(ourPhotos)
+                                // console.log(ourPhotos)
                                 let newOurPhotos = [];
                                 for (let i = 0; i < ourPhotos.length; i++) {
                                     newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])

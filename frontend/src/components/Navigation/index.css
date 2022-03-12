@@ -70,3 +70,6 @@ body{
 #login-button{
     margin-right: 20px;
 }
+#logout-button{
+    cursor: pointer;
+}

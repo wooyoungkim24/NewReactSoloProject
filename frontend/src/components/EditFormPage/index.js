@@ -54,7 +54,7 @@ function EditFormPage() {
     // const [shared, setShared]= useState(false)
 
 
-    console.log(privacyState)
+    // console.log(privacyState)
     const updatePrivacy = (e) => {
         setPrivacyState(e.target.value)
     }
@@ -226,12 +226,12 @@ function EditFormPage() {
         e.preventDefault();
         const formData = new FormData();
         const selectedFile = document.getElementById('edit-photo-input').files[0];
-        console.log(selectedFile)
+        // console.log(selectedFile)
         const photoArray = photos[id]
         const photoToDelete = photoArray[photoNumber - 1]
         const key = `Spot${id}_${selectedFile.name}_${photoToDelete}`
         formData.append('File', selectedFile);
-        console.log('form', formData)
+        // console.log('form', formData)
         // dispatch(putPhoto(payload))
 
 
@@ -358,7 +358,7 @@ function EditFormPage() {
     }
     const handleSpotTypeSubmit = async (e) => {
         e.preventDefault();
-        console.log("are u working")
+        // console.log("are u working")
         const oldSpotType = FilterTrue(spotInfo.SpotType)[0]
         const oldSpotSub = FilterTrue(spotInfoSub)[0]
         const payload1 = {
@@ -411,7 +411,7 @@ function EditFormPage() {
         <>
             {isLoaded &&
                 <div className='edit-form-container'>
-                    {console.log(formType)}
+                    {/* {console.log(formType)} */}
                     {formType === "photo" &&
                         <div>
                             <form id='edit-photo-form' onSubmit={handlePhotoSubmit}>

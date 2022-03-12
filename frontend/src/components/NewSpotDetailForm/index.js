@@ -26,7 +26,7 @@ function NewSpotDetailForm({ newSpot }) {
         setNewSpotSub(e.target.value)
     }
 
-    console.log('do i hav emy spot',newSpot)
+    // console.log('do i hav emy spot',newSpot)
 
     const handleSubmit = async (e) => {
         e.preventDefault();

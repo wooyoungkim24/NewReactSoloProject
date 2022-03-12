@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
           <li id="trips-profile-button" onClick={() => history.push(`/profile/trips/${user.id}`)}>Trips</li>
           <li id='hosted-profile-button'onClick={() => history.push(`/hosted/spots/${user.id}`)} >Hosted Spots</li>
           <li>
-            <button onClick={logout}>Log Out</button>
+            <button id= 'logout-button' onClick={logout}>Log Out</button>
           </li>
         </ul>
       )}

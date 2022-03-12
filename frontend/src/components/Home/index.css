@@ -25,3 +25,20 @@
     top: 180px;
     left: 500px;
 }
+.demo-user-button{
+    position:relative;
+    bottom: 210px;
+
+}
+.demo-user-button button{
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    font-size: 16px;
+    height: 40px;
+    width: 180px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(255,56,92);
+    cursor: pointer;
+    color:white;
+    font-weight: 550;
+}

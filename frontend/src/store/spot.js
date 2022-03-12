@@ -34,7 +34,7 @@ export const createSpot = (payload) => async dispatch => {
         });
         if (res.ok) {
             const newSpot = await res.json();
-            console.log("this is my spot", newSpot)
+            // console.log("this is my spot", newSpot)
             return newSpot;
         }
     } catch (e) {
@@ -55,7 +55,7 @@ export const getSpots = (city) => async dispatch => {
 }
 export const putPhoto = (payload) => async dispatch => {
 
-    console.log("this is the test", payload.getAll("File"))
+    // console.log("this is the test", payload.getAll("File"))
     await csrfFetch(`/api/spots/photo`, {
         method: "POST",
         headers: { "Content-Type": "multipart/form-data" },
@@ -66,7 +66,7 @@ export const putPhoto = (payload) => async dispatch => {
 
 
 export const deletePhotos = (payload) => async dispatch => {
-    console.log('testing payload', payload)
+    // console.log('testing payload', payload)
     const res = await csrfFetch(`/api/spots/photosDelete`, {
         method: "POST",
         body: JSON.stringify(payload)
@@ -107,7 +107,7 @@ export const getSpotsUser = (userId) => async dispatch => {
 }
 
 export const addAmenity = (payload) => async dispatch => {
-    console.log("testing amenity", payload)
+    // console.log("testing amenity", payload)
     const res = await csrfFetch(`/api/spots/amenity`, {
         method: "POST",
         body: JSON.stringify(payload)
@@ -115,7 +115,7 @@ export const addAmenity = (payload) => async dispatch => {
 }
 
 export const editAmenity = (payload) => async dispatch => {
-    console.log(payload)
+    // console.log(payload)
     const res1 = await csrfFetch(`/api/spots/amenity`, {
         method: "PUT",
         body: JSON.stringify(payload)
@@ -245,7 +245,7 @@ export const editSpotSub = (payload) => async dispatch => {
 
     delete payload.oldSpotType
     delete payload.newSpotType
-    console.log("frotn end test", payload)
+    // console.log("frotn end test", payload)
     const res1 = await csrfFetch(`/api/spots/${oldSpotType}SpotType`, {
         method: "DELETE",
         body: JSON.stringify(payload)
