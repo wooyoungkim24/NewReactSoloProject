@@ -44,8 +44,8 @@ function Search() {
     const handleEndClick = () => {
         document.getElementsByClassName("dropdown-end")[0].focus();
     }
-    const handleCityClick = () =>{
-        document.getElementsByClassName("search-bar-city-dropdown")[0].focus();
+    const handleCityClick = () => {
+        document.getElementsByClassName("search-bar-city-input")[0].focus();
     }
     useEffect(() => {
         if (seeStart) {
@@ -56,7 +56,7 @@ function Search() {
             document.addEventListener('click', handleOutsideEndClick);
 
         }
-        if(seeCity){
+        if (seeCity) {
             document.addEventListener('click', handleOutsideCityClick);
         }
         return (() => {
@@ -83,7 +83,7 @@ function Search() {
     const handleOutsideCityClick = () => {
         // Leave dropdown visible as long as input is focused
 
-        if (document.activeElement === inputRefStart.current) return;
+        if (document.activeElement === inputRefCity.current) return;
         else {
             setSeeCity(false)
 
@@ -112,7 +112,12 @@ function Search() {
         <div className="home-search-bar">
             <form className="search-bar" onSubmit={handleSearchSubmit}>
                 <div className="search-bar-city" onClick={handleCityClick}>
-                    <div className="search-bar-city-input">
+                    <div
+                        className="search-bar-city-input"
+                        tabIndex="0"
+                        ref={inputRefCity}
+                        onFocus={() => setSeeCity(true)}
+                    >
                         <input
                             id='cityname-search'
                             type='search'
@@ -122,33 +127,38 @@ function Search() {
                             onChange={updateLocation}
                         />
                     </div>
-                    <div
-                        className="search-bar-city-dropdown"
-                        tabIndex="0"
-                        ref={inputRefCity}
-                        onFocus={() => setSeeCity(true)}>
+                    {seeCity &&
+                        <div className="search-bar-city-dropdown">
+                            <div className="city-dropdown-title">
+                                Suggested Searches:
+                            </div>
 
-                        {seeCity &&
+
                             <ol>
-                                <li>
-                                    New York
+                                <li onClick={() => setLocation("New York")}>
+                                    <div>New York</div>
+
+                                </li >
+                                <li onClick={() => setLocation("Orlando")}>
+                                    <div>Orlando</div>
+
                                 </li>
-                                <li>
-                                    Orlando
+                                <li onClick={() => setLocation("Chicago")}>
+                                    <div>Chicago</div>
+
                                 </li>
-                                <li>
-                                    Chicago
+                                <li onClick={() => setLocation("Los Angeles")}>
+                                    <div>Los Angeles</div>
+
                                 </li>
-                                <li>
-                                    Los Angeles
-                                </li>
-                                <li>
-                                    San Francisco
+                                <li onClick={() => setLocation("San Francisco")}>
+                                    <div>San Francisco</div>
+
                                 </li>
                             </ol>
-                        }
 
-                    </div>
+
+                        </div>}
 
                 </div>
 

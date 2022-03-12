@@ -88,13 +88,35 @@ input:-webkit-autofill:active{
     background-color: rgb(164,164,164,.2);
 } */
 .search-bar-city-dropdown{
-    border: 2px black solid;
-    height:100px;
-    width: 100px;
+    border: rgb(221,221,221) 2px solid;
+    border-radius: 10px;
+    height:180px;
+    width:180px;
     position: absolute;
+    top: 70px;
+    background-color: white;
+    padding-top: 10px;
 
+}
+.city-dropdown-title{
+    margin-left: 10px;
 }
 .search-bar-city-dropdown ol{
     list-style-type: none;
     padding: 0px;
+
+}
+.search-bar-city-dropdown li{
+
+    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+
+}
+.search-bar-city-dropdown li:hover{
+    background-color: rgb(164,164,164,.2);
+}
+.search-bar-city-dropdown li div{
+    padding-left: 10px;
 }

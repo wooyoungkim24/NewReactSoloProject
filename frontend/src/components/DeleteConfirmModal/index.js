@@ -3,28 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { deleteSpotSub,getSpot, deleteSpot, deleteAmenity, deletePrivacy, deleteFloorPlan, deletePhotos, deleteSpotType } from "../../store/spot"
+import { deleteSpotSub, getSpot, deleteSpot, deleteAmenity, deletePrivacy, deleteFloorPlan, deletePhotos, deleteSpotType } from "../../store/spot"
 import Cookies from 'js-cookie';
+import "./index.css"
 
-function DeleteConfirmModal ({id}) {
+function DeleteConfirmModal({ id }) {
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(id)
+
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
         return returned;
     }
-    const spotInfo = useSelector(state =>{
+    const spotInfo = useSelector(state => {
         return state.spots.individualSpot.spot
     })
-    const handleConfirm = async(e) =>{
+    const handleConfirm = async (e) => {
         const payload = {
             id
         }
         let type = FilterTrue(spotInfo.SpotType)
         const payloadSpecial = {
-            spotId:id,
+            spotId: id,
             type
         }
         await dispatch(deletePhotos(payload))
@@ -74,7 +75,7 @@ function DeleteConfirmModal ({id}) {
 
 
 
-        await dispatch(deleteSpot(payload)).then(() =>history.goBack())
+        await dispatch(deleteSpot(payload)).then(() => history.goBack())
     }
 
 
@@ -82,13 +83,14 @@ function DeleteConfirmModal ({id}) {
 
         <div className="confirming-delete">
             <p>Are you sure you want to delete this spot?</p>
-            <div className="confirm-buttons">
-                <button
-                    onClick={handleConfirm}
-                >
-                    Yes
-                </button>
-            </div>
+
+            <button
+                onClick={handleConfirm}
+                id= 'yes-delete'
+            >
+                Yes
+            </button>
+
         </div>
 
     )

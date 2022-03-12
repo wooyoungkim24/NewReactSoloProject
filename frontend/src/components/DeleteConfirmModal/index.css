@@ -1,0 +1,32 @@
+.confirming-delete{
+    width: 500px;
+    height: 70px;
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-size: 24px;
+
+}
+
+#modal-content{
+    border-radius: 20px;
+}
+
+.confirming-delete p{
+    margin-left:20px;
+}
+
+#yes-delete{
+    font-size: 18px;
+    width: 90px;
+    height: 30px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+#go-back{
+    position: relative;
+    bottom:16px;
+    font-size: 18px;
+    width: 90px;
+    height: 30px;
+    cursor: pointer;
+    left: 388px;
+}

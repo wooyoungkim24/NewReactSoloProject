@@ -1,0 +1,27 @@
+.home-image{
+   background: rgba(0,0,0,.3) url("https://news.airbnb.com/wp-content/uploads/sites/4/2020/04/Airbnb_Ireland_Lakeside_House_Featured.jpg");
+   background-size: cover;
+   margin:auto;
+   width: 1200px;
+   height: 800px;
+   background-position: center;
+   background-blend-mode: darken;
+   margin-top: 50px;
+   border-radius: 50px;
+   margin-bottom: 50px;
+}
+.home-welcome{
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    color: white;
+    position: relative;
+    left: 200px;
+    top: 200px;
+    font-size: 40px;
+}
+.search-direction{
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    color: white;
+    position: relative;
+    top: 180px;
+    left: 500px;
+}
