@@ -16,7 +16,7 @@ function Search() {
     const [location, setLocation] = useState("")
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
-    const [guests, setGuests] = useState(0)
+    const [guests, setGuests] = useState(1)
     const [seeStart, setSeeStart] = useState(false)
     const [seeEnd, setSeeEnd] = useState(false);
     const inputRefStart = useRef();
@@ -84,6 +84,7 @@ function Search() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         const searchPayload = guests + "_" + location + "_" + moment(startDate).format("MMMM D YYYY") + "_" + moment(endDate).format("MMMM D YYYY")
+       
         history.push(`/spots/${searchPayload}`)
     }
 
@@ -156,7 +157,7 @@ function Search() {
                         value={guests}
                         onChange={updateGuests}
                         id="search-bar-guests-input"
-                        min={0}
+                        min={1}
                     />
                 </div>
                 <button type="submit" className="button-search-submit">

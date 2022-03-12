@@ -1,0 +1,91 @@
+.signup-form-page{
+    margin:auto;
+    width: 950px;
+
+    height: 600px;
+    margin-top: 50px;
+    border-radius: 20px ;
+    /* filter: brightness(50%); */
+    background-blend-mode: darken;
+    background: rgba(0, 0, 0, 0.5) url('https://news.airbnb.com/wp-content/uploads/sites/4/2020/04/Airbnb_New_Zealand_Arrowtown_House.jpg?w=1000');
+    background-size: cover;
+    background-position: right 85% bottom 50% ;
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}
+
+form#signup-form input{
+    border-radius: 5px;
+    height: 20px;
+}
+.signup-form-page .signup-form-container{
+    border-radius: 20px;
+
+    width: 300px;
+    height: 480px;
+    position: relative;
+    margin-left: 125px;
+    top: 70px;
+
+    background-color: white;
+}
+
+form#signup-form{
+    display:flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.signup-form-title{
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-size:24px;
+    font-weight: 550;
+
+}
+.signup-form-title p{
+    margin-bottom: 2px;
+}
+.signup-form-errors{
+    height: 150px;
+}
+.signup-form-email{
+    margin-top: 3px;
+    display: flex;
+    flex-direction: column;
+}
+.signup-form-email input{
+    margin-top: 3px;
+    font-size: 16px;
+    width: 250px;
+}
+.signup-form-user{
+    margin-top: 3px;
+    display: flex;
+    flex-direction: column;
+}
+.signup-form-user input{
+    margin-top: 3px;
+    font-size: 16px;
+    width: 250px;
+}
+.signup-form-password{
+    margin-top: 3px;
+    display: flex;
+    flex-direction: column;
+}
+.signup-form-password input{
+    margin-top: 3px;
+    font-size: 16px;
+    width: 250px;
+}
+#signup-form button{
+    background-image: radial-gradient(circle at center center, rgb(255, 56, 92) 0%, rgb(230, 30, 77) 27.5%, rgb(227, 28, 95) 40%, rgb(215, 4, 102) 57.5%, rgb(189, 30, 89) 75%, rgb(189, 30, 89) 100%);
+    color: white;
+    border: 0;
+    width: 260px;
+    margin-top: 20px;
+    height: 40px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}

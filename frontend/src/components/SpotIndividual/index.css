@@ -236,3 +236,9 @@ div.intro-profile-photo{
     font-weight: 600;
     font-size:18px;
 }
+button:disabled{
+    cursor: not-allowed;
+    background-image: none;
+    background-color: grey
+
+}

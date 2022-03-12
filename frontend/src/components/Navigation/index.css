@@ -54,3 +54,19 @@ body{
     margin: 0;
     padding:0;
 }
+
+#login-button, #signup-button{
+    font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-weight: 550;
+    font-size: 18px;
+    color: white;
+    border:none;
+    border-radius: 10px;
+    height: 40px;
+    width: 100px;
+    background-color: rgb(255,56,92);
+    cursor: pointer;
+}
+#login-button{
+    margin-right: 20px;
+}

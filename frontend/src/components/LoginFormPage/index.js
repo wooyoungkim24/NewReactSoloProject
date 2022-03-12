@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import "./index.css"
 
 function LoginFormPage() {
   const location = useLocation()
@@ -28,40 +29,56 @@ function LoginFormPage() {
       });
   }
 
-  const handleGoBack = () =>{
-    if(location.state.from !== "/login" && location.state.from !== "/signup"){
+  const handleGoBack = () => {
+    if (location.state.from !== "/login" && location.state.from !== "/signup") {
       history.goBack();
-    }else{
+    } else {
       history.push("/")
     }
   }
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+    <div className='login-form-page'>
+      <div className='login-form-container'>
+        <form id = 'login-form' onSubmit={handleSubmit}>
+          <div className='login-form-title'>
+              <p>Welcome Back!</p>
+          </div>
+          <div className='login-form-errors'>
+            <ul>
+              {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
+          </div>
+          <div className='login-form-user'>
+            <label>
+              Username or Email:
+              <input
+                type="text"
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+
+          <div className='login-form-password'>
+            <label>
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <button type="submit">Log In</button>
+        </form>
+      </div>
+
+    </div>
+
   );
 }
 

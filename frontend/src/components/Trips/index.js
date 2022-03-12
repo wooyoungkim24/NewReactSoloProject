@@ -29,7 +29,13 @@ function Trips() {
         }
         await dispatch(getBookingsUser(payload))
             .then(() => setIsLoaded(true))
+            .catch(async(res) =>{
+                const data = await res.json();
+                history.goBack();
+            })
     }, [dispatch])
+
+
     function splitAtCapital(string) {
         const result = string.split(/(?=[A-Z])/);
         if (result.length === 1) {

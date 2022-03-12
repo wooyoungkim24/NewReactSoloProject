@@ -22,17 +22,18 @@ function SpotIndividual() {
 
     let checkedStart;
     let checkedEnd;
-    if(start === "placeholder"){
+    if (start === "placeholder") {
 
         checkedStart = new Date();
-    }else{
-        checkedStart= new Date(start);
+    } else {
+        checkedStart = new Date(start);
+
     }
 
-    if(end === "placeholder"){
+    if (end === "placeholder") {
         checkedEnd = new Date();
-    }else{
-        checkedEnd= new Date(end);
+    } else {
+        checkedEnd = new Date(end);
     }
 
     const handleCheckInClick = () => {
@@ -58,7 +59,7 @@ function SpotIndividual() {
     const [seeStart, setSeeStart] = useState(false)
     const [seeEnd, setSeeEnd] = useState(false)
     const [bookingCheckIn, setBookingCheckIn] = useState(checkedStart)
-    const [bookingCheckOut, setBookingCheckOut] = useState(checkedEnd )
+    const [bookingCheckOut, setBookingCheckOut] = useState(checkedEnd)
     const [placeholder, setPlaceholder] = useState(false)
 
     const [bookingGuests, setBookingGuests] = useState(1)
@@ -73,7 +74,7 @@ function SpotIndividual() {
     const [showMore, setShowMore] = useState(false);
     const [newBookings, setNewBookings] = useState([])
 
-
+    // const [isBookingOkay, setIsBookingOkay] = useState()
 
     const [bookedEnd, setBookedEnd] = useState(new Date())
     const individualSpot = useSelector(state => {
@@ -97,7 +98,8 @@ function SpotIndividual() {
 
     const getDisabledArray = function (start, end) {
         let arr = [];
-        let dt = new Date(start)
+        let dt = new Date(start);
+        console.log(dt)
         while (dt <= end) {
             arr.push(new Date(dt))
             dt.setDate(dt.getDate() + 1)
@@ -188,13 +190,13 @@ function SpotIndividual() {
             console.log('where is my user', user)
             if (user) {
                 setLoggedIn(true)
-                for(let i = 0; i < bookings.length; i ++){
+                for (let i = 0; i < bookings.length; i++) {
                     let curr = bookings[i];
-                    if(curr.userId === user.id){
+                    if (curr.userId === user.id) {
                         setLoggedIn(false)
                     }
                 }
-                if(user.id === individualSpot.spot.userId){
+                if (user.id === individualSpot.spot.userId) {
                     setLoggedIn(false)
                 }
             }
@@ -235,7 +237,7 @@ function SpotIndividual() {
             userId: user.id
         }
         await dispatch(createBooking(payload))
-        .then(() => history.push(`/profile/trips/${user.id}`))
+            .then(() => history.push(`/profile/trips/${user.id}`))
 
     }
 
@@ -271,7 +273,7 @@ function SpotIndividual() {
         for (let i = 0; i < ourPhotos.length; i++) {
             newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
-        console.log('new', newOurPhotos)
+        // console.log('new', newOurPhotos)
 
 
 
@@ -628,6 +630,38 @@ function SpotIndividual() {
         // console.log('checkingIn', getDisabledArray(new Date(curr.checkIn), new Date(curr.checkOut)))
         disabledArray = [...disabledArray, ...getDisabledArray(new Date(curr.checkIn), new Date(curr.checkOut))]
     }
+    let bookingArray;
+    if (bookingCheckOut > bookingCheckIn) {
+        bookingArray = getDisabledArray(bookingCheckIn, bookingCheckOut)
+    }
+
+    let isBookingOkay = false;
+    function checkingBookingOkay(arr1, arr2) {
+        let testArr2 = []
+        for(let i = 0; i < arr2.length; i ++){
+            let curr = arr2[i];
+            testArr2.push(moment(curr).format("MMMM D YYYY"))
+        }
+        let okay = arr1.some(ele => {
+            let testEle1 = moment(ele).format("MMMM D YYYY")
+
+            return testArr2.includes(testEle1)
+        })
+        return okay;
+    }
+    let test;
+    if (bookingArray) {
+        test = checkingBookingOkay(disabledArray, bookingArray)
+    }
+
+    if (test === true) {
+        isBookingOkay = true
+    } else {
+        isBookingOkay = false
+    }
+    // console.log('mydates',bookingCheckIn, bookingCheckOut)
+    // console.log('where is it', disabledArray)
+    // console.log('there it is', bookingArray)
 
 
     return (
@@ -742,30 +776,31 @@ function SpotIndividual() {
                                                         Check In:
                                                     </div>
                                                     {moment(bookingCheckIn).format("MMMM D YYYY")}
-                                                </div>
-                                                <div
-                                                    className='booking-checkIn-dropdown'
-                                                    tabIndex="0"
-                                                    ref={inputRefStart}
-                                                    onFocus={() => setSeeStart(true)}
-                                                >
-                                                    {seeStart &&
-                                                        <Calendar
-                                                            minDate={new Date()}
-                                                            value={bookingCheckIn}
-                                                            onChange={updateBookingCheckIn}
-                                                            tileDisabled={({ date, view }) =>
-                                                                (view === 'month') && // Block day tiles only
-                                                                disabledArray.some(disabledDate =>
-                                                                    date.getFullYear() === disabledDate.getFullYear() &&
-                                                                    date.getMonth() === disabledDate.getMonth() &&
-                                                                    date.getDate() === disabledDate.getDate()
-                                                                )}
+                                                    <div
+                                                        className='booking-checkIn-dropdown'
+                                                        tabIndex="0"
+                                                        ref={inputRefStart}
+                                                        onFocus={() => setSeeStart(true)}
+                                                    >
+                                                        {seeStart &&
+                                                            <Calendar
+                                                                minDate={new Date()}
+                                                                value={bookingCheckIn}
+                                                                onChange={updateBookingCheckIn}
+                                                                tileDisabled={({ date, view }) =>
+                                                                    (view === 'month') && // Block day tiles only
+                                                                    disabledArray.some(disabledDate =>
+                                                                        date.getFullYear() === disabledDate.getFullYear() &&
+                                                                        date.getMonth() === disabledDate.getMonth() &&
+                                                                        date.getDate() === disabledDate.getDate()
+                                                                    )}
 
-                                                        />
-                                                    }
+                                                            />
+                                                        }
 
+                                                    </div>
                                                 </div>
+
                                             </div>
 
                                             <div className='booking-checkOut-container'>
@@ -774,30 +809,31 @@ function SpotIndividual() {
                                                         Check Out:
                                                     </div>
                                                     {moment(bookingCheckOut).format("MMMM D YYYY")}
-                                                </div>
-                                                <div
-                                                    className='booking-checkOut-dropdown'
-                                                    tabIndex="0"
-                                                    ref={inputRefEnd}
-                                                    onFocus={() => setSeeEnd(true)}
-                                                >
-                                                    {seeEnd &&
-                                                        <Calendar
-                                                            minDate={bookingCheckIn}
-                                                            value={bookingCheckOut}
-                                                            onChange={updateBookingCheckOut}
-                                                            tileDisabled={({ date, view }) =>
-                                                                (view === 'month') && // Block day tiles only
-                                                                disabledArray.some(disabledDate =>
-                                                                    date.getFullYear() === disabledDate.getFullYear() &&
-                                                                    date.getMonth() === disabledDate.getMonth() &&
-                                                                    date.getDate() === disabledDate.getDate()
-                                                                )}
+                                                    <div
+                                                        className='booking-checkOut-dropdown'
+                                                        tabIndex="0"
+                                                        ref={inputRefEnd}
+                                                        onFocus={() => setSeeEnd(true)}
+                                                    >
+                                                        {seeEnd &&
+                                                            <Calendar
+                                                                minDate={bookingCheckIn}
+                                                                value={bookingCheckOut}
+                                                                onChange={updateBookingCheckOut}
+                                                                tileDisabled={({ date, view }) =>
+                                                                    (view === 'month') && // Block day tiles only
+                                                                    disabledArray.some(disabledDate =>
+                                                                        date.getFullYear() === disabledDate.getFullYear() &&
+                                                                        date.getMonth() === disabledDate.getMonth() &&
+                                                                        date.getDate() === disabledDate.getDate()
+                                                                    )}
 
-                                                        />
-                                                    }
+                                                            />
+                                                        }
 
+                                                    </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div className='booking-information-bottom'>
@@ -817,7 +853,7 @@ function SpotIndividual() {
 
                                 </div>
                                 <div className='submit-booking-button'>
-                                    <button type="submit" disabled ={(bookingCheckIn>=bookingCheckOut) || (bookingGuests>individualSpot.spot.FloorPlan.gueests)}form="submit-booking-form">Reserve</button>
+                                    <button type="submit" disabled={(bookingCheckIn >= bookingCheckOut) || isBookingOkay} form="submit-booking-form">Reserve</button>
                                 </div>
                                 <div className='total-cost-booking'>
                                     Total Cost: ${Math.ceil(Math.abs(bookingCheckOut - bookingCheckIn) / (1000 * 60 * 60 * 24)) * individualSpot.spot.costPerNight}
