@@ -162,6 +162,7 @@ function SpotIndividual() {
         dispatch(sessionActions.restoreUser())
         dispatch(getBookingsId({ spotId: id }))
         dispatch(getSpot(id)).then(() => setIsLoaded(true))
+        .catch(() => history.push("/"))
     }, [dispatch])
 
     const didMountRef = useRef(0);
