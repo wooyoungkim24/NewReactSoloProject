@@ -87,3 +87,14 @@ input:-webkit-autofill:active{
 #cityname-search:hover{
     background-color: rgb(164,164,164,.2);
 } */
+.search-bar-city-dropdown{
+    border: 2px black solid;
+    height:100px;
+    width: 100px;
+    position: absolute;
+
+}
+.search-bar-city-dropdown ol{
+    list-style-type: none;
+    padding: 0px;
+}

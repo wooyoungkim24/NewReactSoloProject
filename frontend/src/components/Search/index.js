@@ -19,8 +19,10 @@ function Search() {
     const [guests, setGuests] = useState(1)
     const [seeStart, setSeeStart] = useState(false)
     const [seeEnd, setSeeEnd] = useState(false);
+    const [seeCity, setSeeCity] = useState(false);
     const inputRefStart = useRef();
     const inputRefEnd = useRef();
+    const inputRefCity = useRef();
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -42,6 +44,9 @@ function Search() {
     const handleEndClick = () => {
         document.getElementsByClassName("dropdown-end")[0].focus();
     }
+    const handleCityClick = () =>{
+        document.getElementsByClassName("search-bar-city-dropdown")[0].focus();
+    }
     useEffect(() => {
         if (seeStart) {
             document.addEventListener('click', handleOutsideStartClick);
@@ -51,14 +56,18 @@ function Search() {
             document.addEventListener('click', handleOutsideEndClick);
 
         }
+        if(seeCity){
+            document.addEventListener('click', handleOutsideCityClick);
+        }
         return (() => {
             console.log("Cleaning up event listener from Autocomplete!");
             document.removeEventListener('click', handleOutsideStartClick);
             document.removeEventListener('click', handleOutsideEndClick);
+            document.removeEventListener('click', handleOutsideCityClick);
 
 
         })
-    }, [seeStart, seeEnd])
+    }, [seeStart, seeEnd, seeCity])
 
 
 
@@ -68,6 +77,15 @@ function Search() {
         if (document.activeElement === inputRefStart.current) return;
         else {
             setSeeStart(false)
+
+        }
+    }
+    const handleOutsideCityClick = () => {
+        // Leave dropdown visible as long as input is focused
+
+        if (document.activeElement === inputRefStart.current) return;
+        else {
+            setSeeCity(false)
 
         }
     }
@@ -84,7 +102,7 @@ function Search() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         const searchPayload = guests + "_" + location + "_" + moment(startDate).format("MMMM D YYYY") + "_" + moment(endDate).format("MMMM D YYYY")
-       
+
         history.push(`/spots/${searchPayload}`)
     }
 
@@ -93,14 +111,47 @@ function Search() {
 
         <div className="home-search-bar">
             <form className="search-bar" onSubmit={handleSearchSubmit}>
-                <input
-                    id='cityname-search'
-                    type='search'
-                    placeholder='City Name'
-                    required
-                    value={location}
-                    onChange={updateLocation}
-                />
+                <div className="search-bar-city" onClick={handleCityClick}>
+                    <div className="search-bar-city-input">
+                        <input
+                            id='cityname-search'
+                            type='search'
+                            placeholder='City Name'
+                            required
+                            value={location}
+                            onChange={updateLocation}
+                        />
+                    </div>
+                    <div
+                        className="search-bar-city-dropdown"
+                        tabIndex="0"
+                        ref={inputRefCity}
+                        onFocus={() => setSeeCity(true)}>
+
+                        {seeCity &&
+                            <ol>
+                                <li>
+                                    New York
+                                </li>
+                                <li>
+                                    Orlando
+                                </li>
+                                <li>
+                                    Chicago
+                                </li>
+                                <li>
+                                    Los Angeles
+                                </li>
+                                <li>
+                                    San Francisco
+                                </li>
+                            </ol>
+                        }
+
+                    </div>
+
+                </div>
+
                 <div className="search-bar-start" onClick={handleStartClick}>
                     <div id="start-text">
                         <div className="start-text-label">
@@ -108,8 +159,8 @@ function Search() {
                         </div>
 
                         {startDate === new Date()
-                        ?<>Add dates</>
-                        :moment(startDate).format("MMMM D YYYY")}
+                            ? <>Add dates</>
+                            : moment(startDate).format("MMMM D YYYY")}
                     </div>
                     <div
                         tabIndex="0"
@@ -130,8 +181,8 @@ function Search() {
                             Check Out:
                         </div>
                         {endDate === new Date()
-                        ?<>Add dates</>
-                        :moment(endDate).format("MMMM D YYYY")}
+                            ? <>Add dates</>
+                            : moment(endDate).format("MMMM D YYYY")}
                     </div>
 
                     <div
@@ -160,7 +211,7 @@ function Search() {
                         min={1}
                     />
                 </div>
-                <button type="submit" className="button-search-submit">
+                <button type="submit" disabled={startDate >= endDate} className="button-search-submit">
                     Search
                 </button>
             </form>
