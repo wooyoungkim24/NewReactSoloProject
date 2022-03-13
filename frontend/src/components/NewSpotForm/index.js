@@ -144,13 +144,14 @@ function NewSpotForm() {
     let newSpot;
     const handleFirstSubmit = async (e) => {
         e.preventDefault();
+        let cityNoSpace = city.split(" ").join("")
         const payload = {
             userId: user.id,
             title,
             description,
             costPerNight,
             address,
-            city
+            city:cityNoSpace
         }
         let createdSpot = await dispatch(createSpot(payload))
             .then((res) => newSpot = res)
