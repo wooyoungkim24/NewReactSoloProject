@@ -34,6 +34,14 @@ function HostedSpotIndividual() {
         return state.spots.individualSpot.photoObj
     })
 
+    function splitAtCapital(string) {
+        const result = string.split(/(?=[A-Z])/);
+        if (result.length === 1) {
+            return result[0]
+        } else {
+            return result.join(" ")
+        }
+    }
     function FilterTrue(obj) {
         let keys = Object.keys(obj);
         let returned = keys.filter(ele => obj[ele] === true)
@@ -219,7 +227,7 @@ function HostedSpotIndividual() {
 
                             </div>
                             <div className='edit-address-bottom'>
-                                <p>Address: {spotInfo.address} ----- City: {spotInfo.city}</p>
+                                <p>Address: {spotInfo.address} ----- City: {splitAtCapital(spotInfo.city)}</p>
                             </div>
 
                         </div>
