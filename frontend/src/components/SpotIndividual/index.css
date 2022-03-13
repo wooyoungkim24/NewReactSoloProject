@@ -1,6 +1,7 @@
 .individual-image-container{
     display: flex;
     flex-direction: row;
+    font-size: 16px;
 }
 #individual-image-small-top img:last-child{
     border-top-right-radius: 20px;
@@ -38,11 +39,16 @@ div.intro-profile-photo{
     width:60px;
     height:60px;
 }
+.individual-spot-container{
+    font-size:16px;
+    margin-bottom:50px;
+}
 
 .individual-spot-page{
     margin:auto;
     margin-top: 20px;
     width: 1200px;
+    font-size:16px;
     font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 .individual-title p{
@@ -142,8 +148,9 @@ div.intro-profile-photo{
     width: 350px;
     display: flex;
     flex-direction: column;
-    position:sticky;
-    top: 7rem;
+    /* position:sticky;
+    top: 280px; */
+    /* top: 7rem; */
 }
 .create-booking-div:hover{
     box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;

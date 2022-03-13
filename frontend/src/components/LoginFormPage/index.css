@@ -10,6 +10,7 @@
     background: rgba(0, 0, 0, 0.5) url('https://news.airbnb.com/wp-content/uploads/sites/4/2020/04/Airbnb_New_Zealand_Arrowtown_House.jpg?w=1000');
     background-size: cover;
     background-position: right 85% bottom 50% ;
+    font-family:16px;
     font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 
@@ -35,6 +36,7 @@ form#login-form{
 form#login-form input{
     border-radius: 5px;
     height: 20px;
+    font-size:16px;
 }
 .login-form-title{
     font-family:Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
@@ -81,11 +83,13 @@ form#login-form input{
     cursor: pointer;
 }
 .login-form-page .demo-user-button{
-    position: relative;
-    top: 20px;
-    left: 20px;
+    margin-top: 15px;
 }
 
+/* *:-webkit-autofill::first-line{
+
+  font-size:16px;
+} */
 .login-form-page .demo-user-button button{
     background-image: radial-gradient(circle at center center, rgb(255, 56, 92) 0%, rgb(230, 30, 77) 27.5%, rgb(227, 28, 95) 40%, rgb(215, 4, 102) 57.5%, rgb(189, 30, 89) 75%, rgb(189, 30, 89) 100%);
     color: white;

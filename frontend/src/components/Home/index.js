@@ -25,7 +25,15 @@ function Home() {
 
 
     return (
+
+
+
         <div className="home-image">
+            {!user &&
+                <div className="demo-user-button">
+                    <button type="button" onClick={handleDemo}>Demo User Horton</button>
+                </div>
+            }
             <div className="home-welcome">
                 <h1>Welcome to CityBrb</h1>
             </div>
@@ -33,13 +41,11 @@ function Home() {
                 Search to Get Started
             </div>
 
-            {!user &&
-            <div className="demo-user-button">
-                <button type="button" onClick={handleDemo}>Demo User Horton</button>
-            </div>
-            }
+
 
         </div>
+
+
     )
 }
 

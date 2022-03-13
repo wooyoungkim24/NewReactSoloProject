@@ -10,7 +10,7 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import "./index.css"
 import { loadSearch } from "../../store/spot";
-
+import 'react-calendar/dist/Calendar.css';
 function Search() {
 
     const [location, setLocation] = useState("")
@@ -180,7 +180,7 @@ function Search() {
                         onFocus={() => setSeeStart(true)}
                     >
                         {seeStart &&
-                            <Calendar id="calendar-search-start" value={startDate} onChange={changeDateStart} minDate={new Date()} />
+                            <Calendar id="calendar-search-start"  value={startDate} onChange={changeDateStart} minDate={new Date()} />
                         }
                     </div>
 

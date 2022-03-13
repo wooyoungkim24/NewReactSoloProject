@@ -46,7 +46,7 @@ function LoginFormPage() {
   return (
     <div className='login-form-page'>
       <div className='login-form-container'>
-        <form id='login-form' onSubmit={handleSubmit}>
+        <form autocomplete="off" id='login-form' onSubmit={handleSubmit}>
           <div className='login-form-title'>
             <p>Welcome Back!</p>
           </div>

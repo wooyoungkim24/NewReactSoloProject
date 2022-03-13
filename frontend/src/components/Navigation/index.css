@@ -10,6 +10,7 @@
     border-bottom: solid rgb(235,235,235);
     background-color: white;
     height: 90px;
+    font-size:16px;
 
 }
 
@@ -44,6 +45,7 @@
     border:0;
     background-color: white;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .navbar i{
@@ -53,6 +55,7 @@
 body{
     margin: 0;
     padding:0;
+    font-size:16px;
 }
 
 #login-button, #signup-button{
@@ -72,4 +75,5 @@ body{
 }
 #logout-button{
     cursor: pointer;
+    font-size:16px;
 }
