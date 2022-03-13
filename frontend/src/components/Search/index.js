@@ -45,7 +45,7 @@ function Search() {
         document.getElementsByClassName("dropdown-end")[0].focus();
     }
     const handleCityClick = () => {
-        document.getElementsByClassName("search-bar-city-input")[0].focus();
+        document.getElementsByClassName("cityname-search")[0].focus();
     }
     useEffect(() => {
         if (seeStart) {
@@ -115,14 +115,15 @@ function Search() {
                     <div
                         className="search-bar-city-input"
                         tabIndex="0"
-                        ref={inputRefCity}
-                        onFocus={() => setSeeCity(true)}
+
                     >
                         <input
-                            id='cityname-search'
+                            className='cityname-search'
                             type='search'
                             placeholder='City Name'
                             required
+                            ref={inputRefCity}
+                            onFocus={() => setSeeCity(true)}
                             value={location}
                             onChange={updateLocation}
                         />

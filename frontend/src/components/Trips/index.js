@@ -31,6 +31,7 @@ function Trips() {
             .then(() => setIsLoaded(true))
             .catch(async(res) =>{
                 const data = await res.json();
+
                 history.goBack();
             })
     }, [dispatch])
@@ -60,9 +61,9 @@ function Trips() {
                 <>
                     {bookings.map(ele => {
                         // console.log(ele.id)
-                        const imageLink = `https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.spotId}/` + photoObj[ele.spotId][0]
+                        const imageLink = `https://citybrbphotos2.s3.amazonaws.com/` + `Spot${ele.spotId}/` + photoObj[ele.spotId][0]
                         return (
-                            <div>
+                            <div key={ele.id}>
                                 <div key={ele.id} className='trips-component' onClick={() => history.push(`/spot/${ele.Spot.id}_placeholder_placeholder`)}>
                                     <div className='trip-image'>
                                         <img id='trip-image' src={imageLink}></img>

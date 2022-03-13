@@ -8,7 +8,7 @@ const { ListObjectsCommand } = require("@aws-sdk/client-s3")
 const { PutObjectCommand } = require("@aws-sdk/client-s3")
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { s3Client } = require("../../utils/lib")
-const bucketParams = { Bucket: "citybrbphotos" };
+const bucketParams = { Bucket: "citybrbphotos2" };
 const router = express.Router();
 const formidable = require('express-formidable');
 const fs = require("fs");
@@ -584,11 +584,13 @@ router.post(
     upload.single("File"),
     asyncHandler(async (req, res) => {
         const key = req.params.key
-        const keyPrep = key.split("_")
+        const keyPrep = key.split(":")
+
         const newKey = keyPrep.join("/")
+        console.log('what is going on', key, keyPrep, newKey)
 
         const bucketParamsAdd = {
-            Bucket: "citybrbphotos",
+            Bucket: "citybrbphotos2",
             // Specify the name of the new object. For example, 'index.html'.
             // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
             Key: newKey,
@@ -618,14 +620,15 @@ router.post(
         // const {key, formData} = req.body
         // console.log(req.params)
         const key = req.params.key
-        const keyPrep = key.split("_")
+        const keyPrep = key.split(":")
         let spotId = keyPrep[0]
         const oldKeyPrep = keyPrep.pop();
         const oldKey = `${spotId}/${oldKeyPrep}`
+        console.log("//////",oldKey)
         const newKey = keyPrep.join("/")
 
         const bucketParamsAdd = {
-            Bucket: "citybrbphotos",
+            Bucket: "citybrbphotos2",
             // Specify the name of the new object. For example, 'index.html'.
             // To create a directory for the object, use '/'. For example, 'myApp/package.json'.
             Key: newKey,
@@ -645,7 +648,7 @@ router.post(
             throw new Error("Error", err);
         }
 
-        const bucketParamsDelete = { Bucket: "citybrbphotos", Key: oldKey };
+        const bucketParamsDelete = { Bucket: "citybrbphotos2", Key: oldKey };
         try {
             const data = await s3Client.send(new DeleteObjectCommand(bucketParamsDelete));
             console.log("Success. Object deleted.", data);
@@ -661,7 +664,7 @@ router.post(
     asyncHandler(async (req, res) => {
 
         const { id } = req.body
-        const bucketParams = { Bucket: "citybrbphotos" };
+        const bucketParams = { Bucket: "citybrbphotos2" };
         let data;
         try {
             data = await s3Client.send(new ListObjectsCommand(bucketParams));
@@ -688,7 +691,7 @@ router.post(
         }
         // console.log(keyVault)
         for (let i = 0; i < keyVault.length; i++) {
-            const bucketParams = { Bucket: "citybrbphotos", Key: keyVault[i] };
+            const bucketParams = { Bucket: "citybrbphotos2", Key: keyVault[i] };
 
             try {
                 await s3Client.send(new DeleteObjectCommand(bucketParams));

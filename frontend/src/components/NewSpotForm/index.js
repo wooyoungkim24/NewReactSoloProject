@@ -165,11 +165,11 @@ function NewSpotForm() {
         const selectedFiles5 = document.getElementById('add-photo-input5').files[0];
 
 
-        const key1 = `Spot${newSpot.id}_${selectedFiles1.name}`
-        const key2 = `Spot${newSpot.id}_${selectedFiles2.name}`
-        const key3 = `Spot${newSpot.id}_${selectedFiles3.name}`
-        const key4 = `Spot${newSpot.id}_${selectedFiles4.name}`
-        const key5 = `Spot${newSpot.id}_${selectedFiles5.name}`
+        const key1 = `Spot${newSpot.id}:${selectedFiles1.name}`
+        const key2 = `Spot${newSpot.id}:${selectedFiles2.name}`
+        const key3 = `Spot${newSpot.id}:${selectedFiles3.name}`
+        const key4 = `Spot${newSpot.id}:${selectedFiles4.name}`
+        const key5 = `Spot${newSpot.id}:${selectedFiles5.name}`
 
         const formData1 = new FormData();
         formData1.append("File", selectedFiles1)

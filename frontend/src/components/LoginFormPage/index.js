@@ -36,14 +36,19 @@ function LoginFormPage() {
       history.push("/")
     }
   }
+  const handleDemo = (e) => {
+    return dispatch(sessionActions.login({ credential: 'horton@hears.who', password: 'password6' }))
+      .then(() => history.push("/"))
+  }
+
 
 
   return (
     <div className='login-form-page'>
       <div className='login-form-container'>
-        <form id = 'login-form' onSubmit={handleSubmit}>
+        <form id='login-form' onSubmit={handleSubmit}>
           <div className='login-form-title'>
-              <p>Welcome Back!</p>
+            <p>Welcome Back!</p>
           </div>
           <div className='login-form-errors'>
             <ul>
@@ -75,7 +80,11 @@ function LoginFormPage() {
           </div>
           <button type="submit">Log In</button>
         </form>
+        <div className="demo-user-button">
+          <button type="button" onClick={handleDemo}>Demo User Horton</button>
+        </div>
       </div>
+
 
     </div>
 

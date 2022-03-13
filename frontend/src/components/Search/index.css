@@ -20,7 +20,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
-#cityname-search{
+.cityname-search{
     border: 0;
     border-right:rgb(221,221,221) 2px solid;
     outline:none;

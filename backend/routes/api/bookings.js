@@ -30,7 +30,7 @@ router.get(
     requireAuth,
     asyncHandler(async(req,res) =>{
         let photoObj = {};
-        const bucketParams = { Bucket: "citybrbphotos" };
+        const bucketParams = { Bucket: "citybrbphotos2" };
         try {
             const data = await s3Client.send(new ListObjectsCommand(bucketParams));
             //   console.log("Success", Object.keys(data));

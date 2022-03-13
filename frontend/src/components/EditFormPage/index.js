@@ -229,7 +229,7 @@ function EditFormPage() {
         // console.log(selectedFile)
         const photoArray = photos[id]
         const photoToDelete = photoArray[photoNumber - 1]
-        const key = `Spot${id}_${selectedFile.name}_${photoToDelete}`
+        const key = `Spot${id}:${selectedFile.name}:${photoToDelete}`
         formData.append('File', selectedFile);
         // console.log('form', formData)
         // dispatch(putPhoto(payload))

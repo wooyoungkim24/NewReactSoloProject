@@ -157,7 +157,7 @@ function SpotsLocation() {
                                 let ownedPlaceholder = true;
                                 let newOurPhotos = [];
                                 for (let i = 0; i < ourPhotos.length; i++) {
-                                    newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])
+                                    newOurPhotos.push(`https://citybrbphotos2.s3.amazonaws.com/` + `Spot${ele.id}/` + ourPhotos[i])
                                 }
 
                                 // let startYear;

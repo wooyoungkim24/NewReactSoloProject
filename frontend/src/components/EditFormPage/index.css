@@ -8,6 +8,12 @@
 .preview{
     border-top:rgb(221,221,221) 2px solid;
     border-bottom:rgb(221,221,221) 2px solid;
+
+}
+.preview li p{
+    width: 400px;
+    /* height:300px;
+    border: 2px black solid; */
 }
 .preview li{
     list-style-type: none;

@@ -101,7 +101,7 @@ function HostedSpotIndividual() {
         ourPhotos = photos[id]
 
         for (let i = 0; i < ourPhotos.length; i++) {
-            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
+            newOurPhotos.push(`https://citybrbphotos2.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
 
         amenityKey = Object.keys(spotInfo.Amenity)

@@ -267,12 +267,12 @@ function SpotIndividual() {
         ourPhotos = photos[id]
 
         ourPhotos.map(ele => {
-            let newString = `https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ele;
+            let newString = `https://citybrbphotos2.s3.amazonaws.com/` + `Spot${id}/` + ele;
             // console.log(newString)
             return newString
         })
         for (let i = 0; i < ourPhotos.length; i++) {
-            newOurPhotos.push(`https://citybrbphotos.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
+            newOurPhotos.push(`https://citybrbphotos2.s3.amazonaws.com/` + `Spot${id}/` + ourPhotos[i])
         }
         // console.log('new', newOurPhotos)
 
