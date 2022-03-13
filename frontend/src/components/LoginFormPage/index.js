@@ -38,7 +38,7 @@ function LoginFormPage() {
   }
   const handleDemo = (e) => {
     return dispatch(sessionActions.login({ credential: 'horton@hears.who', password: 'password6' }))
-      .then(() => history.push("/"))
+      .then(handleGoBack)
   }
 
 
