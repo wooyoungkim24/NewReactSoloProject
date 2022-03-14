@@ -213,6 +213,7 @@ function Search() {
                 </div>
 
                 <div className="search-bar-guests">
+                    <label htmlFor="search-bar-guests-input">Guests: </label>
                     <input
                         type="number"
                         required

@@ -11,7 +11,7 @@
     border: rgb(221,221,221) 2px solid;
     border-radius: 50px;
     height: 70px;
-    width: 750px;
+    width: 775px;
 
 }
 input:-webkit-autofill,
@@ -52,7 +52,14 @@ input:-webkit-autofill:active{
 }
 .search-bar-guests{
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+
+    font-size: 16px;
+
+}
+.search-bar-guests label{
+    margin-left:15px;
+    padding-top:12px;
 
 }
 #search-bar-guests-input{
@@ -60,9 +67,9 @@ input:-webkit-autofill:active{
     border-right:rgb(221,221,221) 2px solid;
     outline:none;
     height: 40px;
-    margin-left: 20px;
+    margin-left: 10px;
     font-size: 16px;
-    width: 100px;
+    width: 60px;
 }
 .button-search-submit{
     cursor: pointer;
