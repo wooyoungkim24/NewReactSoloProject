@@ -4,9 +4,14 @@ const LOAD_ALL = "allSpots/load"
 const LOAD_ONE = "oneSpot/load"
 const LOAD_PAYLOAD = "payload/load"
 const LOAD_USERSPOTS = "userSpots/load"
+const LOAD = "spots/load"
 
 const load_all = (all) => ({
     type: LOAD_ALL,
+    all
+})
+const load = (all) =>({
+    type: LOAD,
     all
 })
 
@@ -51,6 +56,15 @@ export const getSpots = (city) => async dispatch => {
         const spots = await res.json();
         dispatch(load_all(spots));
         return spots;
+    }
+}
+
+export const getAllSpots = () => async dispatch =>{
+    const res = await csrfFetch("/api/spots")
+    if(res.ok){
+        const spots = await res.json();
+        dispatch(load(spots));
+        return spots
     }
 }
 export const putPhoto = (payload) => async dispatch => {
@@ -336,7 +350,8 @@ const initialState = {
     individualSpot: {},
     searchInfo: {},
     userSpots: [],
-    photoObjAll: {}
+    photoObjAll: {},
+    allSpots: {}
 }
 
 const spotsReducer = (state = initialState, action) => {
@@ -346,6 +361,18 @@ const spotsReducer = (state = initialState, action) => {
                 ...state,
                 spots: [...action.all.spots],
                 photoObjAll: { ...action.all.photoObj }
+            }
+        case LOAD:
+            let filler = {};
+            for(let i = 0; i < action.all.length; i++){
+                let curr = action.all[i]
+                if(!filler[curr.id]){
+                    filler[curr.id] = curr
+                }
+            }
+            return {
+                ...state,
+                allSpots: {...filler}
             }
         case LOAD_ONE:
             return {

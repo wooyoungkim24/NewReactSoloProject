@@ -284,6 +284,15 @@ router.get(
 
 
 //Spot Stuff
+router.get(
+    "/",
+    asyncHandler(async(req,res) =>{
+        const spots = await Spot.findAll({include: User});
+        return res.json(spots)
+    })
+)
+
+
 router.post(
     "/",
     spotValidations.validateCreateSpot,

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from "../../store/session";
 import Navigation from '../Navigation';
-import { getSpots, getSpot } from "../../store/spot"
+import { getSpots, getSpot, getAllSpots } from "../../store/spot"
 import { getBookingsId, createBooking, getBookingsUser, deleteBooking } from '../../store/booking';
 import moment from 'moment'
 import "./index.css"
+
 
 function Trips() {
 
@@ -23,10 +24,15 @@ function Trips() {
     const photoObj = useSelector(state => {
         return state.bookings.photoObj
     })
+
+    const allSpots = useSelector(state => {
+        return state.spots.allSpots
+    })
     useEffect(async () => {
         const payload = {
             userId
         }
+        await dispatch(getAllSpots())
         await dispatch(getBookingsUser(payload))
             .then(() => setIsLoaded(true))
             .catch(async(res) =>{
@@ -74,7 +80,7 @@ function Trips() {
                                         </div>
 
                                         <div className='trip-host'>
-                                            <p>Hosted by: {ele.User.username}</p>
+                                            <p>Hosted by: {allSpots[ele.Spot.userId].User.username}</p>
                                         </div>
 
                                         <div className='trip-when'>
