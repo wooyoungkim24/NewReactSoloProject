@@ -329,7 +329,7 @@ function SpotsLocation() {
             </div>
             <div className="bigMap">
                 <iframe id="map"
-                    width="780" height="97%" style={{ border: 0 }}
+                    width="1000" height="97%" style={{ border: 0 }}
                     loading="lazy"
                     allowFullScreen
                     src={mapsQuery}>
