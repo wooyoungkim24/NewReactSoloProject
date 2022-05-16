@@ -62,3 +62,13 @@
     font-size: 20px;
     font-weight: 600;
 }
+
+.spots-page{
+    display: flex;
+    flex-direction: row;
+}
+#map{
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-top:15px;
+}
